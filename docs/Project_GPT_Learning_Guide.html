@@ -1,0 +1,4316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Project GPT — Complete Learning Guide</title>
+<style>
+/* ==========================================================================
+   PAGE SETUP & PRINT MEDIA STYLES
+   ========================================================================== */
+@page {
+    size: A4 portrait;
+    margin: 18mm 16mm 20mm 16mm;
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.62;
+    color: #1e293b;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+/* ==========================================================================
+   COVER PAGE
+   ========================================================================== */
+.cover-page {
+    page-break-after: always;
+    min-height: 98vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px 30px;
+    background: linear-gradient(135deg, #090d16 0%, #111827 45%, #1e1b4b 100%);
+    color: #ffffff;
+    border-radius: 12px;
+    position: relative;
+    box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
+}
+
+.cover-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 20px;
+}
+
+.cover-badge {
+    background: rgba(59, 130, 246, 0.2);
+    border: 1px solid #3b82f6;
+    color: #60a5fa;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.cover-edition {
+    color: #94a3b8;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.cover-hero {
+    margin: auto 0;
+    padding: 20px 0;
+}
+
+.cover-icon {
+    font-size: 54px;
+    margin-bottom: 20px;
+}
+
+.cover-title {
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    margin: 0 0 16px 0;
+    background: linear-gradient(90deg, #ffffff 0%, #cbd5e1 50%, #93c5fd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.cover-subtitle {
+    font-size: 18px;
+    font-weight: 400;
+    color: #94a3b8;
+    line-height: 1.5;
+    max-width: 650px;
+    margin: 0 0 32px 0;
+}
+
+.cover-features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    max-width: 650px;
+}
+
+.cover-feature-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #e2e8f0;
+}
+
+.cover-feature-item strong {
+    color: #38bdf8;
+    display: block;
+    margin-bottom: 2px;
+    font-size: 12.5px;
+}
+
+.cover-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    color: #64748b;
+    font-size: 11px;
+}
+
+.cover-meta strong {
+    color: #cbd5e1;
+}
+
+/* ==========================================================================
+   PAGE BREAK & SECTION STYLES
+   ========================================================================== */
+.page-break {
+    page-break-before: always;
+    break-before: page;
+}
+
+.chapter {
+    page-break-before: always;
+    break-before: page;
+    padding-top: 10px;
+}
+
+.avoid-break {
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+/* ==========================================================================
+   TYPOGRAPHY
+   ========================================================================== */
+h1, h2, h3, h4, h5, h6 {
+    color: #0f172a;
+    font-weight: 700;
+    line-height: 1.3;
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+h1 {
+    font-size: 24px;
+    margin-top: 0;
+    margin-bottom: 14px;
+    letter-spacing: -0.3px;
+}
+
+h2 {
+    font-size: 17px;
+    border-bottom: 1.5px solid #e2e8f0;
+    padding-bottom: 6px;
+    margin-top: 28px;
+    margin-bottom: 12px;
+}
+
+h3 {
+    font-size: 14.5px;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    color: #1e293b;
+}
+
+p {
+    margin: 0 0 12px 0;
+}
+
+ul, ol {
+    margin: 0 0 14px 0;
+    padding-left: 24px;
+}
+
+li {
+    margin-bottom: 4px;
+}
+
+a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #e2e8f0;
+    margin: 24px 0;
+}
+
+/* ==========================================================================
+   CHAPTER HEADER BANNER
+   ========================================================================== */
+.chapter-header {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border: 1px solid #e2e8f0;
+    border-left: 6px solid #2563eb;
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+.chapter-phase-badge {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1e40af;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.chapter-number-badge {
+    display: inline-block;
+    background: #0f172a;
+    color: #ffffff;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-left: 6px;
+}
+
+.chapter-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 6px 0 10px 0;
+    line-height: 1.25;
+}
+
+.chapter-code-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11.5px;
+    color: #475569;
+    background: #ffffff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    width: fit-content;
+    margin-top: 6px;
+}
+
+.chapter-code-bar code {
+    color: #0284c7;
+    font-weight: 700;
+}
+
+/* ==========================================================================
+   TABLE OF CONTENTS (COMPACT 2-PAGE LAYOUT)
+   ========================================================================== */
+.toc-container {
+    page-break-before: always;
+    page-break-after: always;
+    padding: 0;
+}
+
+.toc-title {
+    font-size: 24px;
+    font-weight: 900;
+    color: #0f172a;
+    border-bottom: 2px solid #0f172a;
+    padding-bottom: 6px;
+    margin-bottom: 12px;
+}
+
+.toc-phase-block {
+    margin-bottom: 12px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+.toc-phase-title {
+    font-size: 12.5px;
+    font-weight: 800;
+    color: #1e3a8a;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    background: #eff6ff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border-left: 3.5px solid #3b82f6;
+    margin-bottom: 6px;
+}
+
+.toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.toc-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 4px 6px;
+    border-bottom: 1px dotted #e2e8f0;
+    font-size: 12px;
+}
+
+.toc-item-left {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    max-width: 72%;
+}
+
+.toc-num {
+    font-weight: 800;
+    color: #0284c7;
+    font-family: monospace;
+    font-size: 12px;
+    width: 22px;
+    flex-shrink: 0;
+}
+
+.toc-link {
+    color: #0f172a;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.toc-desc {
+    font-size: 10.5px;
+    color: #64748b;
+    margin-top: 1px;
+    line-height: 1.35;
+}
+
+.toc-item-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.toc-code {
+    font-family: "Cascadia Code", Consolas, monospace;
+    font-size: 10.5px;
+    color: #475569;
+    background: #f1f5f9;
+    padding: 1px 5px;
+    border-radius: 4px;
+}
+
+.toc-page-badge {
+    background: #e0f2fe;
+    color: #0369a1;
+    font-weight: 700;
+    font-size: 10.5px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 1px solid #bae6fd;
+    min-width: 32px;
+    text-align: center;
+}
+
+/* ==========================================================================
+   CALLOUT BOXES
+   ========================================================================== */
+.callout {
+    display: flex;
+    gap: 14px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin: 16px 0;
+    font-size: 12.5px;
+    line-height: 1.55;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    border-left: 4px solid;
+}
+
+.callout-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.callout-content {
+    flex-grow: 1;
+}
+
+.callout-content p:last-child {
+    margin-bottom: 0;
+}
+
+.callout-tip {
+    background: #f0f9ff;
+    border-color: #0284c7;
+    color: #0c4a6e;
+}
+
+.callout-tip strong {
+    color: #0369a1;
+}
+
+.callout-warning {
+    background: #fffbeb;
+    border-color: #f59e0b;
+    color: #78350f;
+}
+
+.callout-warning strong {
+    color: #b45309;
+}
+
+.callout-lab {
+    background: #ecfdf5;
+    border-color: #10b981;
+    color: #064e3b;
+}
+
+.callout-lab strong {
+    color: #047857;
+}
+
+.callout-code {
+    background: #f8fafc;
+    border-color: #64748b;
+    color: #1e293b;
+}
+
+.callout-note {
+    background: #f8fafc;
+    border-color: #3b82f6;
+    color: #1e293b;
+}
+
+/* ==========================================================================
+   CODE & SYNTAX HIGHLIGHTING
+   ========================================================================== */
+pre, .codehilite {
+    background: #0f172a !important;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-family: "Cascadia Code", "Fira Code", Consolas, "Courier New", monospace !important;
+    font-size: 11.5px !important;
+    line-height: 1.48;
+    color: #f8fafc !important;
+    overflow-wrap: break-word;
+    white-space: pre-wrap !important;
+    word-break: break-word;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin: 14px 0;
+}
+
+pre code, .codehilite code {
+    background: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    color: inherit !important;
+}
+
+code {
+    font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+    font-size: 11.5px;
+    background: #f1f5f9;
+    color: #0f172a;
+    padding: 2px 5px;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+}
+
+/* Pygments Token Overrides for Dark Box */
+.codehilite .k, .codehilite .kn, .codehilite .kd, .codehilite .kc { color: #38bdf8 !important; font-weight: bold; }
+.codehilite .s, .codehilite .s1, .codehilite .s2, .codehilite .sa { color: #86efac !important; }
+.codehilite .c, .codehilite .c1, .codehilite .ch, .codehilite .cm { color: #94a3b8 !important; font-style: italic; }
+.codehilite .nf, .codehilite .nc, .codehilite .fm { color: #818cf8 !important; font-weight: bold; }
+.codehilite .nb, .codehilite .bp { color: #f472b6 !important; }
+.codehilite .m, .codehilite .mi, .codehilite .mf { color: #fde047 !important; }
+.codehilite .o, .codehilite .ow { color: #cbd5e1 !important; }
+.codehilite .nt { color: #f87171 !important; }
+.codehilite .na { color: #38bdf8 !important; }
+
+/* ==========================================================================
+   TABLES
+   ========================================================================== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 12px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    border: 1px solid #cbd5e1;
+}
+
+th {
+    background: #0f172a;
+    color: #ffffff;
+    font-weight: 700;
+    text-align: left;
+    padding: 8px 12px;
+    border: 1px solid #334155;
+    font-size: 11.5px;
+    letter-spacing: 0.4px;
+}
+
+td {
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    vertical-align: top;
+}
+
+tr:nth-child(even) td {
+    background-color: #f8fafc;
+}
+
+/* ==========================================================================
+   APPENDIX & OVERVIEW CARDS
+   ========================================================================== */
+.overview-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+.overview-card-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 8px;
+}
+</style>
+</head>
+<body>
+
+<!-- ==========================================================================
+     COVER PAGE
+     ========================================================================== -->
+<div class="cover-page">
+    <div class="cover-header">
+        <span class="cover-badge">PROJECT GPT · ENGINEERING MANUAL</span>
+        <span class="cover-edition">OCTOBER 2026 EDITION</span>
+    </div>
+
+    <div class="cover-hero">
+        <div class="cover-icon">🤖📚</div>
+        <h1 class="cover-title">PROJECT GPT<br>THE COMPLETE LEARNING GUIDE</h1>
+        <p class="cover-subtitle">
+            A comprehensive, architectural textbook on building your own local ChatGPT from raw Python scratch:
+            RAG pipelines, vector math, hybrid BM25 search, cross-encoder reranking, document structure parsing,
+            conversational memory, and autonomous agent loops.
+        </p>
+
+        <div class="cover-features-grid">
+            <div class="cover-feature-item">
+                <strong>Phase 1 · Core RAG From Scratch</strong>
+                Ollama, Chunks, Embeddings, ChromaDB, Top-K, Generator
+            </div>
+            <div class="cover-feature-item">
+                <strong>Phase 2 · Better Search Engines</strong>
+                BM25 Keywords, RRF Hybrid Fusion, Cross-Encoders, OCR, MRR
+            </div>
+            <div class="cover-feature-item">
+                <strong>Phase 3 · Document Structure & Memory</strong>
+                Heading/Table chunking, Query rewriting, Follow-up memory
+            </div>
+            <div class="cover-feature-item">
+                <strong>Phase 4 · Full-Stack App & Agents</strong>
+                SSE token streaming, Source verification chips, Multi-step Tools
+            </div>
+        </div>
+    </div>
+
+    <div class="cover-footer">
+        <div class="cover-meta">
+            <div>Author & Project: <strong>Project GPT Core Team</strong></div>
+            <div>Runtime Environment: <strong>100% Local & Private (Ollama + Python)</strong></div>
+        </div>
+        <div>18 Comprehensive Chapters · 5 Standalone Labs · Complete Reference Glossary</div>
+    </div>
+</div>
+
+<!-- ==========================================================================
+     TABLE OF CONTENTS
+     ========================================================================== -->
+<div class="toc-container">
+    <div class="toc-title">Table of Contents</div>
+
+    <div class="toc-phase-block">
+        <div class="toc-phase-title">System Architecture & Foundations</div>
+        <ul class="toc-list">
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">✦</span>
+                    <a class="toc-link" href="#system-architecture">Project GPT Architecture & End-to-End Pipeline Blueprint</a>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">README.md</span>
+                    <span class="toc-page-badge">p. 4</span>
+                </div>
+            </li>
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">✦</span>
+                    <a class="toc-link" href="#curriculum-overview">Curriculum Roadmap & Study Methodology</a>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">docs/learning/README.md</span>
+                    <span class="toc-page-badge">p. 6</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="toc-phase-block">
+        <div class="toc-phase-title">Phase 1: RAG From Scratch</div>
+        <ul class="toc-list">
+
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">00</span>
+                    <div>
+                        <a class="toc-link" href="#chapter-00">Setup & Ollama — Running an AI on Your Own Laptop</a>
+                        <div class="toc-desc">What models and weights are, how Ollama serves models locally via HTTP, parameter sizing (4b vs 9b), and solving the 2-second IPv6 localhost latency bug.</div>
+                    </div>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">rag/ollama_client.py</span>
+                    <span class="toc-page-badge">p. 8</span>
+                </div>
+            </li>
+
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">01</span>
+                    <div>
+                        <a class="toc-link" href="#chapter-01">What is RAG? — The Open-Book Exam</a>
+                        <div class="toc-desc">Why pasting entire documents into prompts fails, the open-book exam mental model, and the two fundamental phases: Library Ingestion vs Real-Time Querying.</div>
+                    </div>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">rag/config.py, ingest.py</span>
+                    <span class="toc-page-badge">p. 11</span>
+                </div>
+            </li>
+
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">02</span>
+                    <div>
+                        <a class="toc-link" href="#chapter-02">Loading Documents — Getting the Words Out</a>
+                        <div class="toc-desc">Extracting clean plain text from PDFs (PyMuPDF) and Word documents (python-docx), attaching page metadata, and handling encoding issues.</div>
+                    </div>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">rag/loader.py</span>
+                    <span class="toc-page-badge">p. 14</span>
+                </div>
+            </li>
+
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">03</span>
+                    <div>
+                        <a class="toc-link" href="#chapter-03">Chunking — Cutting Documents into Pieces</a>
+                        <div class="toc-desc">Why LLMs need small passages, chunk size vs search precision, sentence-boundary splitting, and sliding window overlap to prevent split facts.</div>
+                    </div>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">rag/chunker.py</span>
+                    <span class="toc-page-badge">p. 16</span>
+                </div>
+            </li>
+
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">04</span>
+                    <div>
+                        <a class="toc-link" href="#chapter-04">Embeddings — Turning Meaning into Numbers</a>
+                        <div class="toc-desc">High-dimensional vector representations, how text becomes a coordinate in 768-dimensional space, and measuring cosine distance between ideas.</div>
+                    </div>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">rag/embedder.py</span>
+                    <span class="toc-page-badge">p. 19</span>
+                </div>
+            </li>
+
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">05</span>
+                    <div>
+                        <a class="toc-link" href="#chapter-05">The Vector Database — Storing and Finding Meaning</a>
+                        <div class="toc-desc">ChromaDB internals, persistent collections, metadata filtering, Euclidean distance vs Cosine distance, and why vector search is fast.</div>
+                    </div>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">rag/vector_store.py</span>
+                    <span class="toc-page-badge">p. 22</span>
+                </div>
+            </li>
+
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">06</span>
+                    <div>
+                        <a class="toc-link" href="#chapter-06">Retrieval — Finding the Right Pages</a>
+                        <div class="toc-desc">Transforming user questions into vectors, Top-K nearest neighbour search, similarity thresholds, and formatting chunks into context passages.</div>
+                    </div>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">rag/retriever.py</span>
+                    <span class="toc-page-badge">p. 25</span>
+                </div>
+            </li>
+
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">07</span>
+                    <div>
+                        <a class="toc-link" href="#chapter-07">Generation — The AI Writes the Answer</a>
+                        <div class="toc-desc">Prompt engineering for grounded answers, strict anti-hallucination system instructions, source citation tokens ([1], [2]), and streaming responses.</div>
+                    </div>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">rag/generator.py</span>
+                    <span class="toc-page-badge">p. 28</span>
+                </div>
+            </li>
+
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">08</span>
+                    <div>
+                        <a class="toc-link" href="#chapter-08">Run It & Experiment — Hands-on Testing & Debugging</a>
+                        <div class="toc-desc">End-to-end execution of ingest.py and chat.py, debugging retrieval failures, understanding hallucination scenarios, and performance tuning.</div>
+                    </div>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">ingest.py, chat.py</span>
+                    <span class="toc-page-badge">p. 31</span>
+                </div>
+            </li>
+</ul></div>
+
+    <div class="toc-phase-block">
+        <div class="toc-phase-title">Phase 2: Better Search</div>
+        <ul class="toc-list">
+
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">09</span>
+                    <div>
+                        <a class="toc-link" href="#chapter-09">Keyword Search (BM25) — Smart Exact Matching</a>
+                        <div class="toc-desc">Where vector embeddings fail (exact part numbers, error codes, rare names), BM25 term frequency / inverse document frequency, and building an inverted index.</div>
+                    </div>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">rag/keyword_search.py</span>
+                    <span class="toc-page-badge">p. 35</span>
+                </div>
+            </li>
+
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">10</span>
+                    <div>
+                        <a class="toc-link" href="#chapter-10">Hybrid Search — Combining Meaning & Keywords with RRF</a>
+                        <div class="toc-desc">Reciprocal Rank Fusion (RRF) algorithm: merging BM25 and vector search rankings without scale normalisation problems, achieving best-of-both-worlds retrieval.</div>
+                    </div>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">rag/retriever.py</span>
+                    <span class="toc-page-badge">p. 39</span>
+                </div>
+            </li>
+
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">11</span>
+                    <div>
+                        <a class="toc-link" href="#chapter-11">Re-ranking — The Careful Cross-Encoder Judge</a>
+                        <div class="toc-desc">Bi-encoders vs Cross-encoders (BGE-Reranker-v2-m3), evaluating query and passage simultaneously with full cross-attention, shortlisting top 20 and selecting top 5.</div>
+                    </div>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">rag/reranker.py</span>
+                    <span class="toc-page-badge">p. 42</span>
+                </div>
+            </li>
+
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">12</span>
+                    <div>
+                        <a class="toc-link" href="#chapter-12">OCR — Reading Scanned PDFs and Images</a>
+                        <div class="toc-desc">Handling image-only scanned PDFs, rendering pages to pixmaps with PyMuPDF, running local OCR engines (Tesseract / EasyOCR), and embedding image text.</div>
+                    </div>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">rag/loader.py</span>
+                    <span class="toc-page-badge">p. 46</span>
+                </div>
+            </li>
+
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">13</span>
+                    <div>
+                        <a class="toc-link" href="#chapter-13">Measuring Quality — Hit@K, MRR & Systematic Evaluation</a>
+                        <div class="toc-desc">How to score your RAG pipeline scientifically: Mean Reciprocal Rank (MRR), Hit@1, Hit@5, creating ground-truth evaluation datasets, and benchmarking improvements.</div>
+                    </div>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">evaluate.py</span>
+                    <span class="toc-page-badge">p. 49</span>
+                </div>
+            </li>
+</ul></div>
+
+    <div class="toc-phase-block">
+        <div class="toc-phase-title">Phase 3: Structure & Memory</div>
+        <ul class="toc-list">
+
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">14</span>
+                    <div>
+                        <a class="toc-link" href="#chapter-14">Structure-Aware Chunking — Following Document Shape</a>
+                        <div class="toc-desc">Why character-count chunking cuts tables and headers in half, parsing Markdown headings, keeping table rows intact with repeated headers, and breadcrumb locations.</div>
+                    </div>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">rag/chunker.py, rag/loader.py</span>
+                    <span class="toc-page-badge">p. 53</span>
+                </div>
+            </li>
+
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">15</span>
+                    <div>
+                        <a class="toc-link" href="#chapter-15">Conversation Memory — Multi-Turn Dialogues</a>
+                        <div class="toc-desc">Solving pronoun follow-ups ('and what about the second one?'), query rewriting with Qwen, chat history sliding buffers, and session state persistence.</div>
+                    </div>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">rag/memory.py, chat.py</span>
+                    <span class="toc-page-badge">p. 56</span>
+                </div>
+            </li>
+</ul></div>
+
+    <div class="toc-phase-block">
+        <div class="toc-phase-title">Phase 4: Web UI & Agents</div>
+        <ul class="toc-list">
+
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">16</span>
+                    <div>
+                        <a class="toc-link" href="#chapter-16">The Web UI — Streaming, Sources, Sessions & Cowork</a>
+                        <div class="toc-desc">FastAPI backend, Server-Sent Events (SSE) token streaming, thread queues for non-blocking inference, clickable source citations, DOMPurify security, and live GPU stats.</div>
+                    </div>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">server.py, web/app.js, rag/sessions.py</span>
+                    <span class="toc-page-badge">p. 61</span>
+                </div>
+            </li>
+
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">17</span>
+                    <div>
+                        <a class="toc-link" href="#chapter-17">Agent Mode — Tool Use, Sandboxing & Step Execution</a>
+                        <div class="toc-desc">From single-shot RAG to multi-step autonomous tool execution, Ollama JSON function calling schema, sandboxed filesystem tools (grep, find, read_file), and loop safeguards.</div>
+                    </div>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">rag/agent.py, rag/agent_tools.py</span>
+                    <span class="toc-page-badge">p. 64</span>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+    <div class="toc-phase-block">
+        <div class="toc-phase-title">Reference & Playground Labs</div>
+        <ul class="toc-list">
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">📖</span>
+                    <div>
+                        <a class="toc-link" href="#mini-dictionary">Comprehensive AI & RAG Mini-Dictionary (Glossary)</a>
+                        <div class="toc-desc">Every essential term defined in plain English: Vectors, Tokens, RRF, Top-K, Hallucination...</div>
+                    </div>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">Glossary</span>
+                    <span class="toc-page-badge">p. 67</span>
+                </div>
+            </li>
+            <li class="toc-item">
+                <div class="toc-item-left">
+                    <span class="toc-num">🧪</span>
+                    <div>
+                        <a class="toc-link" href="#playground-appendix">Appendix: Standalone Playground Hands-On Lab</a>
+                        <div class="toc-desc">Standalone companion scripts to see chunking, embeddings, NumPy vector DBs, and reranking.</div>
+                    </div>
+                </div>
+                <div class="toc-item-right">
+                    <span class="toc-code">playground/*.py</span>
+                    <span class="toc-page-badge">p. 68</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="page-break" id="system-architecture">
+    <h1>🏛️ Project GPT — System Architecture & Data Flow</h1>
+    <div class="overview-card">
+        <div class="overview-card-title">The Big Picture: Local AI Assistant Architecture</div>
+        <p>
+            Project GPT is built from scratch without massive abstractions (like LangChain or LlamaIndex)
+            so that every mathematical and software layer is visible and tunable.
+            The entire stack runs <strong>100% locally on your laptop</strong> without sending data outside.
+        </p>
+    </div>
+<p>A private AI assistant that runs <strong>entirely on your laptop</strong>, built phase by phase to learn how it works.</p>
+<p><strong>Stack:</strong> Qwen3.5 (brain) · Ollama (runs the model) · RAG (knows your documents) · <em>local UI (Phase 3)</em></p>
+<div class="codehilite"><pre><span></span><code> Your files ──► load ──► chunk ──► embed ──► ChromaDB        (python ingest.py)
+                                                 │
+ Your question ──► embed ──► search ─────────────┘
+                                │
+                     top 5 chunks + question ──► Qwen3.5 ──► answer with [sources]   (python chat.py)
+</code></pre></div>
+
+<h2>Quick start</h2>
+<div class="codehilite"><pre><span></span><code><span class="c"># 1. Put your PDFs / DOCX / TXT / code files into:</span>
+<span class="c">#    data\documents\</span>
+
+<span class="c"># 2. Build the knowledge base</span>
+<span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">ingest</span><span class="p">.</span><span class="n">py</span>
+
+<span class="c"># 3. Chat with your documents</span>
+<span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">chat</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-debug</span>
+</code></pre></div>
+
+<p>Requires Ollama running with: <code>qwen3.5:4b</code> and <code>nomic-embed-text</code>.</p>
+<h2>Project Layout</h2>
+<div class="codehilite"><pre><span></span><code>├── data/documents/        your files (not committed to git)
+├── data/vector_db/        generated knowledge base (not committed)
+├── docs/learning/         beginner-friendly notes, one per concept
+├── playground/            small standalone experiments
+├── rag/                   the RAG engine, one file per step
+│   ├── config.py          all settings
+│   ├── loader.py          1. read files
+│   ├── chunker.py         2. cut into chunks
+│   ├── embedder.py        3. text → vectors
+│   ├── vector_store.py    4. store / search (ChromaDB)
+│   ├── retriever.py       5-6. question → relevant chunks
+│   ├── generator.py       7-8. prompt → grounded answer
+│   └── ollama_client.py   raw HTTP calls to Ollama
+├── ingest.py              build / update the knowledge base
+└── chat.py                terminal chat
+</code></pre></div>
+
+<h2>Roadmap</h2>
+<ul>
+<li>[x] <strong>Phase 1</strong>: RAG from scratch (raw Python)</li>
+<li>[ ] <strong>Phase 2</strong>: Better RAG: hybrid search, re-ranking, OCR, evaluation</li>
+<li>[ ] <strong>Phase 3</strong>: Local chat UI</li>
+<li>[ ] <strong>Phase 4</strong>: Tools &amp; agents (Git, Python, files, terminal)</li>
+<li>[ ] <strong>Phase 5</strong>: Internet search</li>
+<li>[ ] <strong>Phase 6</strong>: Specialised assistants (tutor, API/Postman, ClaimLens code expert)</li>
+<li>[ ] <strong>Phase 7</strong>: Automations &amp; voice</li>
+</ul></div>
+
+<div class="page-break" id="curriculum-overview">
+    <h1>🗺️ Curriculum Roadmap & How to Learn</h1>
+    <div class="callout callout-tip">
+        <div class="callout-icon">💡</div>
+        <div class="callout-content">
+            <strong>Recommended Study Workflow:</strong>
+            <ol style="margin-top: 6px; padding-left: 20px;">
+                <li>Read the note carefully to understand the core mental model.</li>
+                <li>Open the indicated code file in your editor and inspect the comments.</li>
+                <li>Run the "🧪 Try it yourself" experiments in terminal or in the <code>playground/</code> folder.</li>
+                <li>Progress to the next concept only after seeing it work with your own eyes.</li>
+            </ol>
+        </div>
+    </div>
+<p>Welcome! These notes go with the code in this project. Read them <strong>in order</strong>.
+Each one explains <strong>one idea</strong>, in plain language, and points to the exact code file that does it.</p>
+<div class="callout callout-lab"><div class="callout-icon">🧪</div><div class="callout-content"><p><strong>How to use these notes</strong>
+1. Read the note.
+2. Open the code file it mentions and read the comments.
+3. Do the "🧪 Try it yourself" part at the end.
+4. Only then move to the next note.</p></div></div>
+<h2>Phase 1 — RAG from scratch</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Note</th>
+<th>What you'll understand</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td><a href="#chapter-00">Setup &amp; Ollama</a></td>
+<td>What Ollama is, what a "model" is, why 4b fits your laptop</td>
+<td><code>rag/ollama_client.py</code></td>
+</tr>
+<tr>
+<td>1</td>
+<td><a href="#chapter-01">What is RAG?</a></td>
+<td>The big picture: the open-book exam idea</td>
+<td><code>rag/config.py</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="#chapter-02">Loading documents</a></td>
+<td>Getting plain text out of PDFs and Word files</td>
+<td><code>rag/loader.py</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="#chapter-03">Chunking</a></td>
+<td>Why and how we cut text into small pieces</td>
+<td><code>rag/chunker.py</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="#chapter-04">Embeddings</a></td>
+<td>How text becomes "meaning numbers"</td>
+<td><code>rag/embedder.py</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="#chapter-05">Vector database</a></td>
+<td>Where those numbers are stored and searched</td>
+<td><code>rag/vector_store.py</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="#chapter-06">Retrieval</a></td>
+<td>Finding the right pages for a question</td>
+<td><code>rag/retriever.py</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="#chapter-07">Generation</a></td>
+<td>How the AI writes an answer from those pages</td>
+<td><code>rag/generator.py</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="#chapter-08">Run it &amp; experiment</a></td>
+<td>Use it on your own files, tune it, fix problems</td>
+<td><code>ingest.py</code>, <code>chat.py</code></td>
+</tr>
+</tbody>
+</table>
+<h2>Phase 2 — Better search</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Note</th>
+<th>What you'll understand</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>9</td>
+<td><a href="#chapter-09">Keyword search</a></td>
+<td>BM25: the classic search engine</td>
+<td><code>rag/keyword_search.py</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="#chapter-10">Hybrid search</a></td>
+<td>Meaning + keywords, merged with RRF</td>
+<td><code>rag/retriever.py</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="#chapter-11">Re-ranking</a></td>
+<td>A second, smarter judge for the shortlist</td>
+<td><code>rag/reranker.py</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="#chapter-12">OCR</a></td>
+<td>Reading scanned PDFs and images</td>
+<td><code>rag/loader.py</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="#chapter-13">Measuring quality</a></td>
+<td>Hit@K, MRR: give your RAG a score</td>
+<td><code>evaluate.py</code></td>
+</tr>
+</tbody>
+</table>
+<h2>Phase 3 — Smarter chunks &amp; conversations</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Note</th>
+<th>What you'll understand</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>14</td>
+<td><a href="#chapter-14">Structure-aware chunking</a></td>
+<td>Headings, tables, and why the first try was worse</td>
+<td><code>rag/chunker.py</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td><a href="#chapter-15">Conversation memory</a></td>
+<td>Making "and the second one?" work</td>
+<td><code>rag/memory.py</code></td>
+</tr>
+</tbody>
+</table>
+<h2>Phase 4 — Your own chat app (you are here)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Note</th>
+<th>What you'll understand</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>16</td>
+<td><a href="#chapter-16">The web UI</a></td>
+<td>Streaming, clickable citations, saved chats, Cowork web search, live GPU stats</td>
+<td><code>server.py</code>, <code>web/</code>, <code>rag/sessions.py</code>, <code>rag/web_search.py</code></td>
+</tr>
+</tbody>
+</table>
+<h2>Coming next</h2>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>What we'll build</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>Tools &amp; agents: let the AI use Git, Python, files, terminal</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Deeper internet research (multi-step search, reading more pages)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Special assistants: tutor, API/Postman helper, ClaimLens code expert</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Automations and voice</td>
+</tr>
+</tbody>
+</table></div>
+
+<div class="chapter" id="chapter-00">
+    <div class="chapter-header">
+        <div>
+            <span class="chapter-phase-badge">Phase 1: RAG From Scratch</span>
+            <span class="chapter-number-badge">CHAPTER 00</span>
+        </div>
+        <div class="chapter-title">Setup & Ollama — Running an AI on Your Own Laptop</div>
+        <div class="chapter-code-bar">
+            <span>📂 Primary Implementation:</span>
+            <code>rag/ollama_client.py</code>
+        </div>
+    </div>
+
+    <div class="chapter-body">
+        <h2>What is a "model"?</h2>
+<p>When people say "ChatGPT" or "Qwen", they mean a <strong>model</strong>: one very large file
+full of numbers. Those numbers were learned by reading a huge amount of text.</p>
+<p>A model has one skill: <strong>given some text, guess the next word.</strong>
+It does this extremely well, so well that it can explain, summarise, write code and hold conversations.</p>
+<div class="codehilite"><pre><span></span><code>"The capital of France is"  →  model  →  "Paris"
+</code></pre></div>
+
+<p>That's it. Everything else (chatting, answering from documents, using tools) is built
+<strong>around</strong> this one skill.</p>
+<h2>What is Ollama?</h2>
+<p>Running a model yourself used to be complicated. <strong>Ollama</strong> makes it easy:</p>
+<ul>
+<li>It <strong>downloads</strong> models for you (<code>ollama pull qwen3.5:4b</code>)</li>
+<li>It <strong>runs</strong> them on your graphics card (GPU)</li>
+<li>It opens a <strong>small local web address</strong> (<code>http://localhost:11434</code>) that any program can talk to</li>
+</ul>
+<div class="callout callout-tip"><div class="callout-icon">💡</div><div class="callout-content"><p>💡 <strong>"localhost"</strong> means <em>this computer</em>. When our Python code talks to
+<code>localhost:11434</code>, the message never leaves your laptop.</p>
+<p>⚠️ <strong>A real bug we hit: "localhost" made every request 2 seconds slower!</strong>
+Computers have two kinds of addresses: the old style (IPv4, like <code>127.0.0.1</code>)
+and the new style (IPv6, like <code>::1</code>). On Windows, the name "localhost" tries the
+<strong>new</strong> address first. Ollama only listens on the <strong>old</strong> one, so Windows
+knocked on the wrong door, waited ~2 seconds, then tried the right door.</p>
+<p>Each question was taking ~2.1 s just to be turned into numbers. After we
+switched to <code>http://127.0.0.1:11434</code> in <code>rag/config.py</code>, it took ~0.065 s,
+about <strong>30× faster</strong>, with no other changes.</p>
+<p><strong>Lesson:</strong> if something is slow by a suspiciously <em>round, constant</em> amount
+(exactly ~2 s every time), it's usually a network timeout, not "the AI being slow".</p></div></div>
+<p>Think of Ollama as a <strong>kitchen</strong> and the models as <strong>chefs</strong>. Our Python code is the
+waiter: it takes the order (your question) to the kitchen and brings back the dish (the answer).</p>
+<h2>The two models we use</h2>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Job</th>
+<th>Size</th>
+<th>Analogy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>qwen3.5:4b</code></td>
+<td>Reads and writes answers</td>
+<td>~3 GB</td>
+<td>The <strong>expert</strong> who answers questions</td>
+</tr>
+<tr>
+<td><code>nomic-embed-text</code></td>
+<td>Turns text into meaning-numbers</td>
+<td>~0.3 GB</td>
+<td>The <strong>librarian</strong> who files every page by topic</td>
+</tr>
+</tbody>
+</table>
+<p>Why two? Because they do completely different jobs. The librarian is small and fast
+and organises your library. The expert is big and smart and writes the answers.
+You'll understand the librarian fully in <a href="#chapter-04">note 4</a>.</p>
+<h2>Why "4b" for your laptop?</h2>
+<p>Your laptop has an <strong>RTX 3050 with 6 GB of video memory (VRAM)</strong>.
+The model has to fit in that memory to run fast.</p>
+<table>
+<thead>
+<tr>
+<th>Model size</th>
+<th>Memory needed (approx.)</th>
+<th>On your laptop</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2b</td>
+<td>~2 GB</td>
+<td>Very fast, but less smart</td>
+</tr>
+<tr>
+<td><strong>4b</strong></td>
+<td><strong>~3.5 GB</strong></td>
+<td>✅ <strong>Best balance</strong></td>
+</tr>
+<tr>
+<td>9b</td>
+<td>~6.5 GB</td>
+<td>Doesn't fully fit → part of it runs on the slower CPU</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-tip"><div class="callout-icon">💡</div><div class="callout-content"><p>💡 <strong>"Quantized"</strong>: the downloaded models are <em>compressed</em>. Each number is
+stored with fewer digits (like rounding 3.14159265 to 3.14). The model gets
+much smaller and only very slightly less accurate. That's how a 4-billion-number
+model fits in about 3 GB.</p></div></div>
+<h2>How our code talks to Ollama</h2>
+<p>Open <code>rag/ollama_client.py</code>. It's just two web requests:</p>
+<p><strong>1. Embed</strong> (turn text into numbers)</p>
+<div class="codehilite"><pre><span></span><code><span class="err">POST</span><span class="w"> </span><span class="err">h</span><span class="kc">tt</span><span class="err">p</span><span class="p">:</span><span class="c1">//localhost:11434/api/embed</span>
+<span class="p">{</span><span class="w"> </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nomic-embed-text"</span><span class="p">,</span><span class="w"> </span><span class="nt">"input"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"hello world"</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+
+<span class="err">→</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"embeddings"</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">0.012</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.551</span><span class="p">,</span><span class="w"> </span><span class="mf">0.309</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="p">]]</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+
+<p><strong>2. Chat</strong> (get an answer)</p>
+<div class="codehilite"><pre><span></span><code><span class="err">POST</span><span class="w"> </span><span class="err">h</span><span class="kc">tt</span><span class="err">p</span><span class="p">:</span><span class="c1">//localhost:11434/api/chat</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qwen3.5:4b"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"messages"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"system"</span><span class="p">,</span><span class="w"> </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"You are a helpful assistant."</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span><span class="w">   </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"What is RAG?"</span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>Roles</strong> in a chat:
+- <code>system</code> → the house rules ("always cite sources", "be concise")
+- <code>user</code> → what you typed
+- <code>assistant</code> → what the AI replied before (so it remembers the conversation)</p>
+<div class="callout callout-tip"><div class="callout-icon">💡</div><div class="callout-content"><p>💡 The model has <strong>no memory</strong> between requests. To "remember" a conversation,
+we send the <strong>whole conversation again</strong> every time. ChatGPT works the same way.</p></div></div>
+<h2>🧪 Try it yourself</h2>
+<p>Open a terminal and run:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">ollama</span> <span class="n">list</span>                      <span class="c"># which models you have</span>
+<span class="n">ollama</span> <span class="n">run</span> <span class="n">qwen3</span><span class="p">.</span><span class="n">5</span><span class="p">:</span><span class="n">4b</span>            <span class="c"># chat directly in the terminal (type /bye to exit)</span>
+</code></pre></div>
+
+<p>Ask it: <em>"What did the NHCX document say about preauth cancellation?"</em></p>
+<p>It will either say it doesn't know, or (worse) <strong>make something up</strong>.
+It has never seen your document. Keep that in mind; it's exactly the problem
+<a href="#chapter-01">RAG</a> solves.</p>
+    </div>
+</div>
+
+<div class="chapter" id="chapter-01">
+    <div class="chapter-header">
+        <div>
+            <span class="chapter-phase-badge">Phase 1: RAG From Scratch</span>
+            <span class="chapter-number-badge">CHAPTER 01</span>
+        </div>
+        <div class="chapter-title">What is RAG? — The Open-Book Exam</div>
+        <div class="chapter-code-bar">
+            <span>📂 Primary Implementation:</span>
+            <code>rag/config.py, ingest.py</code>
+        </div>
+    </div>
+
+    <div class="chapter-body">
+        <h2>The problem</h2>
+<p>Imagine a very smart friend who has read millions of books, but <strong>none of yours</strong>.</p>
+<ul>
+<li>They don't know your company's NHCX integration document.</li>
+<li>They don't know your ClaimLens code.</li>
+<li>They stopped reading at some date, so they don't know anything newer.</li>
+<li>And when they don't know something, they sometimes <strong>confidently make it up</strong>.</li>
+</ul>
+<p>That friend is a language model like Qwen.</p>
+<h2>The obvious fix (that doesn't work)</h2>
+<p><em>"Just paste the whole document into the chat!"</em></p>
+<p>A 200-page PDF is around 100,000+ words. The model's "desk" (its <strong>context window</strong>)
+is much smaller, and even when it fits:
+- it gets <strong>slow</strong>,
+- it gets <strong>confused</strong> (important details get lost in the middle),
+- and you'd have to paste it <strong>every single time</strong>.</p>
+<h2>The smart fix: RAG</h2>
+<p><strong>RAG = Retrieval-Augmented Generation.</strong> Let's break the name down:</p>
+<table>
+<thead>
+<tr>
+<th>Word</th>
+<th>Meaning</th>
+<th>Analogy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Retrieval</strong></td>
+<td>Find the few paragraphs that matter</td>
+<td>Open the textbook at the right page</td>
+</tr>
+<tr>
+<td><strong>Augmented</strong></td>
+<td>Add those paragraphs to the question</td>
+<td>Put the page next to the exam paper</td>
+</tr>
+<tr>
+<td><strong>Generation</strong></td>
+<td>The AI writes the answer from them</td>
+<td>Write the answer using the page</td>
+</tr>
+</tbody>
+</table>
+<p>It's an <strong>open-book exam</strong>. The student (Qwen) is smart but doesn't know your book.
+So before each question, a librarian finds the <strong>right 5 pages</strong> and puts them on the desk.
+The student reads only those 5 pages and answers.</p>
+<h2>The two halves of RAG</h2>
+<h3>Half A — Preparing the library (done once per document)</h3>
+<div class="codehilite"><pre><span></span><code>  Your files          📄 NHCX_spec.pdf   📝 notes.docx   💻 code.py
+       │
+  [1] LOAD            take the words out of each file
+       │
+  [2] CHUNK           cut the words into small pieces (a few paragraphs each)
+       │
+  [3] EMBED           turn each piece into "meaning numbers"
+       │
+  [4] STORE           save the pieces + numbers in a vector database
+</code></pre></div>
+
+<p>This is like a librarian reading every page of every book and writing an index card
+for each page saying <em>what it's about</em>.</p>
+<p>👉 Code: <code>ingest.py</code></p>
+<h3>Half B — Answering a question (every time you ask)</h3>
+<div class="codehilite"><pre><span></span><code>  "How do I cancel a preauth?"
+       │
+  [5] EMBED QUESTION  turn the question into meaning numbers too
+       │
+  [6] SEARCH          find the pieces whose numbers are closest
+       │
+  [7] BUILD PROMPT    "Using ONLY these pieces: ... answer: How do I cancel a preauth?"
+       │
+  [8] GENERATE        Qwen writes the answer and says which piece it used [1][2]
+</code></pre></div>
+
+<p>👉 Code: <code>chat.py</code></p>
+<h2>Why this is so powerful</h2>
+<table>
+<thead>
+<tr>
+<th>Without RAG</th>
+<th>With RAG</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"I don't know your document" or makes things up</td>
+<td>Answers from <strong>your</strong> document</td>
+</tr>
+<tr>
+<td>Can't tell you where the info came from</td>
+<td>Cites <strong>file and page</strong></td>
+</tr>
+<tr>
+<td>Must retrain the model to teach it new things (very expensive)</td>
+<td>Just drop a new PDF in the folder and run <code>ingest.py</code></td>
+</tr>
+<tr>
+<td>Your documents may go to a cloud company</td>
+<td>Everything stays <strong>on your laptop</strong></td>
+</tr>
+</tbody>
+</table>
+<h2>The one sentence to remember</h2>
+<div class="callout callout-note"><div class="callout-icon">ℹ️</div><div class="callout-content"><p><strong>RAG doesn't make the AI smarter. It puts the right information in front of it.</strong></p></div></div>
+<p>That's also why, when answers are bad, the cause is usually <strong>wrong pages retrieved</strong>
+(steps 2–6), not a "dumb" model. We'll learn to debug that in <a href="#chapter-08">note 8</a>.</p>
+<h2>Our project map</h2>
+<div class="codehilite"><pre><span></span><code>Project GPT/
+├── data/documents/      ← 📥 put your PDFs, DOCX, TXT here
+├── data/vector_db/      ← 🗄️ the "library index" (created automatically)
+├── rag/
+│   ├── config.py        ← ⚙️ all settings in one place
+│   ├── loader.py        ← step 1
+│   ├── chunker.py       ← step 2
+│   ├── embedder.py      ← step 3 (+ step 5)
+│   ├── vector_store.py  ← step 4 (+ step 6)
+│   ├── retriever.py     ← steps 5–6 together
+│   ├── generator.py     ← steps 7–8
+│   └── ollama_client.py ← talks to Ollama
+├── ingest.py            ← ▶️ run Half A
+├── chat.py              ← ▶️ run Half B
+└── playground/          ← 🧪 small experiments
+</code></pre></div>
+
+<h2>🧪 Try it yourself</h2>
+<p>Open <code>rag/config.py</code> and read every setting.
+You don't need to understand them all yet. Just notice that <strong>every step has its own settings</strong>.
+By the end of note 8 you'll know what each one does.</p>
+    </div>
+</div>
+
+<div class="chapter" id="chapter-02">
+    <div class="chapter-header">
+        <div>
+            <span class="chapter-phase-badge">Phase 1: RAG From Scratch</span>
+            <span class="chapter-number-badge">CHAPTER 02</span>
+        </div>
+        <div class="chapter-title">Loading Documents — Getting the Words Out</div>
+        <div class="chapter-code-bar">
+            <span>📂 Primary Implementation:</span>
+            <code>rag/loader.py</code>
+        </div>
+    </div>
+
+    <div class="chapter-body">
+        <h2>The idea</h2>
+<p>The AI can only read <strong>plain text</strong>. But your files are "boxes":</p>
+<ul>
+<li>A <strong>PDF</strong> stores letters at exact positions on a page, plus fonts, images, lines…</li>
+<li>A <strong>Word file (.docx)</strong> is actually a zip folder of XML files describing paragraphs and styles.</li>
+<li>A <strong>.txt / .md / .py</strong> file is already plain text 🎉</li>
+</ul>
+<p>The <strong>loader</strong> opens each box and takes out only the words.</p>
+<div class="codehilite"><pre><span></span><code> 📄 NHCX_spec.pdf  ──►  loader  ──►  "Pre-authorization is a request sent by..."
+                                      + { source: "NHCX_spec.pdf", page: 12 }
+</code></pre></div>
+
+<h2>Metadata — remembering where text came from</h2>
+<p>Along with the text, we save a few <strong>labels</strong> called <strong>metadata</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th>Example</th>
+<th>Why we need it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>source</code></td>
+<td><code>NHCX_spec.pdf</code></td>
+<td>So the AI can say <em>which file</em></td>
+</tr>
+<tr>
+<td><code>page</code></td>
+<td><code>12</code></td>
+<td>So the AI can say <em>which page</em>, and you can check it yourself</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td><code>D:\...\NHCX_spec.pdf</code></td>
+<td>So we can update a file later without duplicates</td>
+</tr>
+<tr>
+<td><code>file_type</code></td>
+<td><code>pdf</code></td>
+<td>Useful for filtering later ("only search PDFs")</td>
+</tr>
+</tbody>
+</table>
+<p>Without metadata, the AI could answer but never tell you <strong>where</strong> the answer came from.
+With it, you get answers like: <em>"Send a cancel request with the preauth ID [NHCX_spec.pdf, page 12]"</em>.</p>
+<h2>How each file type is read</h2>
+<p>Open <code>rag/loader.py</code>:</p>
+<table>
+<thead>
+<tr>
+<th>File type</th>
+<th>Library</th>
+<th>What we do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.pdf</code></td>
+<td><strong>PyMuPDF</strong> (<code>fitz</code>)</td>
+<td>One piece <strong>per page</strong>, so we know page numbers</td>
+</tr>
+<tr>
+<td><code>.docx</code></td>
+<td><strong>python-docx</strong></td>
+<td>All paragraphs <strong>and tables</strong> (API docs are full of tables!)</td>
+</tr>
+<tr>
+<td><code>.txt .md .py .js …</code></td>
+<td>plain Python</td>
+<td>Just read the file</td>
+</tr>
+</tbody>
+</table>
+<p>Tables in Word are turned into lines like:</p>
+<div class="codehilite"><pre><span></span><code>Field | Type | Required
+preauth_id | string | yes
+</code></pre></div>
+
+<p>so the AI can still understand the rows.</p>
+<h2>⚠️ Things that can go wrong</h2>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>What you'll see</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Scanned PDF</strong> (a photo of paper)</td>
+<td>"No text found. Skipped."</td>
+<td>There are no letters, only an image. It needs <strong>OCR</strong> (reading text from images), which we'll add later.</td>
+</tr>
+<tr>
+<td>Weird spacing / broken words</td>
+<td>Chunks look messy</td>
+<td>PDFs store letters by position, not as sentences. Our chunker cleans up most of this.</td>
+</tr>
+<tr>
+<td>Headers/footers on every page</td>
+<td>"Page 3 of 200 – Confidential" repeated</td>
+<td>Harmless mostly; we'll filter these in Phase 2.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-tip"><div class="callout-icon">💡</div><div class="callout-content"><p>💡 <strong>Quick test for a PDF</strong>: open it and try to <strong>select text with your mouse</strong>.
+If you can select it, we can read it. If it selects like a picture, it's scanned.</p></div></div>
+<h2>🧪 Try it yourself</h2>
+<p>After installing, run this in the project folder (put one PDF in <code>data/documents</code> first):</p>
+<div class="codehilite"><pre><span></span><code><span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">-c</span> <span class="s2">"from rag.loader import *; docs = load_file(find_files()[0]); print(len(docs), 'pages'); print(docs[0].metadata); print(docs[0].text[:500])"</span>
+</code></pre></div>
+
+<p>Look at the output. That raw, slightly messy text is <strong>exactly</strong> what the rest of the pipeline works with.</p>
+    </div>
+</div>
+
+<div class="chapter" id="chapter-03">
+    <div class="chapter-header">
+        <div>
+            <span class="chapter-phase-badge">Phase 1: RAG From Scratch</span>
+            <span class="chapter-number-badge">CHAPTER 03</span>
+        </div>
+        <div class="chapter-title">Chunking — Cutting Documents into Pieces</div>
+        <div class="chapter-code-bar">
+            <span>📂 Primary Implementation:</span>
+            <code>rag/chunker.py</code>
+        </div>
+    </div>
+
+    <div class="chapter-body">
+        <h2>Why cut documents into pieces?</h2>
+<p>Imagine asking a librarian <em>"How do I cancel a preauth?"</em> and they hand you
+<strong>the whole 200-page manual</strong>. Technically correct… totally useless.</p>
+<p>You want them to hand you <strong>the one paragraph</strong> that answers it.</p>
+<p>To do that, the library must be organised by <strong>paragraph-sized pieces</strong>, not whole books.
+Those pieces are called <strong>chunks</strong>.</p>
+<p>Reasons we chunk:
+1. <strong>Precision</strong>: small pieces = we find the exact spot.
+2. <strong>Fits the AI's desk</strong>: we can only give the AI a limited amount of text (its context window).
+3. <strong>Better meaning-numbers</strong>: a chunk about <em>one topic</em> gets a clear meaning.
+   A chunk mixing 10 topics gets a blurry "average" meaning that matches nothing well.</p>
+<h2>How big should a chunk be?</h2>
+<p>It's a balance, like slicing a cake:</p>
+<table>
+<thead>
+<tr>
+<th>Chunk size</th>
+<th>Good</th>
+<th>Bad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Too small</strong> (1 sentence)</td>
+<td>Very precise</td>
+<td>Loses context. <em>"It must be sent within 24 hours."</em> What is "it"? 🤷</td>
+</tr>
+<tr>
+<td><strong>Too big</strong> (5 pages)</td>
+<td>Lots of context</td>
+<td>Blurry meaning, wastes the AI's desk space, worse search</td>
+</tr>
+<tr>
+<td><strong>Just right</strong> (2–4 paragraphs)</td>
+<td>✅ One idea with enough context</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Our setting: <strong><code>CHUNK_SIZE = 1000</code> characters</strong> (about 2–3 paragraphs, ~250 tokens).</p>
+<h2>The smart way to cut: "recursive" splitting</h2>
+<p>We don't cut blindly every 1000 letters. That would slice words and sentences in half.
+Instead we try to cut at <strong>natural borders</strong>, best first:</p>
+<div class="codehilite"><pre><span></span><code> 1st try:  blank lines      "\n\n"   → between paragraphs   (best)
+ 2nd try:  line breaks      "\n"     → between lines
+ 3rd try:  sentence ends    ". "     → between sentences
+ 4th try:  spaces           " "      → between words
+ 5th try:  anywhere                  → last resort           (worst)
+</code></pre></div>
+
+<p>If a paragraph is small enough → keep it.
+If it's still too big → cut it with the <em>next</em> border on the list. And so on.
+Then small neighbouring pieces are <strong>glued back together</strong> until each chunk is close to 1000 characters.</p>
+<h2>Overlap — the safety net</h2>
+<p>What if the answer sits right on the border between two chunks?</p>
+<div class="codehilite"><pre><span></span><code>chunk 1: "...The hospital must send a cancellation request"
+chunk 2: "referencing the original preauth ID within 24 hours..."
+</code></pre></div>
+
+<p>Neither chunk has the full sentence! 😱</p>
+<p>So each chunk <strong>repeats the last bit of the previous one</strong>:</p>
+<div class="codehilite"><pre><span></span><code> chunk 1: [ ======== text ======== | overlap ]
+ chunk 2:                          [ overlap | ======== text ======== | overlap ]
+ chunk 3:                                                             [ overlap | ==== ]
+</code></pre></div>
+
+<p>Our setting: <strong><code>CHUNK_OVERLAP = 150</code> characters</strong>, about one or two sentences.</p>
+<h3>We only repeat WHOLE sentences 🧱</h3>
+<p>Repeating <em>half</em> a sentence would be messy ("...the original preauth ID" — what about it?).
+So the code works like building with Lego bricks:</p>
+<ol>
+<li>First it breaks the text into <strong>sentence-sized bricks</strong>.</li>
+<li>Then it stacks bricks into a chunk until the chunk is nearly full (~1000 characters).</li>
+<li>When it starts the next chunk, it <strong>copies the last brick or two</strong> from the previous chunk
+   (as many as fit into the 150-character overlap budget).</li>
+</ol>
+<div class="codehilite"><pre><span></span><code> chunk 1: [ S1 ][ S2 ][ S3 ][ S4 ]
+ chunk 2:             [ S3 ][ S4 ][ S5 ][ S6 ][ S7 ]
+                        ↑ repeated sentences = overlap
+</code></pre></div>
+
+<div class="callout callout-warning"><div class="callout-icon">⚠️</div><div class="callout-content"><p>⚠️ If a single sentence is <em>longer</em> than the overlap budget, it can't be repeated,
+so that border has no overlap. That's why the overlap should be at least
+as long as a typical sentence in your documents.</p></div></div>
+<h2>Chunk IDs — fingerprints</h2>
+<p>Every chunk gets an <strong>ID</strong> made from its file, page, position and text
+(using a "hash", a function that turns any text into a short, unique-looking code like <code>a3f9c21e…</code>).</p>
+<p>Why? If you run <code>ingest.py</code> twice, the same chunk gets the <strong>same ID</strong>,
+so the database <strong>updates</strong> it instead of storing a duplicate.</p>
+<h2>Read the code</h2>
+<p>Open <code>rag/chunker.py</code> and find:
+- <code>clean_text()</code>: tidies messy PDF spacing
+- <code>_split_recursive()</code>: the "best border first" cutting (used twice: once for chunk-size pieces, once for sentence bricks)
+- <code>split_text()</code>: the 3 passes (pieces → sentence bricks → chunks)
+- <code>_merge_with_overlap()</code>: glues bricks and adds the overlap
+- <code>chunk_documents()</code>: copies the metadata (file, page) onto every chunk</p>
+<h2>🧪 Try it yourself</h2>
+<div class="codehilite"><pre><span></span><code><span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">playground</span><span class="p">\</span><span class="n">01_chunking_demo</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+
+<ol>
+<li>Look at where each chunk starts and ends. Find the repeated sentence(s): that's the overlap.</li>
+<li>Change <code>CHUNK_SIZE = 300</code> to <code>150</code>. Run again. What happens?</li>
+<li>Change it to <code>2000</code>. How many chunks now?</li>
+<li>Set <code>OVERLAP = 40</code>. The overlap disappears. Why? (Hint: are any sentences shorter than 40 characters?)</li>
+<li>Set <code>OVERLAP = 0</code>. Can you find a thought that's now split across two chunks?</li>
+</ol>
+<div class="callout callout-note"><div class="callout-icon">ℹ️</div><div class="callout-content"><p>🎯 <strong>Key lesson:</strong> chunking quality decides search quality.
+Bad chunks → wrong pages found → bad answers, no matter how smart the AI is.</p></div></div>
+    </div>
+</div>
+
+<div class="chapter" id="chapter-04">
+    <div class="chapter-header">
+        <div>
+            <span class="chapter-phase-badge">Phase 1: RAG From Scratch</span>
+            <span class="chapter-number-badge">CHAPTER 04</span>
+        </div>
+        <div class="chapter-title">Embeddings — Turning Meaning into Numbers</div>
+        <div class="chapter-code-bar">
+            <span>📂 Primary Implementation:</span>
+            <code>rag/embedder.py</code>
+        </div>
+    </div>
+
+    <div class="chapter-body">
+        <p>This is the most important idea in RAG. Take your time with it.</p>
+<h2>The problem with normal search</h2>
+<p>Normal search (Ctrl+F) looks for <strong>the same letters</strong>.</p>
+<p>You search: <code>cancel preauth</code>
+The document says: <em>"To </em><em>revoke</em><em> a </em><em>pre-authorization</em><em>, send…"</em></p>
+<p>Ctrl+F finds <strong>nothing</strong>. Same meaning, different words. 😞</p>
+<p>We need a search that understands <strong>meaning</strong>, not spelling.</p>
+<h2>The big idea: a map of meanings</h2>
+<p>Imagine a giant map where <strong>every sentence has a location</strong>,
+and sentences with <strong>similar meaning are placed close together</strong>:</p>
+<div class="codehilite"><pre><span></span><code>                     🗺️  THE MAP OF MEANINGS
+
+     "cancel preauth" •  • "revoke pre-authorization"
+                        • "withdraw approval request"
+
+                                              • "claim settled"
+                                              • "payment released"
+
+  • "my cat sleeps in the sun"
+                                    • "PostgreSQL database"
+                                    • "Redis cache"
+</code></pre></div>
+
+<p>A location on a normal map is 2 numbers: <strong>(latitude, longitude)</strong>.</p>
+<p>An <strong>embedding</strong> is the location of a sentence on the map of meanings.
+But meaning is far richer than 2 directions, so this map has <strong>768 directions</strong>.
+So every chunk becomes a list of <strong>768 numbers</strong>:</p>
+<div class="codehilite"><pre><span></span><code>"revoke a pre-authorization"  →  [0.021, -0.443, 0.118, 0.902, ... 768 numbers]
+</code></pre></div>
+
+<p>You can't picture 768 directions (nobody can!). Just think of the 2-D map; the idea is the same.</p>
+<div class="callout callout-tip"><div class="callout-icon">💡</div><div class="callout-content"><p>💡 <strong>Vector</strong> is just the maths word for "a list of numbers that points somewhere".
+<strong>Embedding</strong> = the vector that represents a piece of text. People use the two words interchangeably.</p></div></div>
+<h2>Who decides the numbers?</h2>
+<p>The <strong>embedding model</strong> (<code>nomic-embed-text</code>). It was trained on millions of
+sentence pairs to learn: <em>"these two mean the same → put them close; these don't → put them far apart"</em>.</p>
+<p>It's a <strong>separate, small model</strong>. It doesn't chat or write answers. It only places texts on the map.
+Think of it as the <strong>librarian</strong> who reads every page and files it in the right spot.</p>
+<h2>Measuring "closeness": cosine similarity</h2>
+<p>To compare two locations we check <strong>which direction they point</strong>.
+If two arrows point the same way → same meaning.</p>
+<div class="codehilite"><pre><span></span><code>   same direction       somewhat apart        opposite / unrelated
+        ↗ ↗                  ↗  →                    ↗   ↙
+   similarity ≈ 1.0     similarity ≈ 0.5        similarity ≈ 0
+</code></pre></div>
+
+<p>This score is called <strong>cosine similarity</strong>: 1.0 = identical meaning, around 0 = unrelated.</p>
+<p>The formula (you'll see it written out in <code>playground/02_embeddings_demo.py</code>):</p>
+<div class="codehilite"><pre><span></span><code>similarity = (multiply matching numbers and add them up)
+             ÷ (length of arrow A × length of arrow B)
+</code></pre></div>
+
+<h2>⚠️ The golden rule</h2>
+<div class="callout callout-note"><div class="callout-icon">ℹ️</div><div class="callout-content"><p><strong>Documents and questions MUST use the SAME embedding model.</strong></p></div></div>
+<p>Each model draws its <strong>own map</strong>. Comparing a location from one map with a location
+on another map is meaningless, like comparing kilometres with miles.
+If you ever change <code>EMBED_MODEL</code>, you must <strong>re-ingest everything</strong> (<code>python ingest.py --reset</code>).</p>
+<h2>The little "prefixes"</h2>
+<p>You'll see this in <code>rag/config.py</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">EMBED_DOCUMENT_PREFIX</span> <span class="o">=</span> <span class="s2">"search_document: "</span>
+<span class="n">EMBED_QUERY_PREFIX</span>    <span class="o">=</span> <span class="s2">"search_query: "</span>
+</code></pre></div>
+
+<p><code>nomic-embed-text</code> was trained to work best when told <strong>what kind of text</strong> it's looking at:
+a stored document, or a search question. It's a small trick that improves results.</p>
+<h2>Read the code</h2>
+<p><code>rag/embedder.py</code>:
+- <code>embed_documents()</code>: embeds chunks <strong>in batches of 32</strong> (much faster than one at a time)
+- <code>embed_query()</code>: embeds your question</p>
+<h2>🧪 Try it yourself</h2>
+<div class="codehilite"><pre><span></span><code><span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">playground</span><span class="p">\</span><span class="n">02_embeddings_demo</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+
+<ol>
+<li>Notice that <em>"Steps to revoke a preauth request"</em> scores high against
+   <em>"How do I cancel a pre-authorization?"</em>, with almost no shared words!</li>
+<li>Notice the cat sentence scores lowest.</li>
+<li>Add your own sentences: something from ClaimLens, something from NHCX.
+   <strong>Guess the score before running.</strong> How good is your intuition?</li>
+</ol>
+    </div>
+</div>
+
+<div class="chapter" id="chapter-05">
+    <div class="chapter-header">
+        <div>
+            <span class="chapter-phase-badge">Phase 1: RAG From Scratch</span>
+            <span class="chapter-number-badge">CHAPTER 05</span>
+        </div>
+        <div class="chapter-title">The Vector Database — Storing and Finding Meaning</div>
+        <div class="chapter-code-bar">
+            <span>📂 Primary Implementation:</span>
+            <code>rag/vector_store.py</code>
+        </div>
+    </div>
+
+    <div class="chapter-body">
+        <h2>What it is</h2>
+<p>After embedding, every chunk has a "location" (768 numbers).
+Now we need somewhere to <strong>keep</strong> them and quickly answer one question:</p>
+<div class="callout callout-note"><div class="callout-icon">ℹ️</div><div class="callout-content"><p><em>"Here's a location. Which stored chunks are </em><em>closest</em><em> to it?"</em></p></div></div>
+<p>That's exactly what a <strong>vector database</strong> does.</p>
+<table>
+<thead>
+<tr>
+<th>Normal database (like PostgreSQL)</th>
+<th>Vector database (like ChromaDB)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WHERE claim_id = 'CLM-123'</code></td>
+<td>"closest in meaning to <em>how do I cancel a preauth?</em>"</td>
+</tr>
+<tr>
+<td>Finds <strong>exact</strong> matches</td>
+<td>Finds <strong>similar</strong> matches</td>
+</tr>
+<tr>
+<td>Answers "yes/no, it matches"</td>
+<td>Answers "here are the 5 closest, with scores"</td>
+</tr>
+</tbody>
+</table>
+<h2>What we store for every chunk</h2>
+<p>Think of each chunk as an <strong>index card</strong> in a library drawer:</p>
+<div class="codehilite"><pre><span></span><code>┌──────────────────────────────────────────────────────┐
+│ ID:        a3f9c21e7b...                (fingerprint) │
+│ EMBEDDING: [0.021, -0.443, 0.118, ...]   (location)   │
+│ TEXT:      "To cancel a preauth, the hospital..."     │
+│ METADATA:  source=NHCX_spec.pdf, page=12, chunk=3     │
+└──────────────────────────────────────────────────────┘
+</code></pre></div>
+
+<ul>
+<li><strong>Embedding</strong> is used to <strong>find</strong> the card.</li>
+<li><strong>Text</strong> is what we <strong>give the AI</strong> to read.</li>
+<li><strong>Metadata</strong> is what we <strong>show you</strong> as the source.</li>
+</ul>
+<h2>Why ChromaDB?</h2>
+<ul>
+<li>It runs <strong>inside our Python program</strong>. No server to install or start.</li>
+<li>It saves to a normal folder: <code>data/vector_db/</code></li>
+<li>It's simple, which makes it perfect for learning. (Later we may move to <strong>Qdrant</strong> or <strong>pgvector</strong>
+  for bigger projects; the idea stays exactly the same.)</li>
+</ul>
+<p>We also switched off Chroma's anonymous usage reporting (<code>anonymized_telemetry=False</code>),
+so <strong>nothing</strong> leaves your machine.</p>
+<h2>How does it search so fast?</h2>
+<p><strong>Simple way:</strong> compare the question with <strong>every</strong> card. Fine for 1,000 cards.
+That's exactly what our tiny database in <code>playground/03_tiny_vector_db.py</code> does.</p>
+<p><strong>Clever way (what Chroma does):</strong> with millions of cards, checking each one is slow.
+So Chroma builds a <strong>shortcut network</strong> called <strong>HNSW</strong>. Think of it like this:</p>
+<div class="callout callout-note"><div class="callout-icon">ℹ️</div><div class="callout-content"><p>To find a house in a city, you don't knock on every door.
+You take the <strong>highway</strong> to the right area, then <strong>main roads</strong> to the right neighbourhood,
+then <strong>side streets</strong> to the right house.</p></div></div>
+<p>HNSW builds "highways" and "side streets" between cards, so a search only visits a few hundred
+cards instead of millions. It's <em>almost</em> perfectly accurate and <strong>thousands of times faster</strong>.</p>
+<h2>Updating files without duplicates</h2>
+<p>When you change a document and run <code>ingest.py</code> again, we:
+1. <strong>Delete</strong> all old cards from that file (<code>delete_file</code>)
+2. <strong>Add</strong> the new cards (<code>upsert</code> = "insert, or update if the ID already exists")</p>
+<p>So your library never has stale or duplicate pages.</p>
+<h2>Read the code</h2>
+<p><code>rag/vector_store.py</code>:
+- <code>get_collection()</code>: opens (or creates) our "drawer", set to measure closeness with <strong>cosine</strong>
+- <code>add_chunks()</code>: saves cards
+- <code>search()</code>: finds the closest cards and converts Chroma's <em>distance</em> into <em>similarity</em> (<code>1 − distance</code>)
+- <code>list_sources()</code>: which files are in the library</p>
+<h2>🧪 Try it yourself</h2>
+<div class="codehilite"><pre><span></span><code><span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">playground</span><span class="p">\</span><span class="n">03_tiny_vector_db</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+
+<ol>
+<li>Read the <code>TinyVectorDB</code> class. It's only ~20 lines. <strong>That's a vector database.</strong></li>
+<li>Add a few of your own sentences to <code>db.add([...])</code> and ask questions about them.</li>
+<li>Ask something unrelated (<em>"best pizza in town"</em>). How low is the best score?</li>
+</ol>
+    </div>
+</div>
+
+<div class="chapter" id="chapter-06">
+    <div class="chapter-header">
+        <div>
+            <span class="chapter-phase-badge">Phase 1: RAG From Scratch</span>
+            <span class="chapter-number-badge">CHAPTER 06</span>
+        </div>
+        <div class="chapter-title">Retrieval — Finding the Right Pages</div>
+        <div class="chapter-code-bar">
+            <span>📂 Primary Implementation:</span>
+            <code>rag/retriever.py</code>
+        </div>
+    </div>
+
+    <div class="chapter-body">
+        <h2>What happens when you ask a question</h2>
+<div class="codehilite"><pre><span></span><code> You: "How do I cancel a preauth?"
+          │
+  [5] EMBED the question       → its location on the map of meanings
+          │
+  [6] SEARCH the vector DB     → the 5 closest chunks (TOP_K = 5)
+          │
+      FILTER weak matches      → drop anything below MIN_SIMILARITY (0.35)
+          │
+      ✅ the pages handed to the AI
+</code></pre></div>
+
+<p>This is the <strong>R</strong> in RAG. It is <em>the most important step</em>.</p>
+<div class="callout callout-note"><div class="callout-icon">ℹ️</div><div class="callout-content"><p>🎯 <strong>If retrieval brings the wrong pages, even the smartest AI gives a wrong answer.</strong>
+It's like giving a brilliant student the wrong chapter in an open-book exam.</p></div></div>
+<h2>The two retrieval knobs</h2>
+<h3><code>TOP_K</code>: how many chunks to fetch</h3>
+<table>
+<thead>
+<tr>
+<th>TOP_K</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1–2</td>
+<td>Very focused, but might <strong>miss</strong> part of the answer</td>
+</tr>
+<tr>
+<td><strong>4–6</strong></td>
+<td>✅ Usually the sweet spot</td>
+</tr>
+<tr>
+<td>10+</td>
+<td>Catches more, but adds <strong>noise</strong> and fills the AI's desk; small models get confused</td>
+</tr>
+</tbody>
+</table>
+<p>You can change it live in the chat: <code>/k 8</code></p>
+<h3><code>MIN_SIMILARITY</code>: the quality bar</h3>
+<p>Every chunk comes with a similarity score (0 to 1).
+If the <strong>best</strong> match for a question is only 0.20, the documents probably <strong>don't contain</strong> the answer.</p>
+<p>So we throw away weak matches. And if <strong>nothing</strong> passes the bar,
+we <strong>don't even ask the AI</strong>. We just say <em>"I couldn't find this in your documents."</em></p>
+<p>That's an important anti-hallucination trick:
+<strong>no relevant pages → no chance to make things up.</strong></p>
+<div class="callout callout-tip"><div class="callout-icon">💡</div><div class="callout-content"><p>💡 Similarity scores are <strong>relative</strong>, not absolute. Different embedding models give different ranges.
+With <code>nomic-embed-text</code>, strong matches are often <strong>0.6–0.8</strong> and unrelated text <strong>below 0.35</strong>.
+Watch the scores with <code>/debug</code> and adjust <code>MIN_SIMILARITY</code> to your documents.</p></div></div>
+<h2>Seeing retrieval with your own eyes: <code>/debug</code></h2>
+<p>In the chat, type <code>/debug</code>. Now before every answer you'll see a table:</p>
+<div class="codehilite"><pre><span></span><code> #  Similarity  Source                   Text preview
+ 1     0.742    NHCX_spec.pdf, page 12   To cancel a pre-authorization the provider...
+ 2     0.688    NHCX_spec.pdf, page 13   The cancel request must reference the...
+ 3     0.512    NHCX_spec.pdf, page 40   Claim settlement occurs after...
+</code></pre></div>
+
+<p>This is <strong>exactly</strong> what the AI was allowed to read. Nothing more.</p>
+<h2>When retrieval fails (and what you'll learn later)</h2>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Example</th>
+<th>Fix (Phase 2)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Exact codes/IDs</td>
+<td>"Find <em>CLM-2024-00123</em>"</td>
+<td>Meaning search is weak at exact codes → add <strong>keyword search</strong> too ("hybrid search")</td>
+</tr>
+<tr>
+<td>Vague follow-ups</td>
+<td>"explain <em>that</em> simpler"</td>
+<td>Search has no idea what "that" is → <strong>rewrite the question</strong> using the chat history</td>
+</tr>
+<tr>
+<td>Right page ranked 7th</td>
+<td>Answer is in a chunk just outside TOP_K</td>
+<td>Fetch 20, then <strong>re-rank</strong> with a more careful model and keep the best 5</td>
+</tr>
+<tr>
+<td>Answer spread over many pages</td>
+<td>"Compare v1 and v2 of the API"</td>
+<td>Smarter strategies: per-document search, summaries</td>
+</tr>
+</tbody>
+</table>
+<h2>Read the code</h2>
+<p><code>rag/retriever.py</code> is tiny on purpose: just <strong>3 lines</strong> of real logic.
+Embed → search → filter. Everything else is in the modules you've already seen.</p>
+<h2>🧪 Try it yourself (after ingesting your files)</h2>
+<div class="codehilite"><pre><span></span><code><span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">chat</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-debug</span>
+</code></pre></div>
+
+<ol>
+<li>Ask a question you <strong>know</strong> is answered in your PDF. Is the right page ranked #1?</li>
+<li>Ask the same thing using <strong>completely different words</strong>. Still found? (That's embeddings at work.)</li>
+<li>Ask something that's <strong>not</strong> in your documents. What are the scores? Does it refuse to answer?</li>
+<li>Search for an <strong>exact code or ID</strong> from your document. Does meaning search find it?
+   (Often not, and now you know why Phase 2 adds keyword search.)</li>
+</ol>
+    </div>
+</div>
+
+<div class="chapter" id="chapter-07">
+    <div class="chapter-header">
+        <div>
+            <span class="chapter-phase-badge">Phase 1: RAG From Scratch</span>
+            <span class="chapter-number-badge">CHAPTER 07</span>
+        </div>
+        <div class="chapter-title">Generation — The AI Writes the Answer</div>
+        <div class="chapter-code-bar">
+            <span>📂 Primary Implementation:</span>
+            <code>rag/generator.py</code>
+        </div>
+    </div>
+
+    <div class="chapter-body">
+        <h2>What we actually send to Qwen</h2>
+<p>This is the moment everything comes together. We build one message (the <strong>prompt</strong>) that contains:</p>
+<div class="codehilite"><pre><span></span><code>┌─────────────────────────── SYSTEM (house rules) ───────────────────────────┐
+│ You answer using ONLY the provided sources.                                 │
+│ Cite sources like [1]. If the answer isn't there, say                       │
+│ "I could not find this in your documents." Never guess.                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────── USER ────────────────────────────────────────────┐
+│ SOURCES:                                                                    │
+│                                                                             │
+│ [1] (NHCX_spec.pdf, page 12)                                                │
+│ To cancel a pre-authorization, the provider sends a Cancel request...       │
+│ ---                                                                         │
+│ [2] (NHCX_spec.pdf, page 13)                                                │
+│ The cancel request must include the original preauth ID...                  │
+│                                                                             │
+│ ====================                                                        │
+│ QUESTION: How do I cancel a preauth?                                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+
+<p>And Qwen replies:</p>
+<div class="callout callout-note"><div class="callout-icon">ℹ️</div><div class="callout-content"><p>To cancel a preauth, the provider sends a Cancel request [1] that includes the original preauth ID [2].</p></div></div>
+<p>That's the <strong>A</strong> (Augmented: we <em>added</em> the sources) and the <strong>G</strong> (Generation: Qwen <em>writes</em>) of RAG.</p>
+<div class="callout callout-tip"><div class="callout-icon">💡</div><div class="callout-content"><p>💡 You can see the <strong>real</strong> prompt any time: type <code>/prompt</code> in the chat after asking a question.
+Do it at least once. It removes all the "magic".</p></div></div>
+<h2>Why each house rule exists</h2>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>"Use ONLY the sources"</em></td>
+<td>Stops the AI mixing in things it half-remembers from training</td>
+</tr>
+<tr>
+<td><em>"Cite [1], [2]"</em></td>
+<td>You can <strong>check</strong> every claim against the original page</td>
+</tr>
+<tr>
+<td><em>"Say you couldn't find it"</em></td>
+<td>Gives the AI a polite way out instead of <strong>inventing</strong> an answer</td>
+</tr>
+<tr>
+<td><em>"Point out disagreements"</em></td>
+<td>Useful when two versions of a document conflict</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-warning"><div class="callout-icon">⚠️</div><div class="callout-content"><p>⚠️ Small models (like 4b) follow rules <strong>most</strong> of the time, not always.
+That's why we <strong>also</strong> have code-level protection: if retrieval finds nothing,
+we don't call the AI at all.</p></div></div>
+<h2>Temperature — the creativity dial</h2>
+<div class="codehilite"><pre><span></span><code>TEMPERATURE = 0.2
+</code></pre></div>
+
+<p>When the AI picks its next word, it has many options with different chances.</p>
+<ul>
+<li><strong>Low (0–0.3)</strong>: almost always picks the most likely word → factual, consistent ✅ for documents</li>
+<li><strong>High (0.8–1.0)</strong>: sometimes picks less likely words → creative, varied ✅ for stories/brainstorming</li>
+</ul>
+<p>For answering from documents, we want a strict, careful student, not a poet.</p>
+<h2>Streaming — the typing effect</h2>
+<p>Instead of waiting 10 seconds for the full answer, we ask Ollama to <strong>stream</strong>:
+it sends each word as soon as it's ready. That's why the answer "types itself" like ChatGPT.
+Same total time, but it <em>feels</em> much faster.</p>
+<h2>Memory for follow-up questions</h2>
+<p>The model <strong>forgets everything</strong> between requests. To allow follow-ups like
+<em>"now make that a checklist"</em>, <code>chat.py</code> keeps the <strong>last 3 question/answer pairs</strong>
+and sends them again with each new question. <code>/clear</code> wipes that memory.</p>
+<h2>"Thinking" mode is off</h2>
+<p>Qwen3.5 can "think out loud" before answering (it writes hidden reasoning first).
+That helps with hard maths and logic, but it's <strong>slower</strong> and not needed for "read this page and answer".
+We switched it off with <code>ENABLE_THINKING = False</code>. Try turning it on later and compare!</p>
+<h2>Read the code</h2>
+<p><code>rag/generator.py</code>:
+- <code>SYSTEM_PROMPT</code>: the house rules (edit them and see what changes!)
+- <code>build_context()</code>: numbers the chunks as <code>[1]</code>, <code>[2]</code>…
+- <code>build_messages()</code>: system + history + sources + question
+- <code>generate_answer()</code>: skips the AI entirely if nothing was retrieved</p>
+<h2>🧪 Try it yourself</h2>
+<ol>
+<li>Ask a question, then type <code>/prompt</code>. Read the <strong>entire</strong> prompt Qwen received.</li>
+<li>Edit <code>SYSTEM_PROMPT</code> and add: <em>"Always answer in exactly 3 bullet points."</em> Restart <code>chat.py</code>. Did it obey?</li>
+<li>Change <code>TEMPERATURE</code> to <code>1.0</code>, ask the same question 3 times. Notice the answers vary more.</li>
+<li>Set <code>ENABLE_THINKING = True</code>. Is the answer better? How much slower is it?</li>
+</ol>
+    </div>
+</div>
+
+<div class="chapter" id="chapter-08">
+    <div class="chapter-header">
+        <div>
+            <span class="chapter-phase-badge">Phase 1: RAG From Scratch</span>
+            <span class="chapter-number-badge">CHAPTER 08</span>
+        </div>
+        <div class="chapter-title">Run It & Experiment — Hands-on Testing & Debugging</div>
+        <div class="chapter-code-bar">
+            <span>📂 Primary Implementation:</span>
+            <code>ingest.py, chat.py</code>
+        </div>
+    </div>
+
+    <div class="chapter-body">
+        <h2>▶️ Everyday usage</h2>
+<p>All commands are run from the project folder (<code>D:\dev\personal\Project GPT</code>).</p>
+<p><strong>1. Make sure Ollama is running.</strong> It starts automatically with Windows (look for the 🦙 llama icon
+in the system tray). If not, open the <strong>Ollama</strong> app from the Start menu.</p>
+<p><strong>2. Put your files in</strong> <code>data\documents\</code> (PDF, DOCX, TXT, MD, code; sub-folders are fine).</p>
+<p><strong>3. Build the knowledge base:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">ingest</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+
+<p>You'll see every step happen for every file:</p>
+<div class="codehilite"><pre><span></span><code>&gt;&gt; NHCX_spec.pdf
+   step 1 load  : 186 page(s)/part(s)
+   step 2 chunk : 512 chunk(s)
+   step 3 embed : 512 vector(s) x 768 numbers each
+   step 4 store : saved to ChromaDB
+</code></pre></div>
+
+<p><strong>4. Chat:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">chat</span><span class="p">.</span><span class="n">py</span>           <span class="c"># normal</span>
+<span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">python</span><span class="p">.</span><span class="n">exe</span> <span class="n">chat</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-debug</span>   <span class="c"># also shows retrieved chunks</span>
+</code></pre></div>
+
+<div class="callout callout-tip"><div class="callout-icon">💡</div><div class="callout-content"><p>💡 <strong>Tip:</strong> activate the virtual environment once per terminal and you can just type <code>python</code>:
+<code>powershell
+.\.venv\Scripts\Activate.ps1
+python chat.py</code></p></div></div>
+<h2>🧰 Useful commands</h2>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>python ingest.py</code></td>
+<td>Ingest / update all files in <code>data/documents</code></td>
+</tr>
+<tr>
+<td><code>python ingest.py some\file.pdf</code></td>
+<td>Ingest just one file</td>
+</tr>
+<tr>
+<td><code>python ingest.py --list</code></td>
+<td>Show which files are in the knowledge base</td>
+</tr>
+<tr>
+<td><code>python ingest.py --reset</code></td>
+<td>Wipe everything and rebuild (needed after changing chunk size or embedding model)</td>
+</tr>
+<tr>
+<td>In chat: <code>/debug</code></td>
+<td>Show/hide retrieved chunks</td>
+</tr>
+<tr>
+<td>In chat: <code>/k 8</code></td>
+<td>Retrieve 8 chunks instead of 5</td>
+</tr>
+<tr>
+<td>In chat: <code>/mode hybrid</code></td>
+<td>Search mode: <code>vector</code>, <code>keyword</code> or <code>hybrid</code> (Phase 2)</td>
+</tr>
+<tr>
+<td>In chat: <code>/rerank</code></td>
+<td>Turn the re-ranker on/off (Phase 2)</td>
+</tr>
+<tr>
+<td>In chat: <code>/rewrite context</code></td>
+<td>How follow-ups are searched: <code>context</code>, <code>auto</code>, <code>always</code>, <code>off</code> (Phase 3)</td>
+</tr>
+<tr>
+<td>In chat: <code>/memory</code></td>
+<td>Show what the assistant remembers of the conversation (Phase 3)</td>
+</tr>
+<tr>
+<td>In chat: <code>/prompt</code></td>
+<td>Show the exact prompt sent to Qwen</td>
+</tr>
+<tr>
+<td>In chat: <code>/clear</code></td>
+<td>Forget the conversation</td>
+</tr>
+<tr>
+<td>In chat: <code>/exit</code></td>
+<td>Quit</td>
+</tr>
+<tr>
+<td><code>python evaluate.py run --misses</code></td>
+<td>Score retrieval on the exam, list failed questions (Phase 2)</td>
+</tr>
+<tr>
+<td><code>python evaluate.py followups</code></td>
+<td>Score follow-up questions / conversation memory (Phase 3)</td>
+</tr>
+</tbody>
+</table>
+<h2>🔬 Experiments (this is where the real learning happens)</h2>
+<p>Do these one at a time. After each change in <code>rag/config.py</code>, <strong>re-ingest with <code>--reset</code></strong>
+if you touched chunking or embeddings.</p>
+<h3>Experiment 1: Chunk size</h3>
+<ol>
+<li>Pick 5 questions you know the answers to. Write them down.</li>
+<li>Try <code>CHUNK_SIZE = 500</code>, then <code>1000</code>, then <code>2000</code> (re-ingest each time).</li>
+<li>For each, ask your 5 questions with <code>--debug</code>. Which size finds the right page most often?</li>
+</ol>
+<h3>Experiment 2: TOP_K</h3>
+<p>Ask a question whose answer spans several pages. Try <code>/k 3</code>, <code>/k 5</code>, <code>/k 10</code>.
+When does the answer become complete? When does it start getting confused?</p>
+<h3>Experiment 3: The "not in my documents" test</h3>
+<p>Ask 3 questions that are definitely <strong>not</strong> in your files.
+Does it refuse properly? What similarity scores do you see? Tune <code>MIN_SIMILARITY</code>.</p>
+<h3>Experiment 4: Different words, same meaning</h3>
+<p>Ask the same question 3 ways (formal, casual, with synonyms). Is the same page found?</p>
+<h3>Experiment 5: Bigger brain</h3>
+<p>Try <code>CHAT_MODEL = "qwen3.5:9b"</code> (run <code>ollama pull qwen3.5:9b</code> first).
+Better answers? How much slower? (It won't fully fit in your 6 GB, so expect slower.)</p>
+<div class="callout callout-note"><div class="callout-icon">ℹ️</div><div class="callout-content"><p>📝 <strong>Keep a learning log.</strong> Write down what you changed and what happened.
+This "change one thing, observe" habit is exactly how AI engineers tune real RAG systems.</p></div></div>
+<h2>🩺 Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ollama is not running</code></td>
+<td>Ollama app closed</td>
+<td>Open <strong>Ollama</strong> from Start menu, or run <code>ollama serve</code></td>
+</tr>
+<tr>
+<td><code>model "..." not found</code></td>
+<td>Model not downloaded</td>
+<td><code>ollama pull qwen3.5:4b</code> and <code>ollama pull nomic-embed-text</code></td>
+</tr>
+<tr>
+<td><code>No text found (scanned image PDF?)</code></td>
+<td>PDF is a picture</td>
+<td>OCR is on by default (Phase 2, <code>OCR_ENABLED</code>)</td>
+</tr>
+<tr>
+<td>Answers are wrong</td>
+<td>Usually <strong>retrieval</strong>, not the AI</td>
+<td>Use <code>--debug</code>. Are the right chunks there? If not → chunking / question wording</td>
+</tr>
+<tr>
+<td>Answers say "couldn't find" but it IS there</td>
+<td>Similarity bar too high, or chunk too blurry</td>
+<td>Lower <code>MIN_SIMILARITY</code>, try smaller <code>CHUNK_SIZE</code></td>
+</tr>
+<tr>
+<td>Very slow answers</td>
+<td>Model spilling out of GPU memory</td>
+<td>Close other GPU apps; stick to 4b; lower <code>CONTEXT_WINDOW</code></td>
+</tr>
+<tr>
+<td>Re-ranking sometimes takes 3–30 s</td>
+<td>Another program is using the GPU</td>
+<td>Normal is ~0.7–1.3 s. Close games/browsers with GPU video, measure again</td>
+</tr>
+<tr>
+<td>Changed settings but nothing changed</td>
+<td>Old chunks still in DB</td>
+<td><code>python ingest.py --reset</code></td>
+</tr>
+</tbody>
+</table>
+<h2>✅ Phase 1 checklist</h2>
+<p>You've finished Phase 1 when you can explain, <strong>in your own words</strong>:</p>
+<ul>
+<li>[ ] Why we can't just paste a whole PDF into the AI</li>
+<li>[ ] What a chunk is, and why overlap exists</li>
+<li>[ ] What an embedding is (the map of meanings)</li>
+<li>[ ] What cosine similarity measures</li>
+<li>[ ] What a vector database stores for each chunk</li>
+<li>[ ] What TOP_K and MIN_SIMILARITY control</li>
+<li>[ ] What the final prompt sent to Qwen looks like</li>
+<li>[ ] Why bad answers are usually a retrieval problem</li>
+</ul>
+<p>When all of these are ticked, you're ready for <strong>Phase 2: better RAG</strong> 🚀</p>
+    </div>
+</div>
+
+<div class="chapter" id="chapter-09">
+    <div class="chapter-header">
+        <div>
+            <span class="chapter-phase-badge">Phase 2: Better Search</span>
+            <span class="chapter-number-badge">CHAPTER 09</span>
+        </div>
+        <div class="chapter-title">Keyword Search (BM25) — Smart Exact Matching</div>
+        <div class="chapter-code-bar">
+            <span>📂 Primary Implementation:</span>
+            <code>rag/keyword_search.py</code>
+        </div>
+    </div>
+
+    <div class="chapter-body">
+        <div class="callout callout-code"><div class="callout-icon">📂</div><div class="callout-content"><p><strong>Phase 2 · Lesson 1</strong> · Code: <code>rag/keyword_search.py</code> · Demo: <code>playground/04_keyword_vs_meaning.py</code></p></div></div>
+<h2>The problem we're fixing</h2>
+<p>In Phase 1, every search was a <strong>meaning search</strong> (embeddings). It's brilliant at this:</p>
+<table>
+<thead>
+<tr>
+<th>You ask</th>
+<th>It finds</th>
+<th>Why it works</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"How do I <strong>withdraw</strong> a preauth?"</td>
+<td>"…to <strong>cancel</strong> a pre-authorization…"</td>
+<td>Different words, same meaning ✅</td>
+</tr>
+</tbody>
+</table>
+<p>But try asking about an <strong>exact thing</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>You ask</th>
+<th>What can go wrong</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"What does error <strong>E-1047</strong> mean?"</td>
+<td>It might return E-1046 or E-1042. To an embedding model these look <em>almost identical</em>: "some error code"</td>
+</tr>
+<tr>
+<td>"Show me policy <strong>POL-77812</strong>"</td>
+<td>Numbers have almost no "meaning", so the meaning-numbers come out blurry</td>
+</tr>
+<tr>
+<td>"What is <strong>ABHA</strong>?"</td>
+<td>Rare abbreviations the model never learned well</td>
+</tr>
+</tbody>
+</table>
+<p>Embeddings capture the <em>gist</em>. Sometimes you need the <em>exact word</em>.</p>
+<h2>The old-school hero: keyword search</h2>
+<p>Think of the <strong>index at the back of a textbook</strong>:</p>
+<div class="codehilite"><pre><span></span><code>appendicitis ........ 12, 48
+ABHA ................ 3, 7, 22
+E-1047 .............. 31
+</code></pre></div>
+
+<p>You don't read the whole book. You look up the word and jump to the page.
+That's exactly what keyword search does. It's called an <strong>inverted index</strong>
+(normal: page → words; inverted: word → pages).</p>
+<h2>But which page is BEST? Enter BM25</h2>
+<p>If your question has 5 words and 40 chunks contain at least one of them, which one wins?
+<strong>BM25</strong> (a scoring recipe from the 1990s that still powers Elasticsearch) gives points using 3 common-sense rules:</p>
+<h3>Rule 1: Rare words are worth more (called <em>IDF</em>)</h3>
+<ul>
+<li>"<strong>the</strong>" appears in every chunk → worthless, tells you nothing</li>
+<li>"<strong>E-1047</strong>" appears in one chunk → <em>gold</em>, that chunk is almost certainly the one</li>
+</ul>
+<p>Like in a crowd: "a person with two eyes" doesn't help you find anyone, but "a person with a green hat" does.</p>
+<h3>Rule 2: Repeated words count more, up to a point (called <em>TF</em>)</h3>
+<p>A chunk that says "preauth" 4 times is probably more about preauth than one that says it once.
+But 20 times isn't 20× better, so the points <strong>level off</strong> (diminishing returns).</p>
+<h3>Rule 3: Short chunks get a small bonus</h3>
+<p>Finding "appendicitis" in a 3-line chunk is a stronger signal than finding it once in a 2-page chunk.</p>
+<div class="codehilite"><pre><span></span><code>score(chunk) = sum over question words of:   rarity  x  repetition (levelled off)  x  shortness bonus
+</code></pre></div>
+
+<p>That's it. <strong>No AI, no GPU, just counting.</strong> It takes milliseconds.</p>
+<h2>How we cut text into "words" (tokenizing)</h2>
+<p>Before counting, every text is turned into a list of lowercase words:</p>
+<div class="codehilite"><pre><span></span><code>"Send the Cancel-Request for E-1042"
+   → ['send', 'cancel-request', 'cancel', 'request', 'e-1042', 'e', '1042']
+</code></pre></div>
+
+<p>Notice:
+- <strong>"the", "for"</strong> are dropped. These are <em>stopwords</em>, too common to help.
+- <strong>"Cancel-Request"</strong> is kept whole <em>and</em> split, so both "cancel request" and "cancel-request" match.
+- <strong>"E-1042"</strong> stays together, so codes match exactly.</p>
+<h2>Its weaknesses (why we don't use it alone)</h2>
+<table>
+<thead>
+<tr>
+<th>Weakness</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No idea about meaning</td>
+<td>"withdraw" ≠ "cancel" → zero points 😬</td>
+</tr>
+<tr>
+<td>Word forms</td>
+<td>"cancelled" ≠ "cancel" (we don't do <em>stemming</em>, to keep it simple)</td>
+</tr>
+<tr>
+<td>Spelling mistakes</td>
+<td>"preuath" matches nothing</td>
+</tr>
+</tbody>
+</table>
+<p>So: <strong>keyword search is strong where meaning search is weak, and the other way round.</strong>
+The obvious idea is to use both. That's the next lesson: <a href="#chapter-10">Hybrid search</a>.</p>
+<h2>Read the code</h2>
+<p>Open <code>rag/keyword_search.py</code>:
+- <code>tokenize()</code>: text → words
+- <code>BM25Index.__init__()</code>: builds the "book index" (<code>postings</code>) and the rarity scores (<code>idf</code>)
+- <code>BM25Index.search()</code>: the 3 rules in about 10 lines
+- <code>get_index()</code>: builds the index from everything in ChromaDB, and rebuilds it when the chunk count changes</p>
+<div class="callout callout-tip"><div class="callout-icon">💡</div><div class="callout-content"><p>💡 The keyword index lives in memory and is rebuilt from ChromaDB when the chat starts.
+If you re-ingest an <em>edited</em> file while chat is open, type <code>/reload</code>.</p></div></div>
+<h2>🧪 Try it yourself</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="n">playground</span><span class="p">\</span><span class="n">04_keyword_vs_meaning</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+
+<p>Watch which method wins for the error-code question, and which wins for the paraphrased question.</p>
+<p>Then in the chat, using your own PDF:</p>
+<div class="codehilite"><pre><span></span><code>python chat.py --debug
+/mode keyword
+</code></pre></div>
+
+<ol>
+<li>Ask about an <strong>exact term</strong> from your PDF (a name, number or code). Look at the <code>Keyword</code> column.</li>
+<li>Ask the same thing using <strong>different words</strong>. Keyword search struggles. Now try <code>/mode vector</code>.</li>
+<li>Switch back with <code>/mode hybrid</code>.</li>
+</ol>
+<div class="callout callout-note"><div class="callout-icon">ℹ️</div><div class="callout-content"><p>🎯 <strong>Key lesson:</strong> meaning search understands <em>what you mean</em>; keyword search notices <em>exactly what you typed</em>.
+Real search systems need both.</p></div></div>
+    </div>
+</div>
+
+<div class="chapter" id="chapter-10">
+    <div class="chapter-header">
+        <div>
+            <span class="chapter-phase-badge">Phase 2: Better Search</span>
+            <span class="chapter-number-badge">CHAPTER 10</span>
+        </div>
+        <div class="chapter-title">Hybrid Search — Combining Meaning & Keywords with RRF</div>
+        <div class="chapter-code-bar">
+            <span>📂 Primary Implementation:</span>
+            <code>rag/retriever.py</code>
+        </div>
+    </div>
+
+    <div class="chapter-body">
+        <div class="callout callout-code"><div class="callout-icon">📂</div><div class="callout-content"><p><strong>Phase 2 · Lesson 2</strong> · Code: <code>rag/retriever.py</code> → <code>reciprocal_rank_fusion()</code></p></div></div>
+<h2>The idea</h2>
+<p>You now have two detectives:</p>
+<table>
+<thead>
+<tr>
+<th>🕵️ Meaning detective (embeddings)</th>
+<th>🔎 Keyword detective (BM25)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Understands paraphrases: "withdraw" ≈ "cancel"</td>
+<td>Spots exact codes, names, numbers: "E-1047"</td>
+</tr>
+<tr>
+<td>Gets confused by codes and rare terms</td>
+<td>Clueless about synonyms</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Hybrid search</strong> sends both detectives out on the same question, and each comes back with a ranked list of suspects (chunks).
+Then we merge the two lists into one.</p>
+<div class="codehilite"><pre><span></span><code>  question
+     │
+     ├──► meaning search ──► [ C7, C2, C9, C4, ... ]   (20 candidates)
+     │
+     └──► keyword search ──► [ C2, C5, C7, C1, ... ]   (20 candidates)
+                                     │
+                              MERGE (RRF)
+                                     │
+                         [ C2, C7, C5, C9, ... ]
+</code></pre></div>
+
+<h2>The tricky part: how do you merge two lists?</h2>
+<p>The two detectives use <strong>different scoring systems</strong>:
+- meaning similarity: 0.0 to 1.0 (e.g. 0.71)
+- BM25 keyword score: 0 to... anything (e.g. 14.8)</p>
+<p>Adding 0.71 + 14.8 is like adding <strong>kilometres and kilograms</strong>. It makes no sense.</p>
+<h3>The trick: ignore the scores, use the <em>positions</em></h3>
+<p>"1st place" means the same thing in both lists. So we only use the <strong>rank</strong>.
+This is called <strong>Reciprocal Rank Fusion (RRF)</strong>, a fancy name for a simple rule:</p>
+<div class="callout callout-note"><div class="callout-icon">ℹ️</div><div class="callout-content"><p>Every chunk gets <strong>1 ÷ (60 + its position)</strong> points from <strong>each</strong> list it appears in.</p></div></div>
+<table>
+<thead>
+<tr>
+<th>Position</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1st</td>
+<td>1/61 = 0.0164</td>
+</tr>
+<tr>
+<td>2nd</td>
+<td>1/62 = 0.0161</td>
+</tr>
+<tr>
+<td>10th</td>
+<td>1/70 = 0.0143</td>
+</tr>
+<tr>
+<td>not in list</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Chunk</th>
+<th>Meaning rank</th>
+<th>Keyword rank</th>
+<th>Total points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C2</td>
+<td>2nd → 0.0161</td>
+<td>1st → 0.0164</td>
+<td><strong>0.0325</strong> 🥇</td>
+</tr>
+<tr>
+<td>C7</td>
+<td>1st → 0.0164</td>
+<td>3rd → 0.0159</td>
+<td><strong>0.0323</strong> 🥈</td>
+</tr>
+<tr>
+<td>C5</td>
+<td>—</td>
+<td>2nd → 0.0161</td>
+<td>0.0161</td>
+</tr>
+<tr>
+<td>C9</td>
+<td>3rd → 0.0159</td>
+<td>—</td>
+<td>0.0159</td>
+</tr>
+</tbody>
+</table>
+<p>A chunk that <strong>both</strong> detectives liked rises to the top. That's exactly what we want.</p>
+<div class="callout callout-note"><div class="callout-icon">ℹ️</div><div class="callout-content"><p>🤔 <strong>Why 60?</strong> It comes from the research paper that introduced RRF. It stops the 1st place from
+completely dominating, so 1st and 2nd are close and agreement between lists matters more.
+It's <code>RRF_K</code> in <code>config.py</code>, and you rarely need to change it.</p></div></div>
+<h2>What you'll see in the chat</h2>
+<p>With <code>--debug</code>, the <strong>Found by</strong> column tells you which detective found each chunk:</p>
+<div class="codehilite"><pre><span></span><code>#  Found by          Meaning  Keyword  ...
+1  keyword+meaning   0.712    9.41         ← both agreed: strong candidate
+2  keyword           -        12.03        ← only exact words matched (e.g. a code)
+3  meaning           0.655    -            ← only the meaning matched (a paraphrase)
+</code></pre></div>
+
+<h2>Settings (in <code>rag/config.py</code>)</h2>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RETRIEVAL_MODE</code></td>
+<td><code>"hybrid"</code></td>
+<td><code>"vector"</code>, <code>"keyword"</code> or <code>"hybrid"</code></td>
+</tr>
+<tr>
+<td><code>CANDIDATES_PER_SEARCH</code></td>
+<td><code>20</code></td>
+<td>How many chunks each detective brings back</td>
+</tr>
+<tr>
+<td><code>RRF_K</code></td>
+<td><code>60</code></td>
+<td>The "60" in the formula</td>
+</tr>
+</tbody>
+</table>
+<h2>🧪 Try it yourself</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="n">chat</span><span class="p">.</span><span class="n">py</span> <span class="p">-</span><span class="n">-debug</span>
+</code></pre></div>
+
+<ol>
+<li>Ask a question and look at the <strong>Found by</strong> column. How many chunks were found by <em>both</em>?</li>
+<li>Ask the same question 3 times, switching <code>/mode vector</code>, <code>/mode keyword</code>, <code>/mode hybrid</code> in between.
+   Does hybrid keep the best chunks from both?</li>
+<li>Find a question where vector and keyword <strong>disagree completely</strong>. Those are the cases where hybrid helps most.</li>
+</ol>
+<div class="callout callout-note"><div class="callout-icon">ℹ️</div><div class="callout-content"><p>🎯 <strong>Key lesson:</strong> merging by <em>position</em> (not score) lets us combine search methods that score in different ways.
+Next, we add a judge that reads the merged list properly: <a href="#chapter-11">Re-ranking</a>.</p></div></div>
+    </div>
+</div>
+
+<div class="chapter" id="chapter-11">
+    <div class="chapter-header">
+        <div>
+            <span class="chapter-phase-badge">Phase 2: Better Search</span>
+            <span class="chapter-number-badge">CHAPTER 11</span>
+        </div>
+        <div class="chapter-title">Re-ranking — The Careful Cross-Encoder Judge</div>
+        <div class="chapter-code-bar">
+            <span>📂 Primary Implementation:</span>
+            <code>rag/reranker.py</code>
+        </div>
+    </div>
+
+    <div class="chapter-body">
+        <div class="callout callout-code"><div class="callout-icon">📂</div><div class="callout-content"><p><strong>Phase 2 · Lesson 3</strong> · Code: <code>rag/reranker.py</code> · Demo: <code>playground/05_reranker_demo.py</code></p></div></div>
+<h2>Fast search is a bit "blurry"</h2>
+<p>Remember how meaning search works:
+1. The question becomes a list of numbers.
+2. Every chunk became a list of numbers (earlier, during ingest).
+3. We compare the numbers.</p>
+<p>The question and the chunk <strong>never actually meet</strong>. Each one is summarised <strong>separately</strong> into numbers, and we compare the summaries.
+That's why it's so fast (milliseconds for 100,000 chunks), but some detail gets lost.</p>
+<p><strong>Example where it goes wrong:</strong></p>
+<div class="callout callout-note"><div class="callout-icon">ℹ️</div><div class="callout-content"><p>Q: "When can a preauth <strong>NOT</strong> be cancelled?"</p></div></div>
+<table>
+<thead>
+<tr>
+<th>Chunk</th>
+<th>Meaning search thinks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A: "A preauth can be cancelled at any time before…"</td>
+<td>😍 0.82: same words, same topic!</td>
+</tr>
+<tr>
+<td>B: "Once the final claim is submitted, the cancellation is blocked."</td>
+<td>🙂 0.71</td>
+</tr>
+</tbody>
+</table>
+<p>Chunk <strong>B</strong> is the real answer. The word "NOT" barely changes the meaning-numbers.</p>
+<h2>The re-ranker reads them <em>together</em></h2>
+<p>A <strong>re-ranker</strong> (technically a <em>cross-encoder</em>) is a different kind of model.
+You give it the question <strong>and</strong> one chunk <strong>at the same time</strong>, and it reads them side by side, word by word, like a teacher marking an answer:</p>
+<div class="codehilite"><pre><span></span><code> [ When can a preauth NOT be cancelled? ] + [ Once the final claim is submitted, ... ]
+                                │
+                          re-ranker model
+                                │
+                          score: 0.94  ✅
+</code></pre></div>
+
+<p>Because it sees both texts together, it understands <em>how</em> they relate: negations ("not"), who did what, and whether the chunk actually <strong>answers</strong> the question or just mentions the same words.</p>
+<h2>Why not use the re-ranker for everything?</h2>
+<p>It's <strong>slow</strong>: it has to read <em>every</em> pair from scratch.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Meaning search</th>
+<th>Re-ranker</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reads question + chunk</td>
+<td>separately (pre-computed)</td>
+<td>together, every time</td>
+</tr>
+<tr>
+<td>100,000 chunks</td>
+<td>~20 ms</td>
+<td>~hours 😅</td>
+</tr>
+<tr>
+<td>30 chunks</td>
+<td>~20 ms</td>
+<td>~0.2–1 second ✅</td>
+</tr>
+<tr>
+<td>Accuracy</td>
+<td>good</td>
+<td>excellent</td>
+</tr>
+</tbody>
+</table>
+<p>So we use <strong>both</strong>, like a hiring process:</p>
+<div class="codehilite"><pre><span></span><code> all chunks ──[fast search: CV screening]──► ~30 shortlisted ──[re-ranker: interviews]──► best 5
+</code></pre></div>
+
+<p>This "retrieve, then re-rank" pattern is used by nearly every serious RAG system.</p>
+<h2>The model we use</h2>
+<p><strong><code>BAAI/bge-reranker-v2-m3</code></strong>, a free, open model:
+- Downloaded <strong>once</strong> from Hugging Face (~2.2 GB), then runs <strong>fully offline</strong>
+- Runs on your <strong>GPU</strong> in 16-bit mode (~1.1 GB of VRAM), next to Qwen
+- Understands 100+ languages</p>
+<p>It needs <strong>PyTorch</strong> (the engine that runs most AI models) and <strong>transformers</strong>
+(a library that knows how to load models from Hugging Face).</p>
+<h3>Scores and the safety filter</h3>
+<p>The re-ranker gives a score from <strong>0 to 1</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Score</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.8 – 1.0</td>
+<td>Directly answers the question</td>
+</tr>
+<tr>
+<td>0.1 – 0.8</td>
+<td>Related, partly useful</td>
+</tr>
+<tr>
+<td>below 0.02</td>
+<td>Not relevant, thrown away (<code>MIN_RERANK_SCORE</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>This makes "I could not find this in your documents" more reliable: junk chunks no longer reach Qwen.</p>
+<h3>...but don't keep only ONE chunk (<code>RERANK_MIN_KEEP</code>)</h3>
+<p>A real failure: <em>"what is search api used for?"</em>. The document never says "search API". It says
+"Payer <strong>Discovery</strong> API" and "Policy <strong>Discovery</strong> API". The judge kept just <strong>1 of 33</strong> chunks (score 0.30).
+Qwen saw one view of the topic and answered only half of it.</p>
+<p>So there is a safety net. If <strong>at least one</strong> chunk passes the filter (the question IS about your
+documents) but fewer than <code>RERANK_MIN_KEEP = 3</code> do, the next-best chunks are kept anyway, up to 3.</p>
+<ul>
+<li>If <strong>nothing</strong> passes, nothing is kept. "I could not find this" still works.</li>
+<li>The order never changes, so the #1 chunk stays #1. Measured: Hit@1 and MRR on the exam were exactly the same.</li>
+</ul>
+<h2>Read the code</h2>
+<p>Open <code>rag/reranker.py</code>. The important part is <code>score_pairs()</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">inputs</span> <span class="o">=</span> <span class="n">_tokenizer</span><span class="p">([[</span><span class="n">question</span><span class="p">,</span> <span class="n">text</span><span class="p">]</span> <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">batch</span><span class="p">],</span> <span class="o">...</span><span class="p">)</span>   <span class="c1"># glue question + chunk together</span>
+<span class="n">raw_scores</span> <span class="o">=</span> <span class="n">_model</span><span class="p">(</span><span class="o">**</span><span class="n">inputs</span><span class="p">)</span><span class="o">.</span><span class="n">logits</span>                             <span class="c1"># model reads both, outputs a number</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">raw_scores</span><span class="p">)</span>                               <span class="c1"># squash into 0..1</span>
+</code></pre></div>
+
+<p>That's the whole idea in 3 lines.</p>
+<h2>Settings (in <code>rag/config.py</code>)</h2>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>USE_RERANKER</code></td>
+<td><code>True</code></td>
+<td>Switch the judge on or off</td>
+</tr>
+<tr>
+<td><code>RERANKER_MODEL</code></td>
+<td><code>BAAI/bge-reranker-v2-m3</code></td>
+<td>Lighter option: <code>BAAI/bge-reranker-base</code> (English and Chinese only)</td>
+</tr>
+<tr>
+<td><code>RERANKER_DEVICE</code></td>
+<td><code>"auto"</code></td>
+<td><code>"cpu"</code> if your GPU runs out of memory</td>
+</tr>
+<tr>
+<td><code>MIN_RERANK_SCORE</code></td>
+<td><code>0.02</code></td>
+<td>Raise it to be stricter, lower it if good chunks get thrown away</td>
+</tr>
+<tr>
+<td><code>RERANK_MIN_KEEP</code></td>
+<td><code>3</code></td>
+<td>If at least one chunk passes, keep at least this many (the runners-up), so Qwen sees more than one view</td>
+</tr>
+<tr>
+<td><code>CANDIDATES_PER_SEARCH</code></td>
+<td><code>20</code></td>
+<td>Bigger shortlist = better chance, but slower judging</td>
+</tr>
+</tbody>
+</table>
+<h2>🧪 Try it yourself</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="n">playground</span><span class="p">\</span><span class="n">05_reranker_demo</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+
+<p>Compare the meaning-search order with the re-ranker order. Look at the "NOT" example.</p>
+<p>Then in the chat:</p>
+<div class="codehilite"><pre><span></span><code>python chat.py --debug
+</code></pre></div>
+
+<ol>
+<li>Ask a question. Compare the <strong>Meaning</strong> column with the <strong>Rerank</strong> column. Did the order change?</li>
+<li>Type <code>/rerank</code> to switch it <strong>off</strong>, and ask the same question. Different top chunk?</li>
+<li>Ask something totally unrelated ("best pizza in town"). With the re-ranker on, are all chunks filtered out?</li>
+</ol>
+<div class="callout callout-note"><div class="callout-icon">ℹ️</div><div class="callout-content"><p>🎯 <strong>Key lesson:</strong> fast search finds <em>candidates</em>; a careful judge picks the <em>winners</em>.
+Speed and accuracy come from using <strong>two stages</strong>.</p></div></div>
+    </div>
+</div>
+
+<div class="chapter" id="chapter-12">
+    <div class="chapter-header">
+        <div>
+            <span class="chapter-phase-badge">Phase 2: Better Search</span>
+            <span class="chapter-number-badge">CHAPTER 12</span>
+        </div>
+        <div class="chapter-title">OCR — Reading Scanned PDFs and Images</div>
+        <div class="chapter-code-bar">
+            <span>📂 Primary Implementation:</span>
+            <code>rag/loader.py</code>
+        </div>
+    </div>
+
+    <div class="chapter-body">
+        <div class="callout callout-code"><div class="callout-icon">📂</div><div class="callout-content"><p><strong>Phase 2 · Lesson 4</strong> · Code: <code>rag/ocr.py</code>, <code>rag/loader.py</code></p></div></div>
+<h2>Two kinds of PDF that look the same</h2>
+<p>Open two PDFs, and they can look identical on screen. Inside, they're completely different:</p>
+<table>
+<thead>
+<tr>
+<th>"Real" PDF (digital)</th>
+<th>Scanned PDF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Made by Word, a website, a billing system</td>
+<td>Made by a scanner or a phone camera</td>
+</tr>
+<tr>
+<td>Stores actual <strong>letters</strong>: <code>P</code> <code>r</code> <code>e</code> <code>a</code> <code>u</code> <code>t</code> <code>h</code></td>
+<td>Stores a <strong>photo</strong> of the page: millions of coloured dots</td>
+</tr>
+<tr>
+<td>You can select and copy text</td>
+<td>Selecting text does nothing</td>
+</tr>
+<tr>
+<td>Our loader copies the text instantly ✅</td>
+<td>Our loader finds <strong>nothing</strong> ❌</td>
+</tr>
+</tbody>
+</table>
+<p>Hospital discharge summaries, signed letters, old policy documents and ID cards are very often scanned.
+In Phase 1, those pages were simply <strong>skipped</strong>.</p>
+<h2>OCR = "look at the picture and type it out"</h2>
+<p><strong>OCR</strong> stands for <em>Optical Character Recognition</em>. Like a person reading a photo of a letter
+and typing it out, the computer looks at the dots and works out which letters they form.</p>
+<p>Classic OCR programs (like Tesseract) must be installed separately.
+But we already have something better on your computer: <strong>Qwen3.5 can see images</strong> (it's a <em>vision</em> model).
+So we just show it the picture and say: <em>"Type out every word you see."</em></p>
+<div class="codehilite"><pre><span></span><code> scanned PDF page
+       │  ① take a "photo" of the page (150 DPI picture)
+       ▼
+   PNG image
+       │  ② send it to Qwen with the instruction "transcribe exactly"
+       ▼
+   plain text  ──►  chunk  ──►  embed  ──►  store   (same as any other page)
+</code></pre></div>
+
+<h2>How does the loader know a page is scanned?</h2>
+<p>Simple test: it tries to copy the text first.
+If a page gives <strong>fewer than 30 real letters</strong> (<code>OCR_MIN_TEXT_CHARS</code>), it's probably a picture → OCR it.</p>
+<p>So a mixed PDF (some typed pages, some scanned) works automatically: typed pages are copied (fast),
+and only the scanned pages are OCR'd (slow).</p>
+<p>Image files (<code>.png</code>, <code>.jpg</code>, <code>.jpeg</code>, <code>.webp</code>) such as screenshots or photos of documents are always OCR'd.</p>
+<p>OCR'd chunks get a label <code>ocr: True</code> in their metadata, so you can always tell their text was <em>read</em>, not copied.</p>
+<h2>Things to know ⚠️</h2>
+<table>
+<thead>
+<tr>
+<th>Topic</th>
+<th>What to expect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Speed</strong></td>
+<td>About 5–30 seconds per page. A 50-page scan can take 10+ minutes. Ingest it once, then it's saved.</td>
+</tr>
+<tr>
+<td><strong>Accuracy</strong></td>
+<td>Very good on clean scans and tables; weaker on blurry photos and messy handwriting.</td>
+</tr>
+<tr>
+<td><strong>AI mistakes</strong></td>
+<td>A vision AI can occasionally misread a number. For important numbers (amounts, IDs), check the original page. The citation tells you which page!</td>
+</tr>
+<tr>
+<td><strong>Quality vs speed</strong></td>
+<td><code>OCR_DPI = 150</code> is a good balance. Try <code>200</code> for tiny text, <code>100</code> for speed.</td>
+</tr>
+</tbody>
+</table>
+<h2>Settings (in <code>rag/config.py</code>)</h2>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Default</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OCR_ENABLED</code></td>
+<td><code>True</code></td>
+<td>Switch OCR off to skip scanned pages (faster ingest)</td>
+</tr>
+<tr>
+<td><code>OCR_MODEL</code></td>
+<td><code>qwen3.5:4b</code></td>
+<td>Any Ollama model with "vision" ability</td>
+</tr>
+<tr>
+<td><code>OCR_MIN_TEXT_CHARS</code></td>
+<td><code>30</code></td>
+<td>Below this many letters, a page counts as "scanned"</td>
+</tr>
+<tr>
+<td><code>OCR_DPI</code></td>
+<td><code>150</code></td>
+<td>Sharpness of the page photo</td>
+</tr>
+</tbody>
+</table>
+<h2>Read the code</h2>
+<ul>
+<li><code>rag/ocr.py</code> → <code>image_to_text()</code>: the picture is sent as <strong>base64</strong> (a way to write binary data as plain text) inside the chat message's <code>images</code> field.
+  The prompt says "copy word for word, don't describe", and <code>temperature=0</code> means no creativity.</li>
+<li><code>rag/loader.py</code> → <code>_load_pdf()</code>: the "fewer than 30 letters?" test, and <code>_load_image()</code>.</li>
+</ul>
+<h2>🧪 Try it yourself</h2>
+<ol>
+<li>Take a photo of any printed page with your phone (or a screenshot of a document) and save it as a <code>.jpg</code> or <code>.png</code>.</li>
+<li>Put it in <code>data\documents</code> and run:
+   <code>powershell
+   python ingest.py</code>
+   Look for <strong>"(1 read with OCR)"</strong> in the output.</li>
+<li>Ask the chat a question about something in the photo. Does it find it and cite the image?</li>
+<li>Try a blurry photo. Where does OCR start making mistakes?</li>
+</ol>
+<div class="callout callout-note"><div class="callout-icon">ℹ️</div><div class="callout-content"><p>🎯 <strong>Key lesson:</strong> the AI can only search what it can <em>read</em>. OCR turns pictures of text into real text,
+so scanned documents become searchable like everything else.</p></div></div>
+    </div>
+</div>
+
+<div class="chapter" id="chapter-13">
+    <div class="chapter-header">
+        <div>
+            <span class="chapter-phase-badge">Phase 2: Better Search</span>
+            <span class="chapter-number-badge">CHAPTER 13</span>
+        </div>
+        <div class="chapter-title">Measuring Quality — Hit@K, MRR & Systematic Evaluation</div>
+        <div class="chapter-code-bar">
+            <span>📂 Primary Implementation:</span>
+            <code>evaluate.py</code>
+        </div>
+    </div>
+
+    <div class="chapter-body">
+        <div class="callout callout-code"><div class="callout-icon">📂</div><div class="callout-content"><p><strong>Phase 2 · Lesson 5</strong> · Code: <code>evaluate.py</code></p></div></div>
+<h2>"It feels better" is not good enough</h2>
+<p>You change a setting, ask 2 questions, and the answers look better. 🎉
+But did 5 <em>other</em> questions quietly get worse? You'd never know.</p>
+<p>Professionals never tune by feel. They build a <strong>test set</strong> (an exam) and measure every change.
+That's what <code>evaluate.py</code> does.</p>
+<h2>What exactly do we measure?</h2>
+<p>We test <strong>retrieval</strong>, the "find the right page" step, because:
+1. If retrieval is wrong, the answer is wrong, no matter how smart Qwen is.
+2. It's fast to test: no waiting for Qwen to write answers.
+3. It's objective: the right page either came back or it didn't.</p>
+<h3>The exam</h3>
+<p>A list of questions where we <strong>know</strong> which page holds the answer:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="w"> </span><span class="nt">"question"</span><span class="p">:</span><span class="w"> </span><span class="s2">"What is the waiting period for maternity cover?"</span><span class="p">,</span><span class="w"> </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"policy.pdf"</span><span class="p">,</span><span class="w"> </span><span class="nt">"page"</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+
+<h3>The scores</h3>
+<p>For every question we check: <strong>did the right page come back, and at what position?</strong></p>
+<table>
+<thead>
+<tr>
+<th>Score</th>
+<th>Plain meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hit@1</strong></td>
+<td>% of questions where the right page came <strong>1st</strong></td>
+<td>70% = right page on top 7 times out of 10</td>
+</tr>
+<tr>
+<td><strong>Hit@5</strong></td>
+<td>% where the right page was <strong>anywhere in the top 5</strong></td>
+<td>90% = Qwen <em>saw</em> the answer 9 times out of 10</td>
+</tr>
+<tr>
+<td><strong>MRR</strong></td>
+<td>Average of <strong>1 ÷ position</strong> (1st → 1.0, 2nd → 0.5, 3rd → 0.33, missed → 0)</td>
+<td>0.80 = usually 1st, sometimes 2nd</td>
+</tr>
+</tbody>
+</table>
+<p>Higher is better for all three. <strong>Hit@5</strong> is the most important for RAG: if the right page is in the top 5, Qwen can use it.</p>
+<h2>Where do the exam questions come from?</h2>
+<h3>Option 1: Let Qwen write them (fast start)</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="n">evaluate</span><span class="p">.</span><span class="n">py</span> <span class="n">generate</span> <span class="p">-</span><span class="n">-n</span> <span class="n">25</span>
+</code></pre></div>
+
+<p>It picks 25 random chunks from your knowledge base and asks Qwen:
+<em>"Write a question that this passage answers."</em>
+We know which chunk (and page) each question came from, so we know the right answer automatically.</p>
+<div class="callout callout-warning"><div class="callout-icon">⚠️</div><div class="callout-content"><p>⚠️ <strong>Watch out:</strong> AI-written questions often <strong>copy words</strong> from the passage,
+which makes keyword search look better than it really is.
+We ask Qwen to use its own words, but it doesn't always manage. Open <code>data\eval\questions.json</code>
+and fix or delete weird questions.</p></div></div>
+<h3>Option 2: Write your own (the gold standard)</h3>
+<p>Add your real questions to <code>data\eval\questions.json</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="w"> </span><span class="nt">"question"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Can I cancel after the claim is submitted?"</span><span class="p">,</span><span class="w"> </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"claims_guide.pdf"</span><span class="p">,</span><span class="w"> </span><span class="nt">"page"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+
+<p>Your own questions are <strong>kept</strong> when you generate new AI questions.
+Even 10 good hand-written questions are worth more than 100 generated ones.</p>
+<h2>Running the exam</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="n">evaluate</span><span class="p">.</span><span class="n">py</span> <span class="n">run</span>
+</code></pre></div>
+
+<p>Output looks like:</p>
+<div class="codehilite"><pre><span></span><code>             Retrieval exam - 25 questions, top-5
+┏━━━━━━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━┳━━━━━━━┳━━━━━━━━━━┓
+┃ Setup           ┃ Hit@1 ┃ Hit@5 ┃   MRR ┃ Avg time ┃
+┡━━━━━━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━╇━━━━━━━╇━━━━━━━━━━┩
+│ vector          │   60% │   84% │ 0.693 │    25 ms │
+│ keyword         │   56% │   80% │ 0.652 │     2 ms │
+│ hybrid          │   68% │   92% │ 0.772 │    28 ms │
+│ hybrid + rerank │   80% │   96% │ 0.861 │   410 ms │
+└─────────────────┴───────┴───────┴───────┴──────────┘
+</code></pre></div>
+
+<p><em>(example numbers; yours will differ)</em></p>
+<p>Add <code>--misses</code> to see <strong>which questions failed</strong>. Those are the most educational part:
+read each one and ask <em>why</em> the search missed it. Wrong words? Answer split across two chunks? Scanned page?</p>
+<h2>The improvement loop 🔁</h2>
+<div class="codehilite"><pre><span></span><code>  1. run the exam        → write down the scores
+  2. change ONE setting  → e.g. CHUNK_SIZE 1000 → 600
+  3. re-ingest if needed → python ingest.py --reset   (for chunking/embedding changes)
+  4. run the exam again  → better or worse?
+  5. keep it or undo it
+</code></pre></div>
+
+<p>Change <strong>one thing at a time</strong>, otherwise you won't know what helped.</p>
+<h2>🧪 Try it yourself</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">python</span> <span class="n">evaluate</span><span class="p">.</span><span class="n">py</span> <span class="n">generate</span> <span class="p">-</span><span class="n">-n</span> <span class="n">25</span>
+<span class="n">python</span> <span class="n">evaluate</span><span class="p">.</span><span class="n">py</span> <span class="n">run</span> <span class="p">-</span><span class="n">-misses</span>
+</code></pre></div>
+
+<ol>
+<li>Which setup wins on <em>your</em> documents? Is the re-ranker worth its extra time?</li>
+<li>Write 5 questions of your own into <code>data\eval\questions.json</code>, and make one of them tricky
+   (different words from the document). Run again.</li>
+<li>Experiment: set <code>CHUNK_SIZE = 600</code> in <code>config.py</code>, run <code>python ingest.py --reset</code>, then <code>python evaluate.py run</code>.
+   Did the scores go up or down?</li>
+</ol>
+<div class="callout callout-note"><div class="callout-icon">ℹ️</div><div class="callout-content"><p>🎯 <strong>Key lesson:</strong> what you don't measure, you can't improve. A small exam turns guessing into engineering.</p></div></div>
+    </div>
+</div>
+
+<div class="chapter" id="chapter-14">
+    <div class="chapter-header">
+        <div>
+            <span class="chapter-phase-badge">Phase 3: Structure & Memory</span>
+            <span class="chapter-number-badge">CHAPTER 14</span>
+        </div>
+        <div class="chapter-title">Structure-Aware Chunking — Following Document Shape</div>
+        <div class="chapter-code-bar">
+            <span>📂 Primary Implementation:</span>
+            <code>rag/chunker.py, rag/loader.py</code>
+        </div>
+    </div>
+
+    <div class="chapter-body">
+        <div class="callout callout-code"><div class="callout-icon">📂</div><div class="callout-content"><p><strong>Code:</strong> <code>rag/loader.py</code> (Word/PDF → Markdown) · <code>rag/chunker.py</code> (<code>split_structured</code>)
+<strong>Settings:</strong> <code>CHUNKING_STRATEGY</code>, <code>SECTION_CHUNK_SIZE</code>, <code>SECTION_MERGE_MAX</code>, <code>CHUNK_LOCATION</code>, <code>TABLE_COMPACT</code>, <code>TABLE_OVERLAP_ROWS</code></p></div></div>
+<h2>The problem with cutting by size</h2>
+<p>Phase 1 cut text every ~1000 characters at paragraph or sentence borders. Think of tearing pages out of a book at random:</p>
+<ul>
+<li>One chunk can end in the middle of section 4.1 and continue into 4.2, mixing two topics.</li>
+<li>A table row like <code>| 3 | QUERIED | ... |</code> ends up far away from its column names and its heading.
+  On its own it means nothing.</li>
+<li>The old Word loader even moved <strong>all tables to the end</strong> of the document, away from their headings.</li>
+</ul>
+<h2>The idea: first follow the structure, then cut by size</h2>
+<div class="codehilite"><pre><span></span><code> Word / PDF ──► loader.py ──► Markdown with real headings and tables
+                                 # Section 4: Workflow Codes
+                                 ## 4.1 Provider-Side Codes
+                                 | Code | Meaning |
+                                 ...
+               chunker.py ──► 1. split at headings      (one topic per chunk)
+                              2. glue tiny siblings      (5.6.1 + 5.6.2 + 5.6.3)
+                              3. cut big tables BETWEEN rows, repeat the column names
+                              4. write the "address" on top of every chunk
+</code></pre></div>
+
+<p>A finished chunk looks like this:</p>
+<div class="codehilite"><pre><span></span><code>Location: Section 4: Workflow Codes Reference &gt; 4.1 Provider-Side Workflow Codes
+
+| Code | Name | Meaning |
+| 2 | QUERIED | Payer needs more information ... |
+| 3 | REJECTED | ... |
+</code></pre></div>
+
+<ul>
+<li><strong>Word files:</strong> headings come from the paragraph style ("Heading 1", "Heading 2"...), and tables stay in place.</li>
+<li><strong>PDFs:</strong> they have no real headings, so we <em>guess</em> them: a line whose font is 15% bigger than
+  normal text (<code>PDF_HEADING_SIZE_RATIO</code>) counts as a heading. Tables come from PyMuPDF's <code>find_tables()</code>.
+  A section that continues on the next page keeps its address.</li>
+</ul>
+<h2>⚠️ Lesson learned: the first version was WORSE</h2>
+<p>This is the most important part of this note. A "smarter" idea is not automatically better.
+<strong>Measure it.</strong> We ran the exam (<code>evaluate.py</code>) on two sets of 40 questions:</p>
+<ul>
+<li>Exam A was written from the <em>old</em> chunks.</li>
+<li>Exam B was written from the <em>new</em> chunks, with the address removed so the questions can't cheat.</li>
+</ul>
+<p>Using both stops the exam from favouring one layout. Results with hybrid + re-rank:</p>
+<table>
+<thead>
+<tr>
+<th>Setup</th>
+<th>Exam A Hit@1</th>
+<th>Exam B Hit@1</th>
+<th>Overall Hit@1</th>
+<th>MRR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Old loader + recursive 1000 (Phase 2)</td>
+<td>85%</td>
+<td>95%</td>
+<td>90.0%</td>
+<td>0.930</td>
+</tr>
+<tr>
+<td>Structure, first try (1000 chars, no overlap)</td>
+<td>78%</td>
+<td>88%</td>
+<td>82.5%</td>
+<td>0.882</td>
+</tr>
+<tr>
+<td>+ only nearest heading as address</td>
+<td>78%</td>
+<td>88%</td>
+<td>82.5%</td>
+<td>~0.88</td>
+</tr>
+<tr>
+<td>+ 2000 chars</td>
+<td>78%</td>
+<td>90%</td>
+<td>83.8%</td>
+<td>0.892</td>
+</tr>
+<tr>
+<td>+ 1200 chars, 1 overlap row</td>
+<td>80%</td>
+<td>90%</td>
+<td>85.0%</td>
+<td>0.898</td>
+</tr>
+<tr>
+<td><strong>Structure 1500, 1 overlap row, full address, compact tables</strong></td>
+<td><strong>90%</strong></td>
+<td><strong>92%</strong></td>
+<td><strong>91.3%</strong></td>
+<td><strong>0.931</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why was the first try worse?</strong> We compared the questions one by one. It came down to two things:</p>
+<ol>
+<li><strong>No overlap in tables.</strong> Plain text repeats ~150 characters between chunks, but table pieces didn't.
+   A row near a border lost its neighbours. Fixed with <code>TABLE_OVERLAP_ROWS = 1</code>.</li>
+<li><strong>Chunks too small.</strong> Address line + column names + rows fill 1000 characters fast, which left too
+   little real content per chunk. 1500 works best here: 1200 is too small and 2000 too big (one chunk then covers several topics again).</li>
+</ol>
+<p>Also: compact tables (dropping the <code>| --- |</code> line) saves tokens and doesn't hurt quality.</p>
+<h2>Speed</h2>
+<p>Re-ranking takes about 0.7–1.3 s for 20–35 candidates on the RTX 3050, about the same for every layout.
+Earlier measurements of 3–30 s were <strong>other programs using the GPU at the same time</strong>, not the chunks.
+Always measure speed on a quiet machine, and check more than once.</p>
+<h2>🧪 Try it yourself</h2>
+<ol>
+<li>Set <code>CHUNKING_STRATEGY = "recursive"</code> in <code>rag/config.py</code>, then run <code>python ingest.py --reset</code> and <code>python evaluate.py run</code>.
+   Switch back to <code>"structure"</code> and compare.</li>
+<li>Try <code>CHUNK_LOCATION = "none"</code>. Does keyword search get better or worse? Why?</li>
+<li>Look at a few chunks: in <code>chat.py</code>, ask a question and read the <code>Location:</code> line of each source.</li>
+</ol>
+    </div>
+</div>
+
+<div class="chapter" id="chapter-15">
+    <div class="chapter-header">
+        <div>
+            <span class="chapter-phase-badge">Phase 3: Structure & Memory</span>
+            <span class="chapter-number-badge">CHAPTER 15</span>
+        </div>
+        <div class="chapter-title">Conversation Memory — Multi-Turn Dialogues</div>
+        <div class="chapter-code-bar">
+            <span>📂 Primary Implementation:</span>
+            <code>rag/memory.py, chat.py</code>
+        </div>
+    </div>
+
+    <div class="chapter-body">
+        <div class="callout callout-code"><div class="callout-icon">📂</div><div class="callout-content"><p><strong>Code:</strong> <code>rag/memory.py</code> · used by <code>chat.py</code> · tested by <code>python evaluate.py followups</code></p></div></div>
+<h2>The problem</h2>
+<div class="codehilite"><pre><span></span><code>You: What payer response codes are there?
+AI:  1 APPROVED, 2 QUERIED, 3 REJECTED ...
+You: and what about the second one?
+</code></pre></div>
+
+<p>You know that "the second one" means <strong>QUERIED</strong>. Our search step doesn't, because it has no memory.
+It turns the words <em>"and what about the second one?"</em> into a meaning vector and looks for chunks
+that are similar to... nothing in particular. The wrong chunks come back, so you get a wrong answer.</p>
+<p>Giving the chat history to the AI is <strong>not enough</strong>. The AI only reads the chunks the search
+found, and that search was run with the vague question.</p>
+<h2>Two ways to fix it</h2>
+<p><strong>A. Glue on the previous question (free).</strong> Search with <em>previous question + follow-up</em>:</p>
+<div class="codehilite"><pre><span></span><code>"What diagnosis type codes exist? What does the last one mean?"
+</code></pre></div>
+
+<p>This is ugly to read, but the <strong>re-ranker</strong> reads the whole thing and works out what is meant.</p>
+<p><strong>B. Query rewriting with Qwen (~1.5 s).</strong> Ask Qwen one extra, very small question:</p>
+<div class="callout callout-note"><div class="callout-icon">ℹ️</div><div class="callout-content"><p><em>"Here is the chat so far. Rewrite the last question so it makes sense on its own."</em></p></div></div>
+<div class="codehilite"><pre><span></span><code>"and what about the second one?"  ──►  "What does payer response code 2 (QUERIED) mean?"
+</code></pre></div>
+
+<p>Both are wired up the same way:</p>
+<ol>
+<li><strong>Search</strong> with the context-rich query, so the right chunks are found.</li>
+<li><strong>Answer</strong> the <em>original</em> question, with the chat history included, so the reply sounds natural.</li>
+</ol>
+<div class="codehilite"><pre><span></span><code> question ──► [add context from memory] ──► search ──► re-rank ──► Qwen answers
+                    ▲                                                 │
+                    └──────────── memory (last N turns) ◄────────────┘
+</code></pre></div>
+
+<h2>⚠️ Measured: the simple trick wins</h2>
+<p><code>python evaluate.py followups</code> (8 conversations, hybrid + re-rank):</p>
+<table>
+<thead>
+<tr>
+<th>How the follow-up was searched</th>
+<th>Hit@1</th>
+<th>Hit@5</th>
+<th>MRR</th>
+<th>Extra time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>no memory (as typed)</td>
+<td>50%</td>
+<td>75%</td>
+<td>0.60</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Qwen rewrite alone</td>
+<td>62–75%</td>
+<td>88–100%</td>
+<td>0.75–0.88</td>
+<td>~1.2–1.7 s</td>
+</tr>
+<tr>
+<td><strong>previous question + follow-up</strong></td>
+<td><strong>88%</strong></td>
+<td><strong>100%</strong></td>
+<td><strong>0.94</strong></td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td>previous question + Qwen rewrite</td>
+<td>88%</td>
+<td>100%</td>
+<td>0.94</td>
+<td>~1.5 s</td>
+</tr>
+</tbody>
+</table>
+<p>Why is the clever Qwen rewrite worse? A 4-billion-parameter model sometimes picks the <strong>wrong item</strong>.
+Asked about "the queried one", it once wrote <em>"...partially approved?"</em>. A wrong rewrite
+sends the search in the wrong direction. Gluing on the previous question can't make that mistake,
+because it never throws information away.</p>
+<p>So the default is <strong><code>QUERY_REWRITE = "context"</code></strong>. The Qwen modes still exist, and they also glue on
+the previous question so a bad rewrite does less harm. With a bigger chat model they may win.
+<strong>Measure again</strong> if you change models. (8 conversations is a small exam, so add your own!)</p>
+<h2>Three pieces in <code>memory.py</code></h2>
+<table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ConversationMemory</code></td>
+<td>Keeps the last <code>MEMORY_TURNS</code> question/answer pairs. Old answers are shortened (<code>HISTORY_ANSWER_MAX_CHARS</code>) so they don't push the sources out of the context window.</td>
+</tr>
+<tr>
+<td><code>looks_like_follow_up()</code></td>
+<td>A free, instant guess (no AI): very short questions, questions that start with "and / what about / also...", or that contain pointing words ("it", "that", "second", "those").</td>
+</tr>
+<tr>
+<td><code>prepare()</code></td>
+<td>Decides what to search for: the question as-is, previous question + follow-up (<code>context</code>), or previous question + Qwen rewrite (<code>auto</code> / <code>always</code>). Long chains are cut to the last 60 words.</td>
+</tr>
+<tr>
+<td><code>rewrite()</code></td>
+<td>Calls Qwen with <code>temperature=0</code> and at most 80 tokens. <code>_clean_rewrite()</code> throws away bad output (empty, or so long that Qwen started <em>answering</em> instead of rewriting). In that case we fall back to the original question.</td>
+</tr>
+</tbody>
+</table>
+<h2>Settings (<code>rag/config.py</code>)</h2>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MEMORY_TURNS = 3</code></td>
+<td>How many earlier turns are remembered.</td>
+</tr>
+<tr>
+<td><code>QUERY_REWRITE = "context"</code></td>
+<td><code>context</code> = previous question + follow-up (free, default). <code>auto</code> = previous question + Qwen rewrite, for follow-ups only. <code>always</code> = the same for every question. <code>off</code> = no memory in the search (Phase 1/2).</td>
+</tr>
+<tr>
+<td><code>HISTORY_ANSWER_MAX_CHARS = 1200</code></td>
+<td>Old answers are cut to this length.</td>
+</tr>
+</tbody>
+</table>
+<p>In <code>chat.py</code> you can change it live with <code>/rewrite context|auto|always|off</code>, look at the memory with <code>/memory</code>,
+and forget everything with <code>/clear</code>. When a question is rewritten, the chat shows
+<code>searching for: …</code> so you can see what was actually searched.</p>
+<h2>Measuring it</h2>
+<p><code>data/eval/followups.json</code> holds small two-turn conversations. <code>python evaluate.py followups</code>
+really chats through the first question (Qwen writes a real answer), then searches for the follow-up
+in three ways:</p>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>How the follow-up is searched</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>no memory</td>
+<td>exactly as typed</td>
+</tr>
+<tr>
+<td>previous question + follow-up</td>
+<td>the <code>context</code> mode</td>
+</tr>
+<tr>
+<td>Qwen rewrite</td>
+<td>only the stand-alone question from <code>rewrite()</code></td>
+</tr>
+<tr>
+<td>previous question + rewrite</td>
+<td>the <code>auto</code> mode</td>
+</tr>
+</tbody>
+</table>
+<p>It prints Hit@1 / Hit@5 / MRR for each, plus the average rewrite time.</p>
+<h2>"Didn't understand, can you clarify?" — a message with NO topic</h2>
+<p>A real chat that went wrong:</p>
+<div class="codehilite"><pre><span></span><code>You: what is search api used for?
+AI:  ...discovering payers [1]
+You: didnt understand can you clarify..
+AI:  I could not find anything relevant in your documents.     ← dead end!
+</code></pre></div>
+
+<p>What happened:</p>
+<ol>
+<li><code>looks_like_follow_up()</code> said <strong>no</strong>. 5 words, no "and / what about", no "it / that".</li>
+<li>So we searched for <em>"didnt understand can you clarify"</em> on its own. Those words match nothing.</li>
+<li>The re-ranker (correctly!) threw every chunk away. With 0 chunks, Qwen is not even asked.</li>
+</ol>
+<p>The message isn't a question about your documents. It's a question about <strong>the last answer</strong>.
+Searching again is the wrong move, so now there are three paths. They live in
+<code>rag/pipeline.py</code>, shared by <code>chat.py</code>, <code>evaluate.py</code> and the web UI:</p>
+<div class="codehilite"><pre><span></span><code>message ──► is_clarification()?  (clarify words, and NO topic words)
+               yes ─► re-use the last answer's sources    origin = "clarify"  (no search, instant)
+               no  ─► prepare() ─► search ─► re-rank      origin = "search"
+                                     │
+                                     └─ found nothing, but it's a follow-up?
+                                            ─► last answer's sources       origin = "fallback"
+</code></pre></div>
+
+<table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>is_clarification()</code></td>
+<td>True for <em>"didn't get that"</em>, <em>"can you clarify?"</em>, <em>"explain it more simply"</em>, <em>"give an example"</em>... but only if no real topic words remain. <em>"Can you clarify the claim deadline?"</em> is a <strong>new</strong> question, so it is searched normally.</td>
+</tr>
+<tr>
+<td><code>Turn.sources</code></td>
+<td>Memory now also remembers <strong>which chunks</strong> each answer used, so they can be re-used.</td>
+</tr>
+<tr>
+<td><code>CLARIFY_HINT</code></td>
+<td>Tells Qwen: <em>"the user didn't understand, explain again more simply, same sources, maybe an example"</em>.</td>
+</tr>
+<tr>
+<td>fallback</td>
+<td>A follow-up that finds nothing gets the previous sources rather than a dead end. Qwen is still told to say "I could not find this" if they don't answer it.</td>
+</tr>
+</tbody>
+</table>
+<p>The chat shows <code>clarification -&gt; re-using the sources of the previous answer</code> when this happens.</p>
+<p><strong>Measured</strong> (<code>evaluate.py followups</code>, 11 conversations: the 8 above + 3 clarifications).
+The <code>chat pipeline (default)</code> row is exactly what <code>chat.py</code> does:</p>
+<table>
+<thead>
+<tr>
+<th>How the follow-up was searched</th>
+<th>Hit@1</th>
+<th>Hit@5</th>
+<th>MRR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>no memory (as typed)</td>
+<td>36%</td>
+<td>55%</td>
+<td>0.44</td>
+</tr>
+<tr>
+<td>previous question + follow-up</td>
+<td>91%</td>
+<td>100%</td>
+<td>0.955</td>
+</tr>
+<tr>
+<td>Qwen rewrite alone</td>
+<td>55–73%</td>
+<td>82–91%</td>
+<td>0.67–0.82</td>
+</tr>
+<tr>
+<td><strong>chat pipeline (default)</strong></td>
+<td><strong>91%</strong></td>
+<td><strong>100%</strong></td>
+<td><strong>0.955</strong></td>
+</tr>
+</tbody>
+</table>
+<p>All 3 clarifications come out at <strong>#1 with origin "clarify"</strong>, in 0.0 s, because there is no search.
+The same chat replayed: the second answer is now a step-by-step explanation with an example.</p>
+<div class="callout callout-note"><div class="callout-icon">ℹ️</div><div class="callout-content"><p><strong>Lesson from building the exam:</strong> the first version of one test expected a fact (the IST timestamp rule)
+that the <em>previous answer never used</em>. A clarification should re-explain <strong>what was said</strong>, so the
+evidence must come from the previous answer's sources. Check that your test measures the right thing!</p></div></div>
+<h2>🧪 Try it yourself</h2>
+<ol>
+<li><code>python chat.py</code>, ask <em>"What diagnosis type codes exist?"</em>, then <em>"what does the last one mean?"</em>.
+   Look at the <code>searching for:</code> line.</li>
+<li>Type <code>/rewrite auto</code> and ask the same follow-up again. Is Qwen's rewrite right? Is it worth the wait?</li>
+<li>Type <code>/rewrite off</code> and try once more. Compare the sources.</li>
+<li>Add your own conversation to <code>data/eval/followups.json</code> and run <code>python evaluate.py followups</code>.</li>
+</ol>
+    </div>
+</div>
+
+<div class="chapter" id="chapter-16">
+    <div class="chapter-header">
+        <div>
+            <span class="chapter-phase-badge">Phase 4: Web UI & Agents</span>
+            <span class="chapter-number-badge">CHAPTER 16</span>
+        </div>
+        <div class="chapter-title">The Web UI — Streaming, Sources, Sessions & Cowork</div>
+        <div class="chapter-code-bar">
+            <span>📂 Primary Implementation:</span>
+            <code>server.py, web/app.js, rag/sessions.py</code>
+        </div>
+    </div>
+
+    <div class="chapter-body">
+        <div class="callout callout-code"><div class="callout-icon">📂</div><div class="callout-content"><p><strong>Code:</strong> <code>server.py</code>, <code>web/index.html</code>, <code>web/app.js</code>, <code>web/style.css</code>,
+<code>rag/sessions.py</code>, <code>rag/web_search.py</code></p></div></div>
+<p>Until now you talked to your AI in a terminal (<code>python chat.py</code>). Phase 4 gives it a
+real app in your browser, with no change to the RAG brain underneath. The web UI
+calls the <strong>same</strong> <code>pipeline.find_sources()</code> and <code>generator.generate_answer()</code> that <code>chat.py</code> uses.</p>
+<div class="codehilite"><pre><span></span><code> Browser (web/app.js)                 server.py (FastAPI)                 rag/ (unchanged brain)
+ ───────────────────                  ───────────────────                 ──────────────────────
+ type question  ── POST /api/chat ──► worker thread ──► pipeline.find_sources() ─► search + re-rank
+                                         │            ──► web_search (Cowork only)
+ status line   ◄── event: status ───────┤
+ source cards  ◄── event: sources ──────┤
+ words appear  ◄── event: token  ───────┤ ◄── generator.generate_answer() ◄── Qwen (Ollama)
+ speed + time  ◄── event: done   ───────┘ ──► sessions.save()  (data/sessions/*.json)
+</code></pre></div>
+
+<h2>1. Streaming with Server-Sent Events (SSE)</h2>
+<p>A normal web request is "ask, wait, get everything at once". For an AI answer that means
+staring at nothing for 10 seconds. Instead, the response <strong>stays open</strong> and the server pushes
+small named messages as soon as they exist:</p>
+<div class="codehilite"><pre><span></span><code>event: status
+data: {"text": "Searching your documents..."}
+
+event: token
+data: {"text": "The deadline"}
+</code></pre></div>
+
+<p>Each message is <code>event:</code> + <code>data:</code> + an empty line. The browser reads the stream piece by piece
+(<code>response.body.getReader()</code> in <code>app.js</code>) and splits on the empty lines.</p>
+<p><strong>Why a worker thread?</strong> Search, re-ranking and Qwen are ordinary <em>blocking</em> Python. If they ran
+on the server's main loop, the whole server would freeze while one answer is being written:
+no stats, no uploads, nothing. So <code>run_chat()</code> runs in a thread and drops events into a queue,
+and the async side just forwards the queue to the browser.</p>
+<p><strong>Stop button:</strong> when you press Stop, the browser closes the connection. The server notices,
+sets a <code>cancel</code> flag, the worker breaks out of the token loop and closes the stream to Ollama.
+Qwen stops writing, so the GPU is free again straight away.</p>
+<h2>2. Citations you can click</h2>
+<p>The system prompt already makes Qwen write <code>[1]</code>, <code>[2][3]</code> after facts (note 07).
+The UI turns those into chips:</p>
+<ol>
+<li>The answer's markdown is converted to HTML (<code>marked</code>) and <strong>sanitised</strong> (<code>DOMPurify</code>).
+   Never put AI output into a page without sanitising it: a document could contain HTML or script tags.</li>
+<li>A tree walker finds <code>[n]</code> in the <em>text</em> (not inside code blocks) and replaces it with a button.</li>
+<li>Clicking it opens the source card and shows the exact chunk text the AI was given.</li>
+</ol>
+<p>That last step is the real point of RAG: <strong>you can check the AI's homework.</strong></p>
+<h2>3. Sessions: memory that survives a restart</h2>
+<p><code>chat.py</code> forgets everything when you quit. <code>rag/sessions.py</code> saves every chat as a JSON file
+in <code>data/sessions/</code>, <strong>including the sources of every answer</strong>. When you reopen a chat, the
+<code>ConversationMemory</code> (note 15) is rebuilt from those messages, so follow-ups ("and the second one?")
+and clarifications ("didn't get it") still work after a restart.</p>
+<h2>4. Cowork mode: documents + the live web</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Chat mode</th>
+<th>Cowork mode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sources</td>
+<td>your documents only</td>
+<td>your documents (top 4) + web pages</td>
+</tr>
+<tr>
+<td>If nothing is found</td>
+<td>"I could not find this in your documents."</td>
+<td>may use general knowledge, <strong>clearly marked</strong></td>
+</tr>
+<tr>
+<td>Internet</td>
+<td>never</td>
+<td>only the search query is sent out</td>
+</tr>
+<tr>
+<td>System prompt</td>
+<td><code>SYSTEM_PROMPT</code></td>
+<td><code>COWORK_SYSTEM_PROMPT</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>rag/web_search.py</code> works in four steps:</p>
+<ol>
+<li><strong>Search</strong> DuckDuckGo (no API key) for the question, or the follow-up-aware search query.</li>
+<li><strong>Read</strong> the top 3 pages in parallel (6-second timeout each, so a slow site can't freeze the chat).
+   Search snippets alone are ~200 characters, too thin to answer from.</li>
+<li><strong>Pick</strong> the paragraphs that share the most words with the question (BM25's tokenizer, note 09).</li>
+<li><strong>Wrap</strong> them as <code>SearchResult</code> objects with <code>type: "web"</code>, so the generator numbers and cites
+   them exactly like document chunks.</li>
+</ol>
+<p>Documents come <strong>first</strong> in the numbering and the prompt says they are the most trusted:
+your own spec beats a random blog post.</p>
+<h2>5. Live system stats</h2>
+<p>The System tab polls <code>/api/stats</code> every 2 seconds:</p>
+<ul>
+<li><strong>GPU memory / load / temperature</strong> come from <code>nvidia-smi</code> (ships with the NVIDIA driver).</li>
+<li><strong>Loaded models</strong> come from Ollama's <code>/api/ps</code>, which shows how much of Qwen is in VRAM.</li>
+<li><strong>Tokens per second</strong> come from Ollama itself: the last streamed message carries <code>eval_count</code>
+  (tokens written) and <code>eval_duration</code> (nanoseconds). <code>ollama_client.chat(stats=...)</code> captures them.</li>
+</ul>
+<h2>6. Safer uploads</h2>
+<p>Uploading a file runs the same steps as <code>python ingest.py &lt;file&gt;</code>, plus a few guards a web
+endpoint needs:</p>
+<ul>
+<li><code>Path(filename).name</code> strips folders, so a file named <code>../../server.py</code> can only land in <code>data/documents</code>.</li>
+<li>Only <code>SUPPORTED_EXTENSIONS</code> are accepted, up to 200 MB.</li>
+<li>If a file yields <strong>0 chunks</strong> (blank, or a scan OCR couldn't read), you get an error instead of a fake "success".</li>
+<li>After ingesting, the BM25 index is rebuilt. Re-ingesting an edited file can keep the
+  same chunk count, and the index only auto-rebuilds when the count changes (note 09).</li>
+</ul>
+<h2>🧪 Try it yourself</h2>
+<ol>
+<li>Run <code>python server.py</code> and open <a href="http://127.0.0.1:8000">http://127.0.0.1:8000</a>.</li>
+<li>Ask a document question, then click a <code>[1]</code> chip. Is the chunk really what the AI said?</li>
+<li>Ask a follow-up ("explain that more simply"), then restart the server, reopen the chat from
+   the sidebar, and ask another follow-up. Does it still know what "that" means?</li>
+<li>Open <strong>System &amp; Stats</strong> while an answer is streaming and watch GPU load and VRAM.</li>
+<li>Switch to <strong>Cowork</strong> and ask something that is <em>not</em> in your documents. Which sources are
+   web, and did the AI mark general-knowledge sentences?</li>
+<li>Press <strong>Stop</strong> halfway through an answer and watch GPU load drop in the System tab.</li>
+</ol>
+    </div>
+</div>
+
+<div class="chapter" id="chapter-17">
+    <div class="chapter-header">
+        <div>
+            <span class="chapter-phase-badge">Phase 4: Web UI & Agents</span>
+            <span class="chapter-number-badge">CHAPTER 17</span>
+        </div>
+        <div class="chapter-title">Agent Mode — Tool Use, Sandboxing & Step Execution</div>
+        <div class="chapter-code-bar">
+            <span>📂 Primary Implementation:</span>
+            <code>rag/agent.py, rag/agent_tools.py</code>
+        </div>
+    </div>
+
+    <div class="chapter-body">
+        <p>Chat and Cowork answer in <strong>one shot</strong>: search → write. Agent mode works in <strong>steps</strong>:
+the model picks a tool, we run it, it looks at the result, and decides what to do next.</p>
+<div class="codehilite"><pre><span></span><code>you    : "Where is the sandbox check implemented?"
+model  : → repo_overview()                 we run it, send back the tree
+model  : → grep("resolve_path")            we run it, send back file:line matches
+model  : → read_file("rag/agent_tools.py", 95, 130)
+model  : "It's in resolve_path() in rag/agent_tools.py:110 ..."   ← no tool call = final answer
+</code></pre></div>
+
+<h2>The pieces</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Job</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rag/agent_tools.py</code></td>
+<td>The tools (plain Python functions) + the <strong>sandbox</strong></td>
+</tr>
+<tr>
+<td><code>rag/agent.py</code></td>
+<td>The loop: call model → run tools → repeat (max 12 steps)</td>
+</tr>
+<tr>
+<td><code>server.py</code></td>
+<td><code>mode="agent"</code> in <code>/api/chat</code>, and <code>/api/agent/folders</code></td>
+</tr>
+<tr>
+<td><code>web/app.js</code></td>
+<td>Agent mode button, folder chips, live step timeline</td>
+</tr>
+</tbody>
+</table>
+<h2>How tool calling works (Ollama)</h2>
+<p>We send the tool descriptions as JSON schemas along with the messages:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"function"</span><span class="p">,</span><span class="w"> </span><span class="nt">"function"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"read_file"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w"> </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">}}}}}</span>
+</code></pre></div>
+
+<p>The model replies either with normal text (the answer) or with:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"assistant"</span><span class="p">,</span><span class="w"> </span><span class="nt">"tool_calls"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="nt">"function"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"read_file"</span><span class="p">,</span><span class="w"> </span><span class="nt">"arguments"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"server.py"</span><span class="p">}}}]}</span>
+</code></pre></div>
+
+<p>We run the tool and append <code>{"role": "tool", "content": "&lt;result&gt;"}</code>, then ask again.</p>
+<h2>Tools (Phase 1 - all read-only)</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>repo_overview</code></td>
+<td>Tree, file types, tech stack, README - the best first call</td>
+</tr>
+<tr>
+<td><code>list_dir</code></td>
+<td>Files/folders in one folder, with sizes</td>
+</tr>
+<tr>
+<td><code>find_files</code></td>
+<td>Find by name pattern (<code>*.py</code>, <code>config*</code>)</td>
+</tr>
+<tr>
+<td><code>grep</code></td>
+<td>Search inside files (regex) → <code>file:line: text</code></td>
+</tr>
+<tr>
+<td><code>read_file</code></td>
+<td>Read up to 250 lines, with line numbers</td>
+</tr>
+<tr>
+<td><code>disk_usage</code></td>
+<td>Folder size + largest items</td>
+</tr>
+</tbody>
+</table>
+<h2>Safety rules</h2>
+<ol>
+<li><strong>Sandbox</strong> - every path is resolved (<code>..</code>, symlinks) and must be inside a folder you
+   added in the UI (<code>data/agent_folders.json</code>). Whole drives (<code>C:\</code>) are refused.</li>
+<li><strong>Read-only</strong> - no tool can write, delete or run commands (yet).</li>
+<li><strong>Secrets</strong> - <code>.env</code>, <code>*.pem</code>, <code>*.key</code>, <code>id_rsa*</code> are never read.</li>
+<li><strong>Limits</strong> - results are capped (6000 chars) and scans stop after 20 s, so one call
+   cannot flood the small model's context window.</li>
+</ol>
+<h2>Small-model tricks</h2>
+<ul>
+<li><code>AGENT_CONTEXT_WINDOW = 16384</code> (bigger than Chat's 8192 - tool results pile up).</li>
+<li>Old tool results are shortened; only the newest 3 stay complete.</li>
+<li>The same call twice in a row gets a "you already have this" nudge instead of re-running.</li>
+<li>Out of steps → tools are switched off and the model must answer with what it has.</li>
+</ul>
+<h2>What's next</h2>
+<ul>
+<li>Phase 2: storage analysis (junk/temp/duplicates, report only)</li>
+<li>Phase 3: approval cards in the UI (Approve / Reject)</li>
+<li>Phase 4: write actions - file edits, Recycle-Bin cleanup, run commands - all approval-gated</li>
+<li>Phase 5: code-aware indexing for large repos</li>
+</ul>
+    </div>
+</div>
+
+<div class="page-break" id="mini-dictionary">
+    <h1>📖 AI & RAG Mini-Dictionary — Core Terminology</h1>
+    <p>Keep this glossary handy. Whenever a technical term causes confusion, review its plain-English definition here.</p>
+    <h2>📖 Mini dictionary (come back here whenever a word confuses you)</h2>
+<table>
+<thead>
+<tr>
+<th>Word</th>
+<th>Plain meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Model / LLM</strong></td>
+<td>The AI "brain" file. It predicts the next word, very, very well.</td>
+</tr>
+<tr>
+<td><strong>Ollama</strong></td>
+<td>A free app that runs AI models on your own computer.</td>
+</tr>
+<tr>
+<td><strong>Parameters (4b, 9b…)</strong></td>
+<td>The "brain cells" of a model. 4b = 4 billion. More = smarter but heavier.</td>
+</tr>
+<tr>
+<td><strong>Token</strong></td>
+<td>A small piece of a word. "unbelievable" ≈ "un" + "believ" + "able". ~4 letters ≈ 1 token.</td>
+</tr>
+<tr>
+<td><strong>Context window</strong></td>
+<td>How much text the AI can "keep in view" at once (like the size of its desk).</td>
+</tr>
+<tr>
+<td><strong>RAG</strong></td>
+<td>Retrieval-Augmented Generation: <em>find the right pages first, then answer from them.</em></td>
+</tr>
+<tr>
+<td><strong>Chunk</strong></td>
+<td>A small piece of a document (a few paragraphs).</td>
+</tr>
+<tr>
+<td><strong>Embedding / vector</strong></td>
+<td>A list of numbers that captures what a text <em>means</em>.</td>
+</tr>
+<tr>
+<td><strong>Vector database</strong></td>
+<td>A database that finds texts with <em>similar meaning</em> very fast.</td>
+</tr>
+<tr>
+<td><strong>Similarity</strong></td>
+<td>A score from 0 to 1 — how close two meanings are.</td>
+</tr>
+<tr>
+<td><strong>Top-K</strong></td>
+<td>"Give me the K best matches." K = 5 means the 5 best chunks.</td>
+</tr>
+<tr>
+<td><strong>Metadata</strong></td>
+<td>Labels attached to a chunk: which file, which page.</td>
+</tr>
+<tr>
+<td><strong>Prompt</strong></td>
+<td>The full message we send to the AI.</td>
+</tr>
+<tr>
+<td><strong>System prompt</strong></td>
+<td>The permanent "house rules" we give the AI before every chat.</td>
+</tr>
+<tr>
+<td><strong>Hallucination</strong></td>
+<td>When the AI confidently makes something up. RAG is our main weapon against it.</td>
+</tr>
+<tr>
+<td><strong>Temperature</strong></td>
+<td>Creativity dial. Low = strict and factual. High = creative.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="page-break" id="playground-appendix">
+    <h1>🧪 Appendix: Playground Hands-On Lab</h1>
+    <p>
+        These 5 standalone Python scripts let you observe each core mechanic in isolation without
+        spinning up the entire application server. Run them directly in your terminal to develop intuition.
+    </p>
+
+    <div class="overview-card" style="margin-top: 24px;">
+        <div class="overview-card-title">🔬 Lab Script: <code>playground/01_chunking_demo.py</code></div>
+        <pre><code class="language-python">"""
+Playground 01 - See chunking with your own eyes.
+===============================================
+
+No AI needed for this one. Run it:
+
+    python playground/01_chunking_demo.py
+
+Then change CHUNK_SIZE and OVERLAP below and run it again.
+Watch how the pieces change. That is ALL chunking is.
+"""
+
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))   # so "import rag" works
+
+from rag.chunker import split_text
+
+# ---- try changing these two numbers! ----
+CHUNK_SIZE = 300
+OVERLAP = 120     # overlap repeats WHOLE sentences, so it must be >= one sentence long
+                  # try OVERLAP = 40 and watch the overlap disappear!
+# -----------------------------------------
+
+SAMPLE = """Pre-authorization (preauth) is a request sent by a hospital to an insurance company before treatment. It asks the insurer to confirm that the treatment will be covered.
+
+A preauth request contains the patient details, the policy number, the diagnosis, and the estimated cost. The insurer reviews it and replies with an approval, a partial approval, or a rejection.
+
+Sometimes the hospital needs to cancel a preauth. For example, the patient may decide not to go ahead with the treatment. In that case, the hospital sends a cancellation request referencing the original preauth ID. Once cancelled, the preauth cannot be reused and a fresh request must be created.
+
+After treatment, the hospital submits the final claim. The claim refers back to the approved preauth so the insurer can match them."""
+
+chunks = split_text(SAMPLE, chunk_size=CHUNK_SIZE, overlap=OVERLAP)
+
+print(f"Original text: {len(SAMPLE)} characters")
+print(f"CHUNK_SIZE={CHUNK_SIZE}  OVERLAP={OVERLAP}  ->  {len(chunks)} chunks\n")
+
+for i, chunk in enumerate(chunks, start=1):
+    print(f"========== CHUNK {i}  ({len(chunk)} chars) ==========")
+    print(chunk)
+    print()
+
+print("TIP: Look at the END of one chunk and the START of the next.")
+print("     The repeated words you see there are the OVERLAP.")
+</code></pre>
+    </div>
+
+    <div class="overview-card" style="margin-top: 24px;">
+        <div class="overview-card-title">🔬 Lab Script: <code>playground/02_embeddings_demo.py</code></div>
+        <pre><code class="language-python">"""
+Playground 02 - Feel what an embedding is.
+=========================================
+
+Needs Ollama running with `nomic-embed-text` pulled. Run:
+
+    python playground/02_embeddings_demo.py
+
+We embed a few sentences and compare EVERY pair.
+You will see that sentences with the same MEANING score high,
+even when they share almost no words.
+"""
+
+import math
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from rag import config, ollama_client
+
+SENTENCES = [
+    "How do I cancel a pre-authorization?",              # 0
+    "Steps to revoke a preauth request",                 # 1  same meaning as 0, different words
+    "The claim was settled and payment released",        # 2  related topic (insurance), different meaning
+    "My cat loves sleeping in the sun",                  # 3  totally unrelated
+    "Procedure for withdrawing an approval request",     # 4  similar meaning to 0/1
+]
+
+
+def cosine_similarity(a: list[float], b: list[float]) -> float:
+    """The formula behind "semantic search", written out by hand.
+
+    dot product  = multiply matching numbers and add them all up
+    length       = how long each arrow is
+    similarity   = dot / (length_a * length_b)   -> between -1 and 1
+    """
+    dot = sum(x * y for x, y in zip(a, b))
+    length_a = math.sqrt(sum(x * x for x in a))
+    length_b = math.sqrt(sum(y * y for y in b))
+    return dot / (length_a * length_b)
+
+
+vectors = ollama_client.embed([config.EMBED_DOCUMENT_PREFIX + s for s in SENTENCES])
+
+print(f"Each sentence became a list of {len(vectors[0])} numbers.")
+print(f"First 8 numbers of sentence 0: {[round(x, 3) for x in vectors[0][:8]]} ...\n")
+
+print("Similarity of every sentence to sentence 0:")
+print(f'   "{SENTENCES[0]}"\n')
+scores = sorted(
+    ((cosine_similarity(vectors[0], vectors[i]), i) for i in range(1, len(SENTENCES))),
+    reverse=True,
+)
+for score, i in scores:
+    bar = "#" * int(score * 40)
+    print(f"  {score:.3f}  {bar:<40}  {SENTENCES[i]}")
+
+print("\nNotice: sentence 1 shares almost NO words with sentence 0, but scores highest.")
+print("That is the power of embeddings: they compare MEANING, not spelling.")
+print("\nTRY THIS: add your own sentences to SENTENCES and guess the scores before running.")
+</code></pre>
+    </div>
+
+    <div class="overview-card" style="margin-top: 24px;">
+        <div class="overview-card-title">🔬 Lab Script: <code>playground/03_tiny_vector_db.py</code></div>
+        <pre><code class="language-python">"""
+Playground 03 - Build a tiny vector database in 30 lines.
+========================================================
+
+ChromaDB can feel like a black box. It isn't. At its heart, a vector DB does this:
+
+    1. keep a list of (text, vector) pairs
+    2. when a question comes in, turn it into a vector
+    3. compare it with every stored vector
+    4. return the closest ones
+
+Run:   python playground/03_tiny_vector_db.py
+
+(Real vector DBs add clever shortcuts so they don't have to compare with
+EVERY vector when you have millions - but the idea is exactly this.)
+"""
+
+import sys
+from pathlib import Path
+
+import numpy as np
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from rag import config, ollama_client
+
+
+class TinyVectorDB:
+    def __init__(self):
+        self.texts: list[str] = []
+        self.vectors: list[np.ndarray] = []
+
+    def add(self, texts: list[str]) -> None:
+        embeddings = ollama_client.embed([config.EMBED_DOCUMENT_PREFIX + t for t in texts])
+        for text, vec in zip(texts, embeddings):
+            self.texts.append(text)
+            v = np.array(vec)
+            self.vectors.append(v / np.linalg.norm(v))   # normalise: make every arrow length 1
+
+    def search(self, question: str, top_k: int = 3) -> list[tuple[float, str]]:
+        q = np.array(ollama_client.embed([config.EMBED_QUERY_PREFIX + question])[0])
+        q = q / np.linalg.norm(q)
+        # With length-1 arrows, cosine similarity is just the dot product.
+        scores = np.array(self.vectors) @ q
+        best = np.argsort(scores)[::-1][:top_k]          # indexes of the highest scores
+        return [(float(scores[i]), self.texts[i]) for i in best]
+
+
+db = TinyVectorDB()
+db.add([
+    "ABHA is a 14-digit health ID number issued under the Ayushman Bharat Digital Mission.",
+    "A preauth can be cancelled by sending a cancellation request with the original preauth ID.",
+    "PostgreSQL is an open-source relational database.",
+    "Claims are settled after the insurer verifies the final bill and discharge summary.",
+    "Redis is an in-memory key-value store often used for caching.",
+    "Consent artefacts let patients control who can see their health records.",
+])
+
+for question in [
+    "how to withdraw a pre authorization?",
+    "what is the health id number?",
+    "which tool is good for caching?",
+]:
+    print(f"\nQ: {question}")
+    for score, text in db.search(question):
+        print(f"   {score:.3f}  {text}")
+
+print("\nTRY THIS: ask a question that matches NOTHING (e.g. 'best pizza in town').")
+print("          Look at how LOW the best score is. That's why we use MIN_SIMILARITY.")
+</code></pre>
+    </div>
+
+    <div class="overview-card" style="margin-top: 24px;">
+        <div class="overview-card-title">🔬 Lab Script: <code>playground/04_keyword_vs_meaning.py</code></div>
+        <pre><code class="language-python">"""
+Playground 04 - Keyword search vs meaning search, side by side.
+==============================================================
+
+Needs Ollama running (for the meaning search). Run it:
+
+    python playground/04_keyword_vs_meaning.py
+
+Watch which method wins for each question:
+  - exact codes / names     -> keyword search shines
+  - same meaning, new words -> meaning search shines
+"""
+
+import sys
+from pathlib import Path
+
+import numpy as np
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))   # so "import rag" works
+
+from rag import embedder
+from rag.keyword_search import BM25Index, tokenize
+
+# A tiny "library" of 8 chunks. Notice how similar the error codes look.
+LIBRARY = [
+    "E-1046 Signature verification failed: the digital signature on the payload could not be verified.",
+    "E-1047 Consent artefact expired: ask the patient for a fresh consent through the ABHA app.",
+    "E-1048 Unsupported document format: only PDF, JPEG and PNG attachments are accepted.",
+    "E-1042 Duplicate submission: a request with the same correlation ID was already received.",
+    "To cancel a pre-authorization, the hospital sends a CancelRequest with the original preauth ID.",
+    "A claim must be submitted within 30 days of the patient's discharge from hospital.",
+    "ABHA is a 14-digit health ID number issued under the Ayushman Bharat Digital Mission.",
+    "Redis is an in-memory key-value store that is often used for caching.",
+]
+
+QUESTIONS = [
+    "what does E-1047 mean?",              # exact code      -> keyword should win
+    "how do I withdraw a preauth?",        # paraphrase      -> meaning should win ("withdraw" != "cancel")
+    "deadline for sending a claim",        # paraphrase      -> meaning
+    "ABHA",                                # rare term       -> both OK
+]
+
+print("How the keyword search 'sees' a sentence:")
+print("  ", tokenize("E-1047 Consent artefact expired: ask the patient..."), "\n")
+
+# ---- build both search engines over the same library
+ids = [f"chunk{i}" for i in range(len(LIBRARY))]
+bm25 = BM25Index(ids, LIBRARY, [{} for _ in LIBRARY])
+doc_vectors = np.array(embedder.embed_documents(LIBRARY))
+doc_vectors /= np.linalg.norm(doc_vectors, axis=1, keepdims=True)
+
+
+def meaning_top3(question):
+    q = np.array(embedder.embed_query(question))
+    q /= np.linalg.norm(q)
+    sims = doc_vectors @ q
+    best = np.argsort(-sims)[:3]
+    return [(float(sims[i]), LIBRARY[i]) for i in best]
+
+
+for question in QUESTIONS:
+    print("=" * 100)
+    print(f"Q: {question}")
+    print("  MEANING search (similarity 0..1):")
+    for score, text in meaning_top3(question):
+        print(f"     {score:.3f}  {text[:75]}")
+    print("  KEYWORD search (BM25 points):")
+    hits = bm25.search(question, top_k=3)
+    if not hits:
+        print("     (no chunk contains any of the question's words!)")
+    for r in hits:
+        print(f"     {r.keyword_score:6.2f}  {r.text[:75]}")
+
+print("\nTRY THIS: add your own sentences to LIBRARY and your own QUESTIONS.")
+print("          Can you find a question where only ONE of the two methods gets it right?")
+</code></pre>
+    </div>
+
+    <div class="overview-card" style="margin-top: 24px;">
+        <div class="overview-card-title">🔬 Lab Script: <code>playground/05_reranker_demo.py</code></div>
+        <pre><code class="language-python">"""
+Playground 05 - Meet the re-ranker (the careful judge).
+======================================================
+
+Needs Ollama running + PyTorch/transformers installed. Run it:
+
+    python playground/05_reranker_demo.py
+
+The first run downloads the re-ranker model (~2.2 GB) - be patient once.
+
+We compare two rankings of the SAME candidates:
+  1. meaning search  (question and chunk turned into numbers SEPARATELY)
+  2. re-ranker       (question and chunk read TOGETHER)
+"""
+
+import sys
+import time
+from pathlib import Path
+
+import numpy as np
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))   # so "import rag" works
+
+from rag import embedder, reranker
+
+if not reranker.is_available():
+    sys.exit("PyTorch/transformers are not installed. See docs/learning/11_reranking.md")
+
+EXAMPLES = {
+    "When can a preauth NOT be cancelled?": [
+        "A preauth can be cancelled at any time by sending a cancellation request.",
+        "Once the final claim has been submitted, the preauth is locked and cancellation is blocked.",
+        "A preauth request contains patient details, policy number and estimated cost.",
+        "Cancelled preauths cannot be reopened; create a fresh request instead.",
+    ],
+    "Who issues the ABHA number?": [
+        "ABHA numbers are used to link a patient's health records across hospitals.",
+        "The ABHA number is issued by the National Health Authority under the Ayushman Bharat Digital Mission.",
+        "Patients can download their ABHA card from the ABHA mobile app.",
+        "Health ID numbers are 14 digits long.",
+    ],
+}
+
+print("Loading the re-ranker (first time: downloading ~2.2 GB)...")
+started = time.perf_counter()
+device = reranker.warm_up()
+print(f"Ready on {device.upper()} in {time.perf_counter() - started:.1f}s\n")
+
+for question, candidates in EXAMPLES.items():
+    print("=" * 100)
+    print(f"Q: {question}\n")
+
+    # 1. meaning search
+    q = np.array(embedder.embed_query(question))
+    d = np.array(embedder.embed_documents(candidates))
+    sims = (d @ q) / (np.linalg.norm(d, axis=1) * np.linalg.norm(q))
+
+    # 2. re-ranker
+    started = time.perf_counter()
+    judge = reranker.score_pairs(question, candidates)
+    ms = (time.perf_counter() - started) * 1000
+
+    print("  MEANING SEARCH order:                       RE-RANKER order:")
+    by_meaning = np.argsort(-sims)
+    by_judge = np.argsort(-np.array(judge))
+    for rank in range(len(candidates)):
+        a, b = by_meaning[rank], by_judge[rank]
+        print(f"  {rank + 1}. {sims[a]:.3f}  {candidates[a][:30]:<30}...   "
+              f"{rank + 1}. {judge[b]:.3f}  {candidates[b][:45]}...")
+    print(f"\n  (re-ranker judged {len(candidates)} pairs in {ms:.0f} ms)\n")
+
+print("Notice: the re-ranker's scores are far more DECISIVE (close to 0 or close to 1),")
+print("and it understands words like NOT and WHO that meaning search mostly ignores.")
+print("\nTRY THIS: add your own question + 4 candidate sentences to EXAMPLES.")
+</code></pre>
+    </div>
+</div>
+
+</body>
+</html>

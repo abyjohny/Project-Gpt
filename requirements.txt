@@ -1,0 +1,35 @@
+# ---------------------------------------------------------------
+# Project GPT - Phase 1 + 2 (RAG from scratch)
+# ---------------------------------------------------------------
+# We deliberately keep this list SMALL so you can see every moving part.
+# No LangChain / LlamaIndex yet - we build those ideas ourselves first.
+
+# ---- Phase 1: the basic RAG pipeline ----
+requests>=2.31        # Talk to Ollama over HTTP (it runs a small local web server)
+chromadb>=1.0         # Our vector database (stores the "meaning numbers" of text)
+pymupdf>=1.24         # Read text out of PDF files (and photograph pages for OCR)
+python-docx>=1.1      # Read text out of Word (.docx) files
+numpy>=1.26           # Maths on lists of numbers (used in the playground lessons)
+rich>=13.7            # Pretty, colourful terminal output
+
+# ---- Phase 2: the re-ranker (optional - everything else works without it) ----
+# PyTorch is the engine that runs most AI models. The CUDA build uses your NVIDIA GPU.
+# (~2.5 GB download). No NVIDIA GPU? Remove the next line to get the smaller CPU build.
+--extra-index-url https://download.pytorch.org/whl/cu128
+torch>=2.4
+transformers>=4.44    # Loads the re-ranker model from Hugging Face
+
+# ---- Phase 4: Web UI & Server ----
+fastapi>=0.100
+uvicorn>=0.23
+python-multipart>=0.0.6  # For file uploads
+ddgs>=9.0                # Web search for Cowork mode (formerly "duckduckgo-search")
+
+# ---- Phase 6: Email Agent (Gmail) ----
+google-auth>=2.20
+google-auth-oauthlib>=1.0
+google-auth-httplib2>=0.1
+google-api-python-client>=2.90
+
+# ---- Phase 7: Gemini API (Job Hunter) ----
+google-genai>=0.1.0

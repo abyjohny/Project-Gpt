@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Your private documents and the generated vector database stay local
+data/documents/*
+!data/documents/.gitkeep
+data/vector_db/
+data/eval/
+data/sessions/
+data/credentials.json
+data/gmail_token.json
+data/client_secret*.json
+data/gemini_api_key.txt
+data/cv/*
+!data/cv/.gitkeep
+.env
+
+# Logs
+*.log
+server.log
+
+# Editors / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

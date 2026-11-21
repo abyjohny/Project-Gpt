@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJP - Private Document Assistant</title>
+    <meta name="description" content="Agent Jose Pereira (AJP): a private, local AI assistant that answers from your own documents with citations, and can research the web in Cowork mode.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Icons + markdown libraries are served locally (web/vendor) so the UI works offline -->
+    <link rel="stylesheet" href="/static/vendor/phosphor/style.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- Left Sidebar -->
+        <aside class="sidebar" id="sidebar" aria-label="Sidebar">
+            <div class="sidebar-header">
+                <button class="icon-btn" id="toggle-sidebar" aria-label="Collapse sidebar" title="Collapse sidebar">
+                    <i class="ph ph-sidebar-simple"></i>
+                </button>
+                <span class="logo-text">AJP</span>
+            </div>
+
+            <button class="new-chat-btn" id="new-chat-btn" title="New chat (Ctrl+Shift+O)">
+                <i class="ph ph-plus"></i>
+                <span>New chat</span>
+            </button>
+
+            <nav class="sidebar-menu">
+                <button class="menu-item" id="open-documents-btn">
+                    <i class="ph ph-files"></i><span>Documents</span>
+                    <span class="menu-count" id="doc-count"></span>
+                </button>
+                <button class="menu-item" id="open-settings-btn">
+                    <i class="ph ph-gauge"></i><span>System &amp; Stats</span>
+                </button>
+                <a href="/jobs" class="menu-item" id="open-jobs-btn">
+                    <i class="ph ph-briefcase"></i><span>Job Hunter</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-section">
+                <div class="section-title">Recent chats</div>
+                <ul class="session-list" id="session-list"></ul>
+                <p class="session-empty" id="session-empty">Your conversations will appear here.</p>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="engine-status" id="engine-status" title="Local engine status">
+                    <span class="status-dot" id="status-dot"></span>
+                    <div class="engine-details">
+                        <span class="engine-name" id="engine-name">Connecting...</span>
+                        <span class="engine-sub" id="engine-sub">Local &middot; private</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content is-empty" id="main">
+
+            <header class="topbar">
+                <button class="icon-btn hidden" id="open-sidebar-btn" aria-label="Open sidebar" title="Open sidebar">
+                    <i class="ph ph-sidebar-simple"></i>
+                </button>
+                <div class="topbar-title" id="topbar-title"></div>
+                <div class="top-badge" id="top-badge">AJP Local <span id="badge-mode">Chat</span></div>
+            </header>
+
+            <section class="conversation" id="conversation" aria-live="polite">
+                <div class="welcome" id="welcome">
+                    <h1 class="welcome-title" id="greeting">Good evening.</h1>
+                    <p class="welcome-sub" id="welcome-sub">Ask anything about your documents. Answers cite their sources.</p>
+                </div>
+                <div class="messages" id="messages"></div>
+            </section>
+
+            <div class="composer-dock">
+                <!-- Agent mode: the folders the agent may read (sandbox) -->
+                <div class="agent-folders hidden" id="agent-folders" aria-label="Allowed folders">
+                    <span class="agent-folders-label"><i class="ph ph-folder-open"></i>Folders</span>
+                    <div class="folder-chips" id="folder-chips"></div>
+                    <form class="folder-add hidden" id="folder-add-form" autocomplete="off">
+                        <input type="text" id="folder-input" placeholder="D:\dev\my-project" aria-label="Folder path" spellcheck="false">
+                        <button type="submit" class="folder-add-ok" id="folder-add-ok" title="Allow folder"><i class="ph ph-check"></i></button>
+                    </form>
+                    <button type="button" class="folder-add-btn" id="folder-add-btn" title="Allow the agent to read a folder">
+                        <i class="ph ph-folder-simple-plus"></i><span>Add folder</span>
+                    </button>
+                </div>
+                <form class="chat-input-box" id="composer" autocomplete="off">
+                    <div class="input-row">
+                        <textarea id="chat-input" placeholder="How can I help you today?" rows="1" aria-label="Message"></textarea>
+                    </div>
+                    <div class="input-controls">
+                        <div class="left-controls">
+                            <button type="button" class="icon-btn-small" id="attach-btn" aria-label="Add documents" title="Add documents to your knowledge base">
+                                <i class="ph ph-paperclip"></i>
+                            </button>
+                            <div class="mode-toggle" role="tablist" aria-label="Assistant mode">
+                                <button type="button" class="mode-btn active" id="mode-chat" role="tab" aria-selected="true" title="Answer from your documents only">
+                                    <i class="ph ph-chat-centered-text"></i>Chat
+                                </button>
+                                <button type="button" class="mode-btn" id="mode-cowork" role="tab" aria-selected="false" title="Documents + live web research">
+                                    <i class="ph ph-globe-hemisphere-west"></i>Cowork
+                                </button>
+                                <button type="button" class="mode-btn" id="mode-agent" role="tab" aria-selected="false" title="Explore folders and codebases on this computer (read-only)">
+                                    <i class="ph ph-robot"></i>Agent
+                                </button>
+                                <button type="button" class="mode-btn" id="mode-email" role="tab" aria-selected="false" title="Read, search, and send emails from your Gmail">
+                                    <i class="ph ph-envelope"></i>Email
+                                </button>
+                            </div>
+                        </div>
+                        <div class="right-controls">
+                            <span class="model-name" id="model-name">Local model</span>
+                            <button type="submit" class="send-btn" id="send-btn" aria-label="Send message" title="Send (Enter)" disabled>
+                                <i class="ph ph-arrow-up"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <p class="composer-hint" id="composer-hint">Chat mode: answers come only from your documents. Nothing leaves this computer.</p>
+            </div>
+        </main>
+
+        <!-- Settings: Documents + System -->
+        <div class="modal-overlay hidden" id="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="settings-title">Workspace</h2>
+                    <div class="modal-tabs" role="tablist">
+                        <button class="tab-btn active" data-tab="documents" id="tab-documents" role="tab">
+                            <i class="ph ph-files"></i>Documents
+                        </button>
+                        <button class="tab-btn" data-tab="system" id="tab-system" role="tab">
+                            <i class="ph ph-gauge"></i>System
+                        </button>
+                    </div>
+                    <button class="icon-btn" id="close-settings-btn" aria-label="Close"><i class="ph ph-x"></i></button>
+                </div>
+
+                <div class="modal-body">
+                    <!-- Documents tab -->
+                    <div class="tab-panel" id="panel-documents">
+                        <div class="upload-dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload documents">
+                            <i class="ph ph-upload-simple"></i>
+                            <div>
+                                <strong>Drop files here or click to browse</strong>
+                                <span class="dropzone-sub">PDF, Word, text, Markdown, code and images (OCR). Indexed locally.</span>
+                            </div>
+                        </div>
+                        <ul class="upload-queue" id="upload-queue"></ul>
+
+                        <div class="panel-heading">
+                            <h3>Knowledge base</h3>
+                            <span class="panel-meta" id="kb-summary"></span>
+                        </div>
+                        <ul class="doc-list" id="doc-list"></ul>
+                    </div>
+
+                    <!-- System tab -->
+                    <div class="tab-panel hidden" id="panel-system">
+                        <div class="stats-grid" id="stats-grid">
+                            <div class="stat-card wide">
+                                <div class="stat-head">
+                                    <span class="stat-label"><i class="ph ph-graphics-card"></i>GPU memory</span>
+                                    <span class="stat-value" id="stat-vram">-</span>
+                                </div>
+                                <div class="meter"><div class="meter-fill" id="stat-vram-bar"></div></div>
+                                <span class="stat-foot" id="stat-gpu-name">-</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label"><i class="ph ph-cpu"></i>GPU load</span>
+                                <span class="stat-big" id="stat-gpu-util">-</span>
+                                <span class="stat-foot" id="stat-gpu-temp">-</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label"><i class="ph ph-lightning"></i>Last answer speed</span>
+                                <span class="stat-big" id="stat-tps">-</span>
+                                <span class="stat-foot" id="stat-tps-foot">Ask a question to measure</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label"><i class="ph ph-database"></i>Knowledge base</span>
+                                <span class="stat-big" id="stat-chunks">-</span>
+                                <span class="stat-foot" id="stat-files">-</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label"><i class="ph ph-plugs-connected"></i>Ollama</span>
+                                <span class="stat-big" id="stat-ollama">-</span>
+                                <span class="stat-foot" id="stat-loaded">-</span>
+                            </div>
+                        </div>
+                        <div class="config-list" id="config-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="toast-stack" id="toast-stack" aria-live="assertive"></div>
+    </div>
+
+    <script src="/static/vendor/marked.min.js"></script>
+    <script src="/static/vendor/purify.min.js"></script>
+    <script src="/static/app.js"></script>
+</body>
+</html>
