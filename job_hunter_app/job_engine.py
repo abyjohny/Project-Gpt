@@ -15,6 +15,7 @@ import uuid
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 from pathlib import Path
+from urllib.parse import urlparse
 
 import requests
 from ddgs import DDGS
@@ -46,24 +47,46 @@ FILTERED_EMAIL_PREFIXES = {
     "marketing", "sales", "billing", "feedback", "unsubscribe",
 }
 
-AGGREGATOR_DOMAINS = {
-    "linkedin.com", "indeed.com", "glassdoor.com", "monster.com",
-    "naukri.com", "ziprecruiter.com", "simplyhired.com", "dice.com",
-    "careerbuilder.com", "jooble.org", "jobrapido.com", "adzuna.com",
-    "reed.co.uk", "totaljobs.com", "cwjobs.co.uk", "seek.com.au",
-    "shine.com", "foundit.in", "instahyre.com", "hirist.com",
-    "timesjobs.com", "apna.co", "cutshort.io", "wellfound.com",
-    "workatastartup.com", "builtin.com",
+# ------------------------------------------------------------------
+# Strict Whitelist & Blacklist for Strict Job Search
+# ------------------------------------------------------------------
+
+VERIFIED_JOB_PLATFORMS = {
+    # Major Global & Regional Job Boards / Aggregators
+    "linkedin.com", "indeed.com", "naukri.com", "glassdoor.com", "glassdoor.co.in",
+    "foundit.in", "monster.com", "shine.com", "instahyre.com", "hirist.com",
+    "hirist.tech", "cutshort.io", "apna.co", "timesjobs.com", "wellfound.com",
+    "angel.co", "workatastartup.com", "builtin.com", "dice.com", "ziprecruiter.com",
+    "simplyhired.com", "careerbuilder.com", "jooble.org", "adzuna.com", "adzuna.in",
+    "reed.co.uk", "totaljobs.com", "cwjobs.co.uk", "seek.com.au", "remoteok.com",
+    "weworkremotely.com", "otta.com", "levels.fyi", "flexjobs.com", "hired.com",
+    "catchwork.jobs", "jobrapido.com",
+
+    # Applicant Tracking Systems (ATS / Direct Application Portals)
+    "greenhouse.io", "lever.co", "myworkdayjobs.com", "ashbyhq.com",
+    "bamboohr.com", "smartrecruiters.com", "workable.com", "recruitee.com",
+    "breezy.hr", "jobvite.com", "taleo.net", "jobs2web.com", "successfactors.com",
+    "rippling-ats.com", "teamtailor.com", "pinpointhq.com", "personio.com",
+    "personio.de", "applytojob.com",
 }
 
-BLOCKED_DOMAINS = {
+BLOCKED_NON_JOB_DOMAINS = {
     "wikipedia.org", "w3schools.com", "geeksforgeeks.org", "tutorialspoint.com",
-    "python.org", "github.com", "gitlab.com", "youtube.com", "reddit.com",
-    "quora.com", "medium.com", "stackoverflow.com", "stackexchange.com",
+    "python.org", "github.com", "gitlab.com", "bitbucket.org", "sourceforge.net",
+    "youtube.com", "reddit.com", "quora.com", "medium.com", "substack.com",
+    "twitter.com", "x.com", "facebook.com", "instagram.com", "tiktok.com",
+    "stackoverflow.com", "stackexchange.com", "dev.to", "hashnode.com",
     "coursera.org", "udemy.com", "edx.org", "freecodecamp.org", "javatpoint.com",
-    "docs.python.org", "pypi.org", "a-z-animals.com", "iere.org", "britannica.com",
+    "docs.python.org", "pypi.org", "grokipedia.com", "britannica.com",
     "investopedia.com", "khanacademy.org", "codecademy.com", "datacamp.com",
-    "simplilearn.com", "programiz.com", "baeldung.com", "dev.to", "hashnode.com",
+    "simplilearn.com", "programiz.com", "baeldung.com", "a-z-animals.com", "iere.org",
+    "timesofindia.indiatimes.com", "ndtv.com", "thehindu.com", "hindustantimes.com",
+    "news18.com", "indiatoday.in", "indianexpress.com", "techcrunch.com", "theverge.com",
+}
+
+AD_AND_TRACKER_DOMAINS = {
+    "bing.com", "googleadservices.com", "doubleclick.net", "adclick", "clickserve",
+    "advertising.com", "outbrain.com", "taboola.com",
 }
 
 BLOCKED_TITLE_PATTERNS = {
@@ -72,6 +95,12 @@ BLOCKED_TITLE_PATTERNS = {
     "interview questions", "learn python", "guide for beginners", "syntax",
     "compiler", "interpreter", "ide online", "ide, editor", "introduction to",
 }
+
+CAREER_PATH_INDICATORS = (
+    "/careers", "/career", "/jobs", "/job/", "/openings", "/opening",
+    "/vacancies", "/vacancy", "/positions", "/position", "/join-us",
+    "/work-with-us", "/apply",
+)
 
 JOB_INTENT_KEYWORDS = {
     "job", "jobs", "hiring", "vacancy", "vacancies", "career", "careers",
@@ -82,26 +111,109 @@ JOB_INTENT_KEYWORDS = {
 }
 
 
-def is_valid_job_listing(title: str, url: str, snippet: str) -> bool:
-    """Filter out non-job content like documentation, tutorials, and encyclopedias."""
-    url_l = url.lower()
-    title_l = title.lower()
-    combined = f"{title_l} {snippet.lower()}"
+def classify_and_filter_job(url: str, title: str, snippet: str) -> dict | None:
+    """
+    STRICT job search filter:
+    Returns job metadata dict ONLY if the URL is a verified job board, ATS, or direct company career page.
+    Returns None if the URL is an encyclopedia, blog, ad redirect, tutorial, or non-job page.
+    """
+    if not url or not url.startswith("http"):
+        return None
 
-    # Discard non-job domains
-    if any(d in url_l for d in BLOCKED_DOMAINS):
-        return False
+    parsed = urlparse(url)
+    host = parsed.netloc.lower()
+    path = parsed.path.lower()
+    combined_text = f"{title.lower()} {snippet.lower()}"
 
-    # Discard educational/informational title patterns
-    if any(p in title_l for p in BLOCKED_TITLE_PATTERNS):
-        return False
+    # 1. Block ad trackers, click redirects, and affiliate wrappers
+    if any(ad in host or ad in path for ad in AD_AND_TRACKER_DOMAINS):
+        return None
 
-    # Known aggregator job boards are already job portals
-    if any(d in url_l for d in AGGREGATOR_DOMAINS):
-        return True
+    # 2. Block known non-job domains (encyclopedias, tutorials, news, social)
+    if any(blocked in host for blocked in BLOCKED_NON_JOB_DOMAINS):
+        return None
 
-    # For general web results, require at least one job keyword
-    return any(kw in combined for kw in JOB_INTENT_KEYWORDS)
+    # 3. Block tutorial/documentation/compiler titles
+    if any(w in title.lower() for w in BLOCKED_TITLE_PATTERNS):
+        return None
+
+    # 4. Check if it's a Verified Job Platform or ATS
+    matched_platform = None
+    for p in VERIFIED_JOB_PLATFORMS:
+        if p in host:
+            matched_platform = p
+            break
+
+    if matched_platform:
+        is_ats = any(ats in host for ats in (
+            "greenhouse.io", "lever.co", "myworkdayjobs.com", "ashbyhq.com",
+            "bamboohr.com", "smartrecruiters.com", "workable.com", "recruitee.com",
+            "breezy.hr", "jobvite.com", "taleo.net", "jobs2web.com", "successfactors.com",
+            "rippling-ats.com", "teamtailor.com", "pinpointhq.com", "personio.com",
+            "applytojob.com",
+        ))
+        source_name = matched_platform.split(".")[0].capitalize()
+        return {
+            "source": f"{source_name} (ATS)" if is_ats else source_name,
+            "posting_type": "direct" if is_ats else "aggregator",
+        }
+
+    # 5. Check if it's an authentic Company Career Page
+    is_career_subdomain = host.startswith("careers.") or host.startswith("jobs.")
+    is_career_path = any(p in path for p in CAREER_PATH_INDICATORS)
+
+    if (is_career_subdomain or is_career_path) and any(k in combined_text for k in JOB_INTENT_KEYWORDS):
+        clean_domain = host.replace("www.", "").replace("careers.", "").replace("jobs.", "")
+        company_name = clean_domain.split(".")[0].capitalize()
+        return {
+            "source": f"{company_name} Careers",
+            "posting_type": "direct",
+        }
+
+    # If it does not belong to a verified job site or company career page: REJECT
+    return None
+
+
+def extract_company_name(url: str, title: str) -> str:
+    """Extract clean company name from ATS URLs, career subdomains, or title separators."""
+    parsed = urlparse(url)
+    host = parsed.netloc.lower()
+    path = parsed.path.strip("/").split("/")
+
+    # Check ATS path/subdomain structures
+    if "greenhouse.io" in host and path:
+        return path[0].replace("-", " ").title()
+    if "lever.co" in host and path:
+        return path[0].replace("-", " ").title()
+    if "ashbyhq.com" in host and path:
+        return path[0].replace("-", " ").title()
+    if "workable.com" in host and path:
+        return path[0].replace("-", " ").title()
+    if "myworkdayjobs.com" in host:
+        return host.split(".")[0].replace("-", " ").title()
+
+    # Title parsing: "Role at Company", "Role - Company", "Role | Company"
+    for sep in (" at ", " | ", " - "):
+        if sep in title:
+            parts = title.split(sep)
+            if len(parts) >= 2:
+                candidate = parts[1].strip()
+                if candidate.lower() not in (
+                    "linkedin", "indeed", "glassdoor", "naukri", "greenhouse software",
+                    "lever", "workday", "ashby", "jobs", "careers",
+                ):
+                    return candidate
+            if "hiring" in parts[0].lower():
+                cand = parts[0].replace("hiring", "").strip()
+                if cand:
+                    return cand
+
+    # Company careers subdomain
+    if host.startswith("careers.") or host.startswith("jobs."):
+        clean = host.replace("careers.", "").replace("jobs.", "").replace("www.", "")
+        return clean.split(".")[0].title()
+
+    return ""
 
 
 # ------------------------------------------------------------------
@@ -141,7 +253,7 @@ def search_jobs(
     date_to: str = "",
     experience: str = "",
 ) -> list[dict]:
-    """Search DuckDuckGo for job postings. Returns deduplicated list of dicts."""
+    """Search DuckDuckGo for job postings. Returns strictly verified job postings only."""
     location = f"{state} {country}".strip() if state else country
     exp_tag = f" {experience}" if experience else ""
 
@@ -158,14 +270,18 @@ def search_jobs(
         search_role = role_clean
 
     queries = [
+        # Verified Job Boards
+        f"{search_role}{exp_tag} jobs in {location} site:linkedin.com/jobs",
+        f"{search_role}{exp_tag} jobs {location} site:indeed.com",
+        f"{search_role}{exp_tag} jobs {location} site:naukri.com" if "india" in location.lower() else f"{search_role}{exp_tag} jobs {location} site:glassdoor.com",
+        # ATS & Direct Application Portals
+        f"{search_role}{exp_tag} {location} site:boards.greenhouse.io",
+        f"{search_role}{exp_tag} {location} site:jobs.lever.co",
+        f"{search_role}{exp_tag} {location} site:myworkdayjobs.com",
+        f"{search_role}{exp_tag} {location} site:jobs.ashbyhq.com",
+        # Broad job openings
         f"{search_role}{exp_tag} jobs {location}",
-        f"{search_role}{exp_tag} hiring {location}",
-        f"{search_role}{exp_tag} careers {location}",
-        f"{search_role}{exp_tag} jobs in {location} site:linkedin.com",
-        f"{search_role}{exp_tag} jobs in {location} site:indeed.com",
     ]
-    if "india" in location.lower():
-        queries.append(f"{search_role}{exp_tag} jobs in {location} site:naukri.com")
 
     if date_from:
         queries = [f"{q} after:{date_from}" for q in queries]
@@ -179,35 +295,24 @@ def search_jobs(
         try:
             raw = DDGS().text(query, max_results=10) or []
         except Exception as exc:
-            logger.warning("DuckDuckGo query failed: %s — %s", query, exc)
+            logger.debug("DuckDuckGo query returned no items: %s (%s)", query, exc)
             continue
 
         for r in raw:
             url = r.get("href", "")
             if not url or url in seen_urls:
                 continue
-            seen_urls.add(url)
 
             title = r.get("title", "").strip()
             snippet = r.get("body", "").strip()
 
-            # Filter out non-job content (encyclopedias, tutorials, documentation, etc.)
-            if not is_valid_job_listing(title, url, snippet):
+            # STRICT FILTER: strictly accept ONLY verified job boards, ATS, or company career pages
+            job_meta = classify_and_filter_job(url, title, snippet)
+            if not job_meta:
                 continue
 
-            source = "web"
-            for site in ("linkedin.com", "indeed.com", "glassdoor.com", "monster.com", "naukri.com"):
-                if site in url:
-                    source = site.split(".")[0]
-                    break
-
-            company = ""
-            for sep in (" at ", " - ", " | "):
-                if sep in title:
-                    parts = title.split(sep)
-                    if len(parts) >= 2:
-                        company = parts[1].strip()
-                    break
+            seen_urls.add(url)
+            company = extract_company_name(url, title)
 
             results.append({
                 "title": title,
@@ -215,8 +320,8 @@ def search_jobs(
                 "location": location,
                 "url": url,
                 "snippet": snippet,
-                "source": source,
-                "posting_type": "aggregator" if any(d in url for d in AGGREGATOR_DOMAINS) else "direct",
+                "source": job_meta["source"],
+                "posting_type": job_meta["posting_type"],
                 "has_company": bool(company and company.lower() not in (
                     "unknown", "", "n/a", "various", "multiple", "confidential",
                     "not specified", "undisclosed",
