@@ -26,13 +26,12 @@ from datetime import datetime
 from pathlib import Path
 
 import uvicorn
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 from fastapi import FastAPI, File, HTTPException, Request, Response, UploadFile
-from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
-from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel, Field
-
-load_dotenv()
 
 import auth
 import job_engine

@@ -18,9 +18,11 @@ import os
 from pathlib import Path
 
 from itsdangerous import URLSafeTimedSerializer, BadSignature, SignatureExpired
-from dotenv import load_dotenv
-
-load_dotenv()
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 logger = logging.getLogger("auth")
 
