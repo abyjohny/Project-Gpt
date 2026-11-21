@@ -11,6 +11,7 @@ from __future__ import annotations
 import json
 import logging
 import re
+import time
 import uuid
 from datetime import datetime, timezone
 from html.parser import HTMLParser
@@ -54,20 +55,29 @@ FILTERED_EMAIL_PREFIXES = {
 VERIFIED_JOB_PLATFORMS = {
     # Major Global & Regional Job Boards / Aggregators
     "linkedin.com", "indeed.com", "naukri.com", "glassdoor.com", "glassdoor.co.in",
-    "foundit.in", "monster.com", "shine.com", "instahyre.com", "hirist.com",
-    "hirist.tech", "cutshort.io", "apna.co", "timesjobs.com", "wellfound.com",
-    "angel.co", "workatastartup.com", "builtin.com", "dice.com", "ziprecruiter.com",
-    "simplyhired.com", "careerbuilder.com", "jooble.org", "adzuna.com", "adzuna.in",
-    "reed.co.uk", "totaljobs.com", "cwjobs.co.uk", "seek.com.au", "remoteok.com",
-    "weworkremotely.com", "otta.com", "levels.fyi", "flexjobs.com", "hired.com",
-    "catchwork.jobs", "jobrapido.com",
+    "foundit.in", "monster.com", "monster.co.uk", "shine.com", "instahyre.com",
+    "hirist.com", "hirist.tech", "cutshort.io", "apna.co", "timesjobs.com",
+    "wellfound.com", "angel.co", "workatastartup.com", "builtin.com", "dice.com",
+    "ziprecruiter.com", "simplyhired.com", "careerbuilder.com", "jooble.org",
+    "adzuna.com", "adzuna.in", "adzuna.co.uk", "reed.co.uk", "totaljobs.com",
+    "cwjobs.co.uk", "cv-library.co.uk", "jobsite.co.uk", "seek.com.au", "seek.co.nz",
+    "remoteok.com", "weworkremotely.com", "otta.com", "levels.fyi", "flexjobs.com",
+    "hired.com", "catchwork.jobs", "jobrapido.com", "jobbank.gc.ca", "usajobs.gov", "gov.uk",
 
-    # Applicant Tracking Systems (ATS / Direct Application Portals)
+    # Healthcare, Nursing & Medical Portals
+    "nhs.jobs", "nurses.co.uk", "healthjobsuk.com", "nursejobsworld.com",
+    "nursingtimesjobs.co.uk", "bmj.com", "healthcareers.nhs.uk", "practicematch.com",
+
+    # Education & Academia Portals
+    "tes.com", "timeshighereducation.com", "higheredjobs.com", "schoolspring.com",
+    "efinancialcareers.com",
+
+    # Applicant Tracking Systems (ATS / Direct Application Portals for all sectors)
     "greenhouse.io", "lever.co", "myworkdayjobs.com", "ashbyhq.com",
     "bamboohr.com", "smartrecruiters.com", "workable.com", "recruitee.com",
     "breezy.hr", "jobvite.com", "taleo.net", "jobs2web.com", "successfactors.com",
     "rippling-ats.com", "teamtailor.com", "pinpointhq.com", "personio.com",
-    "personio.de", "applytojob.com",
+    "personio.de", "applytojob.com", "icims.com", "brassring.com",
 }
 
 BLOCKED_NON_JOB_DOMAINS = {
@@ -90,10 +100,11 @@ AD_AND_TRACKER_DOMAINS = {
 }
 
 BLOCKED_TITLE_PATTERNS = {
-    "(programming language)", "tutorial", "tutorials", "documentation",
-    "download python", "what is", "cheat sheet", "cheatsheet", "roadmap",
-    "interview questions", "learn python", "guide for beginners", "syntax",
-    "compiler", "interpreter", "ide online", "ide, editor", "introduction to",
+    "tutorial", "tutorials", "documentation", "download ", "what is a ",
+    "what is an ", "cheat sheet", "cheatsheet", "roadmap", "interview questions",
+    "guide for beginners", "syntax", "compiler", "interpreter",
+    "ide online", "ide, editor", "introduction to ", "course overview", "syllabus",
+    "curriculum", "meaning in ", "definition of ", "how to learn ",
 }
 
 CAREER_PATH_INDICATORS = (
@@ -105,9 +116,13 @@ CAREER_PATH_INDICATORS = (
 JOB_INTENT_KEYWORDS = {
     "job", "jobs", "hiring", "vacancy", "vacancies", "career", "careers",
     "opening", "openings", "role", "roles", "position", "positions",
-    "recruitment", "apply", "developer", "engineer", "salary", "full-time",
-    "part-time", "contract", "remote", "fresher", "intern", "experienced",
-    "walkin", "walk-in", "work from home", "wfh", "talent", "opportunity",
+    "recruitment", "apply", "salary", "full-time", "part-time", "contract",
+    "permanent", "temporary", "shift", "band", "grade", "staff", "associate",
+    "assistant", "manager", "officer", "specialist", "executive", "lead",
+    "director", "consultant", "worker", "technician", "practitioner", "intern",
+    "remuneration", "opportunity", "opportunities", "nurse", "nursing",
+    "doctor", "accountant", "analyst", "developer", "engineer", "teacher",
+    "advisor", "coordinator", "representative", "operator",
 }
 
 
@@ -245,6 +260,27 @@ def extract_cv_text(filepath: Path) -> str:
 # Job search (DuckDuckGo)
 # ------------------------------------------------------------------
 
+def get_timelimit(date_from: str) -> str | None:
+    """Map date_from string (YYYY-MM-DD) to DuckDuckGo timelimit parameter ('d', 'w', 'm', 'y')."""
+    if not date_from:
+        return None
+    try:
+        from_dt = datetime.strptime(date_from.strip(), "%Y-%m-%d").replace(tzinfo=timezone.utc)
+        now = datetime.now(timezone.utc)
+        diff_days = (now - from_dt).days
+        if diff_days <= 1:
+            return "d"
+        elif diff_days <= 7:
+            return "w"
+        elif diff_days <= 35:
+            return "m"
+        elif diff_days <= 365:
+            return "y"
+    except Exception:
+        pass
+    return None
+
+
 def search_jobs(
     role: str,
     country: str,
@@ -253,47 +289,46 @@ def search_jobs(
     date_to: str = "",
     experience: str = "",
 ) -> list[dict]:
-    """Search DuckDuckGo for job postings. Returns strictly verified job postings only."""
+    """Search DuckDuckGo for job postings across ANY profession. Returns strictly verified postings."""
     location = f"{state} {country}".strip() if state else country
-    exp_tag = f" {experience}" if experience else ""
 
-    # Normalize role: if user entered only a technology/skill (e.g. 'python', 'react'), ensure job intent
-    role_clean = role.strip()
-    role_lower = role_clean.lower()
-    role_nouns = (
-        "developer", "engineer", "programmer", "architect", "lead", "specialist",
-        "analyst", "manager", "designer", "consultant", "scientist", "tester", "intern",
-    )
-    if not any(noun in role_lower for noun in role_nouns) and "job" not in role_lower:
-        search_role = f"{role_clean} Developer"
+    # Role handling: respect exactly what the user entered for ANY field (Nurse, Accountant, Chef, Developer, etc.)
+    search_role = role.strip()
+    # Prepend experience naturally if provided and not already in role (e.g. "Senior Nurse", not "Nurse Senior")
+    if experience and experience.lower() not in search_role.lower():
+        full_role = f"{experience} {search_role}".strip()
     else:
-        search_role = role_clean
+        full_role = search_role
 
+    # Focused, high-yield queries (avoiding rate limits and timeouts)
     queries = [
-        # Verified Job Boards
-        f"{search_role}{exp_tag} jobs in {location} site:linkedin.com/jobs",
-        f"{search_role}{exp_tag} jobs {location} site:indeed.com",
-        f"{search_role}{exp_tag} jobs {location} site:naukri.com" if "india" in location.lower() else f"{search_role}{exp_tag} jobs {location} site:glassdoor.com",
-        # ATS & Direct Application Portals
-        f"{search_role}{exp_tag} {location} site:boards.greenhouse.io",
-        f"{search_role}{exp_tag} {location} site:jobs.lever.co",
-        f"{search_role}{exp_tag} {location} site:myworkdayjobs.com",
-        f"{search_role}{exp_tag} {location} site:jobs.ashbyhq.com",
-        # Broad job openings
-        f"{search_role}{exp_tag} jobs {location}",
+        f"{full_role} jobs in {location}",
+        f"{full_role} vacancies in {location}",
     ]
 
-    if date_from:
-        queries = [f"{q} after:{date_from}" for q in queries]
-    if date_to:
-        queries = [f"{q} before:{date_to}" for q in queries]
+    loc_lower = location.lower()
+    if "united kingdom" in loc_lower or " uk" in loc_lower:
+        queries.append(f"{full_role} jobs in {location} site:reed.co.uk")
+    elif "india" in loc_lower:
+        queries.append(f"{full_role} jobs in {location} site:naukri.com")
+    elif "canada" in loc_lower:
+        queries.append(f"{full_role} jobs in {location} site:ca.indeed.com")
+    elif "australia" in loc_lower:
+        queries.append(f"{full_role} jobs in {location} site:seek.com.au")
+    else:
+        queries.append(f"{full_role} jobs in {location} site:indeed.com")
+
+    timelimit = get_timelimit(date_from)
 
     seen_urls: set[str] = set()
     results: list[dict] = []
 
     for query in queries:
         try:
-            raw = DDGS().text(query, max_results=10) or []
+            kwargs = {"max_results": 10}
+            if timelimit:
+                kwargs["timelimit"] = timelimit
+            raw = DDGS().text(query, **kwargs) or []
         except Exception as exc:
             logger.debug("DuckDuckGo query returned no items: %s (%s)", query, exc)
             continue
@@ -327,6 +362,9 @@ def search_jobs(
                     "not specified", "undisclosed",
                 )),
             })
+
+        # Polite delay to protect against search engine rate limits
+        time.sleep(0.3)
 
     return results
 
