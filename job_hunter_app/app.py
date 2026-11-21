@@ -267,7 +267,7 @@ async def auth_login(request: Request):
             )
         else:
             raise HTTPException(500, "Google OAuth is not configured on this server. Please set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in the Render dashboard.")
-    url = auth.get_auth_url()
+    url = auth.get_auth_url(request)
     return RedirectResponse(url)
 
 
@@ -325,7 +325,7 @@ async def auth_callback(request: Request, code: str = "", error: str = ""):
 
     try:
         # Exchange code for tokens
-        tokens = auth.exchange_code(code)
+        tokens = auth.exchange_code(code, request)
         access_token = tokens.get("access_token")
         if not access_token:
             raise ValueError("No access token received")

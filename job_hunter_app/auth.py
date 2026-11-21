@@ -76,10 +76,44 @@ def is_oauth_configured() -> bool:
     return bool(get_client_id() and get_client_secret())
 
 
-def get_auth_url() -> str:
+def get_base_url(request=None) -> str:
+    """Determine the base URL accurately across local and cloud environments."""
+    # 1. Explicit env var if set and valid http/https URL
+    env_base = os.environ.get("BASE_URL", "").strip().rstrip("/")
+    if env_base and env_base.startswith("http"):
+        return env_base
+
+    # 2. Render-provided external URL (e.g. https://job-hunter-fg50.onrender.com)
+    render_url = os.environ.get("RENDER_EXTERNAL_URL", "").strip().rstrip("/")
+    if render_url and render_url.startswith("http"):
+        return render_url
+
+    # 3. Dynamic from incoming request headers
+    if request is not None:
+        scheme = request.headers.get("x-forwarded-proto") or getattr(getattr(request, "url", None), "scheme", "https")
+        if os.environ.get("RENDER"):
+            scheme = "https"
+        host = (
+            request.headers.get("x-forwarded-host")
+            or request.headers.get("host")
+            or getattr(getattr(request, "url", None), "netloc", "")
+        )
+        if host:
+            return f"{scheme}://{host}".rstrip("/")
+
+    # 4. Fallback for Render if request was not passed
+    if os.environ.get("RENDER"):
+        return "https://job-hunter-fg50.onrender.com"
+
+    # 5. Local fallback
+    return "http://localhost:8080"
+
+
+def get_auth_url(request=None) -> str:
     """Build the Google OAuth authorization URL."""
     import urllib.parse
-    redirect_uri = f"{BASE_URL}/auth/callback"
+    base_url = get_base_url(request)
+    redirect_uri = f"{base_url}/auth/callback"
     params = {
         "client_id": get_client_id(),
         "redirect_uri": redirect_uri,
@@ -92,10 +126,11 @@ def get_auth_url() -> str:
     return f"https://accounts.google.com/o/oauth2/v2/auth?{urllib.parse.urlencode(params)}"
 
 
-def exchange_code(code: str) -> dict:
+def exchange_code(code: str, request=None) -> dict:
     """Exchange the authorization code for tokens. Returns token data."""
     import requests
-    redirect_uri = f"{BASE_URL}/auth/callback"
+    base_url = get_base_url(request)
+    redirect_uri = f"{base_url}/auth/callback"
     resp = requests.post(
         "https://oauth2.googleapis.com/token",
         data={
