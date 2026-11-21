@@ -196,6 +196,14 @@ app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 # Landing page / Dashboard
 # ------------------------------------------------------------------
 
+def is_local_dev(request: Request) -> bool:
+    """Return True only if running locally on localhost/127.0.0.1, not on Render."""
+    if os.environ.get("RENDER"):
+        return False
+    host = request.headers.get("host", "").split(":")[0].lower()
+    return host in ("127.0.0.1", "localhost", "0.0.0.0")
+
+
 @app.get("/", response_class=HTMLResponse)
 async def serve_frontend(request: Request):
     user = get_current_user(request)
@@ -209,10 +217,36 @@ async def serve_frontend(request: Request):
             html = html.replace("{{USER_EMAIL}}", user.get("email", ""))
             html = html.replace("{{USER_PICTURE}}", user.get("picture", ""))
             return html
+
     # Serve the landing page
     landing_path = STATIC_DIR / "landing.html"
     if landing_path.exists():
-        return landing_path.read_text(encoding="utf-8")
+        html = landing_path.read_text(encoding="utf-8")
+        if is_local_dev(request):
+            dev_block = """
+                <div class="auth-divider">
+                    <span>or local test</span>
+                </div>
+                <div class="dev-card">
+                    <div class="dev-card-header">
+                        <span class="dev-badge"><i class="ph ph-terminal"></i> Local Dev Access</span>
+                        <span class="dev-sub">Local environment only</span>
+                    </div>
+                    <div class="dev-info">
+                        <div class="dev-user">Instant Test Account</div>
+                        <div class="dev-sub">Auto-configures isolated workspace &amp; Gemini engine</div>
+                    </div>
+                    <a href="/auth/dev-login" class="btn-primary">
+                        <span>Launch Workspace Demo</span>
+                        <i class="ph ph-arrow-right"></i>
+                    </a>
+                </div>
+            """
+            html = html.replace("{{DEV_LOGIN_SECTION}}", dev_block)
+        else:
+            html = html.replace("{{DEV_LOGIN_SECTION}}", "")
+        return html
+
     return "<h1>Job Hunter</h1><p><a href='/auth/login'>Sign in with Google</a></p>"
 
 
@@ -221,23 +255,28 @@ async def serve_frontend(request: Request):
 # ------------------------------------------------------------------
 
 @app.get("/auth/login")
-async def auth_login():
+async def auth_login(request: Request):
     if not auth.is_oauth_configured():
-        return HTMLResponse(
-            "<h2>Google OAuth not configured yet</h2>"
-            "<p>To use Google Sign-In, set <code>GOOGLE_CLIENT_ID</code> and <code>GOOGLE_CLIENT_SECRET</code> in <code>.env</code>.</p>"
-            "<p>Or for local development and testing, you can use the Dev Login:</p>"
-            "<p><a href='/auth/dev-login' style='display:inline-block;padding:10px 20px;background:#FF9B6B;color:#111;text-decoration:none;border-radius:8px;font-weight:600;'>⚡ Enter Local Dev Test Mode</a></p>"
-            "<p><a href='/'>← Back to Home</a></p>",
-            status_code=200,
-        )
+        if is_local_dev(request):
+            return HTMLResponse(
+                "<h2>Google OAuth not configured yet</h2>"
+                "<p>To use Google Sign-In, set <code>GOOGLE_CLIENT_ID</code> and <code>GOOGLE_CLIENT_SECRET</code> in <code>.env</code>.</p>"
+                "<p><a href='/auth/dev-login' style='display:inline-block;padding:10px 20px;background:#2563EB;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;'>⚡ Enter Local Dev Test Mode</a></p>"
+                "<p><a href='/'>← Back to Home</a></p>",
+                status_code=200,
+            )
+        else:
+            raise HTTPException(500, "Google OAuth is not configured on this server. Please set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in the Render dashboard.")
     url = auth.get_auth_url()
     return RedirectResponse(url)
 
 
 @app.get("/auth/dev-login")
-async def auth_dev_login():
+async def auth_dev_login(request: Request):
     """Local dev login bypass for instant testing without OAuth configuration."""
+    if not is_local_dev(request) and not os.environ.get("ALLOW_DEV_LOGIN"):
+        raise HTTPException(403, "Dev login is disabled in cloud production.")
+
     user_id = "local_dev_user"
     email = "abyjohny25@gmail.com"
     name = "Aby Johny (Dev)"
