@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Hunter - Dashboard</title>
+    <meta name="description" content="AI-powered job hunting: search, match your CV, draft cover emails, and send applications.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/vendor/phosphor/style.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/jobs.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- Left Sidebar -->
+        <aside class="sidebar" id="sidebar" aria-label="Sidebar">
+            <div class="sidebar-header">
+                <button class="icon-btn" id="toggle-sidebar" aria-label="Collapse sidebar" title="Collapse sidebar">
+                    <i class="ph ph-sidebar-simple"></i>
+                </button>
+                <span class="logo-text">Job <span>Hunter</span></span>
+            </div>
+
+            <nav class="sidebar-menu">
+                <button class="menu-item active" id="nav-search">
+                    <i class="ph ph-magnifying-glass"></i><span>Search Jobs</span>
+                </button>
+                <button class="menu-item" id="nav-presets">
+                    <i class="ph ph-bookmarks"></i><span>Saved Presets</span>
+                </button>
+                <button class="menu-item" id="nav-runner">
+                    <i class="ph ph-robot"></i><span>Daily Runner</span>
+                </button>
+                <button class="menu-item" id="nav-history">
+                    <i class="ph ph-clock-counter-clockwise"></i><span>Application History</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-info" id="user-info">
+                    <img class="user-avatar" id="user-avatar" src="{{USER_PICTURE}}" alt="" referrerpolicy="no-referrer">
+                    <div class="user-details">
+                        <span class="user-name" id="user-name">{{USER_NAME}}</span>
+                        <span class="user-email" id="user-email">{{USER_EMAIL}}</span>
+                    </div>
+                </div>
+                <a href="/auth/logout" class="menu-item sign-out-link" title="Sign out">
+                    <i class="ph ph-sign-out"></i><span>Sign Out</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content" id="main">
+
+            <header class="topbar">
+                <button class="icon-btn hidden" id="open-sidebar-btn" aria-label="Open sidebar" title="Open sidebar">
+                    <i class="ph ph-sidebar-simple"></i>
+                </button>
+                <div class="topbar-title">Job Hunter</div>
+                <div class="top-badge"><span style="color: var(--accent-job); font-weight: 600;">Active Session</span></div>
+            </header>
+
+            <!-- Search Panel (default view) -->
+            <div class="jobs-view" id="view-search">
+                <div class="jobs-container">
+
+                    <!-- Config Panel -->
+                    <section class="config-panel" id="config-panel">
+                        <h2><i class="ph ph-sliders-horizontal"></i> Search Configuration</h2>
+                        <div class="config-grid">
+                            <div class="field">
+                                <label for="job-role">Role / Title</label>
+                                <input type="text" id="job-role" placeholder="e.g. Full Stack Developer">
+                            </div>
+                            <div class="field">
+                                <label for="job-country">Country</label>
+                                <input type="text" id="job-country" placeholder="e.g. India">
+                            </div>
+                            <div class="field">
+                                <label for="job-state">State / City</label>
+                                <input type="text" id="job-state" placeholder="e.g. Kerala (optional)">
+                            </div>
+                            <div class="field">
+                                <label for="job-experience">Experience Level</label>
+                                <select id="job-experience">
+                                    <option value="">Any</option>
+                                    <option value="Entry Level">Entry Level</option>
+                                    <option value="Junior">Junior (1-2 years)</option>
+                                    <option value="Mid-Level">Mid-Level (3-5 years)</option>
+                                    <option value="Senior">Senior (5+ years)</option>
+                                    <option value="Lead">Lead / Principal</option>
+                                    <option value="Manager">Manager / Director</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="job-date-from">Posted From</label>
+                                <input type="date" id="job-date-from">
+                            </div>
+                            <div class="field">
+                                <label for="job-date-to">Posted To</label>
+                                <input type="date" id="job-date-to">
+                            </div>
+                            <div class="field actions">
+                                <button class="primary-btn" id="search-btn">
+                                    <i class="ph ph-magnifying-glass"></i> Search Jobs
+                                </button>
+                                <button class="secondary-btn" id="save-preset-btn">
+                                    <i class="ph ph-bookmark-simple"></i> Save as Preset
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- CV Upload -->
+                    <section class="cv-panel" id="cv-panel">
+                        <div class="cv-header">
+                            <h2><i class="ph ph-file-text"></i> Your CV</h2>
+                            <span class="cv-status" id="cv-status">No CV uploaded</span>
+                        </div>
+                        <div class="cv-dropzone" id="cv-dropzone" tabindex="0" role="button" aria-label="Upload CV">
+                            <i class="ph ph-upload-simple"></i>
+                            <span>Drop your CV here or click to browse</span>
+                            <span class="cv-hint">PDF, DOCX, or TXT</span>
+                        </div>
+                    </section>
+
+                    <!-- Results -->
+                    <section class="results-panel hidden" id="results-panel">
+                        <div class="results-header">
+                            <h2><i class="ph ph-list-checks"></i> Job Results</h2>
+                            <div class="results-actions">
+                                <button class="action-btn" id="analyze-btn" disabled>
+                                    <i class="ph ph-sparkle"></i> Analyze CV Match
+                                </button>
+                                <button class="action-btn" id="draft-btn" disabled>
+                                    <i class="ph ph-envelope-simple"></i> Draft Emails
+                                </button>
+                                <button class="action-btn danger" id="send-btn" disabled>
+                                    <i class="ph ph-paper-plane-tilt"></i> Send Applications
+                                </button>
+                            </div>
+                        </div>
+                        <div class="select-all-row">
+                            <label><input type="checkbox" id="select-all"> Select All</label>
+                            <span class="result-count" id="result-count">0 jobs found</span>
+                        </div>
+                        <div class="job-list" id="job-list"></div>
+                    </section>
+
+                </div>
+            </div>
+
+            <!-- Presets Panel -->
+            <div class="jobs-view hidden" id="view-presets">
+                <div class="jobs-container">
+                    <section class="presets-panel">
+                        <div class="presets-header">
+                            <h2><i class="ph ph-bookmarks"></i> Saved Search Presets</h2>
+                            <span class="preset-hint">Click a preset to load &amp; search, or toggle it for the daily runner.</span>
+                        </div>
+                        <div class="presets-grid" id="presets-grid">
+                            <p class="empty-state">No presets saved yet. Use "Save as Preset" from the Search tab.</p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Daily Runner Panel -->
+            <div class="jobs-view hidden" id="view-runner">
+                <div class="jobs-container">
+                    <section class="runner-panel">
+                        <h2><i class="ph ph-robot"></i> Daily Job Runner</h2>
+                        <p class="runner-desc">Automatically searches for jobs using your active presets every day, matches them against your CV, and emails you a summary for review.</p>
+
+                        <div class="runner-config-grid">
+                            <div class="runner-toggle-row">
+                                <span class="runner-label"><i class="ph ph-power"></i> Enable Daily Runner</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="runner-enabled">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="field">
+                                <label for="runner-time">Run At (24h)</label>
+                                <input type="time" id="runner-time" value="09:00">
+                            </div>
+
+                            <div class="field">
+                                <label for="runner-min-score">Min Match Score</label>
+                                <div class="range-row">
+                                    <input type="range" id="runner-min-score" min="0" max="100" value="50">
+                                    <span class="range-value" id="runner-min-score-val">50%</span>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label for="runner-email">Summary Email To</label>
+                                <input type="email" id="runner-email" value="" placeholder="your@email.com">
+                            </div>
+
+                            <div class="field actions">
+                                <button class="primary-btn" id="save-runner-btn">
+                                    <i class="ph ph-floppy-disk"></i> Save Runner Config
+                                </button>
+                                <button class="secondary-btn" id="trigger-runner-btn">
+                                    <i class="ph ph-play"></i> Run Now
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="runner-status" id="runner-status">
+                            <div class="runner-status-row">
+                                <span><i class="ph ph-clock"></i> Last Run:</span>
+                                <span id="runner-last-run">Never</span>
+                            </div>
+                            <div class="runner-status-row">
+                                <span><i class="ph ph-calendar-check"></i> Next Run:</span>
+                                <span id="runner-next-run">—</span>
+                            </div>
+                        </div>
+
+                        <div class="daily-results" id="daily-results">
+                            <h3><i class="ph ph-list-magnifying-glass"></i> Latest Scan Results</h3>
+                            <div id="daily-results-content">
+                                <p class="empty-state">No scan results yet. Click "Run Now" or wait for the scheduled time.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Gemini API Configuration -->
+                    <section class="gemini-panel">
+                        <h2><i class="ph ph-lightning"></i> AI Engine (Google Gemini API)</h2>
+                        <p class="runner-desc">Uses Google Gemini for fast CV analysis, job matching, and email drafting. <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" style="color: var(--accent-blue); font-weight: 500;">Get a free API key here →</a></p>
+                        <div class="gemini-status" id="gemini-status">
+                            <span class="status-dot" id="gemini-dot"></span>
+                            <span id="gemini-status-text">Checking...</span>
+                        </div>
+                        <div class="field gemini-key-field">
+                            <label for="gemini-key">Personal API Key (Optional — a shared key is used by default)</label>
+                            <div class="key-input-row">
+                                <input type="password" id="gemini-key" placeholder="AIzaSy...">
+                                <button class="primary-btn" id="save-gemini-btn">
+                                    <i class="ph ph-floppy-disk"></i> Save
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- History Panel -->
+            <div class="jobs-view hidden" id="view-history">
+                <div class="jobs-container">
+
+                    <!-- Analytics Dashboard -->
+                    <section class="analytics-panel" id="analytics-panel">
+                        <h2><i class="ph ph-chart-bar"></i> Analytics</h2>
+                        <div class="analytics-cards" id="analytics-cards">
+                            <div class="analytics-card">
+                                <span class="analytics-label"><i class="ph ph-paper-plane-tilt"></i> Total Sent</span>
+                                <span class="analytics-value" id="stat-total">0</span>
+                            </div>
+                            <div class="analytics-card success">
+                                <span class="analytics-label"><i class="ph ph-check-circle"></i> Successful</span>
+                                <span class="analytics-value" id="stat-sent">0</span>
+                            </div>
+                            <div class="analytics-card danger">
+                                <span class="analytics-label"><i class="ph ph-warning-circle"></i> Failed</span>
+                                <span class="analytics-value" id="stat-failed">0</span>
+                            </div>
+                            <div class="analytics-card">
+                                <span class="analytics-label"><i class="ph ph-calendar"></i> This Week</span>
+                                <span class="analytics-value" id="stat-week">0</span>
+                            </div>
+                            <div class="analytics-card">
+                                <span class="analytics-label"><i class="ph ph-calendar-blank"></i> This Month</span>
+                                <span class="analytics-value" id="stat-month">0</span>
+                            </div>
+                            <div class="analytics-card">
+                                <span class="analytics-label"><i class="ph ph-percent"></i> Success Rate</span>
+                                <span class="analytics-value" id="stat-rate">—</span>
+                            </div>
+                        </div>
+
+                        <div class="analytics-breakdowns" id="analytics-breakdowns">
+                            <div class="breakdown-card">
+                                <h3><i class="ph ph-buildings"></i> By Company</h3>
+                                <div class="breakdown-list" id="breakdown-company">
+                                    <span class="empty-state-sm">No data yet</span>
+                                </div>
+                            </div>
+                            <div class="breakdown-card">
+                                <h3><i class="ph ph-briefcase"></i> By Role</h3>
+                                <div class="breakdown-list" id="breakdown-role">
+                                    <span class="empty-state-sm">No data yet</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-chart" id="activity-chart">
+                            <h3><i class="ph ph-chart-line-up"></i> Activity (Last 30 Days)</h3>
+                            <div class="chart-bars" id="chart-bars">
+                                <span class="empty-state-sm">No activity yet</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <h2><i class="ph ph-clock-counter-clockwise"></i> Application History</h2>
+                    <div class="history-list" id="history-list">
+                        <p class="empty-state">No applications sent yet.</p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Email Preview Modal -->
+        <div class="modal-overlay hidden" id="email-modal" role="dialog" aria-modal="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Email Drafts</h2>
+                    <button class="icon-btn" id="close-email-modal" aria-label="Close"><i class="ph ph-x"></i></button>
+                </div>
+                <div class="modal-body" id="email-drafts-container"></div>
+                <div class="modal-footer">
+                    <button class="secondary-btn" id="cancel-send-btn">Cancel</button>
+                    <button class="primary-btn" id="confirm-send-btn">
+                        <i class="ph ph-paper-plane-tilt"></i> Send All
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preset Name Modal -->
+        <div class="modal-overlay hidden" id="preset-name-modal" role="dialog" aria-modal="true">
+            <div class="modal-content modal-sm">
+                <div class="modal-header">
+                    <h2>Save Search Preset</h2>
+                    <button class="icon-btn" id="close-preset-modal" aria-label="Close"><i class="ph ph-x"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="field">
+                        <label for="preset-name-input">Preset Name</label>
+                        <input type="text" id="preset-name-input" placeholder="e.g. Senior Dev - India" autofocus>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="secondary-btn" id="cancel-preset-btn">Cancel</button>
+                    <button class="primary-btn" id="confirm-preset-btn">
+                        <i class="ph ph-bookmark-simple"></i> Save
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="toast-stack" id="toast-stack" aria-live="assertive"></div>
+    </div>
+
+    <script src="/static/jobs.js?v=2"></script>
+</body>
+</html>

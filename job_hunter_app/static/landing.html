@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Hunter - Sign in to your workspace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/vendor/phosphor/style.css">
+    <style>
+        :root {
+            --bg-canvas: #FFFFFF;
+            --bg-subtle: #F8FAFC;
+            --text-primary: #0F172A;
+            --text-secondary: #334155;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+            --border-strong: #CBD5E1;
+            --primary: #2563EB;
+            --primary-hover: #1D4ED8;
+            --primary-light: #EFF6FF;
+            --primary-border: #BFDBFE;
+            --ok: #16A34A;
+            --ok-light: #DCFCE7;
+            --ok-border: #86EFAC;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-canvas);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ------------------------------------------------------------- */
+        /* Split Layout                                                  */
+        /* ------------------------------------------------------------- */
+        .split-container {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* Left Side: Auth Section */
+        .auth-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 48px 64px;
+            max-width: 580px;
+            background: #FFFFFF;
+            border-right: 1px solid var(--border-color);
+            z-index: 10;
+        }
+
+        /* Header Logo */
+        .brand-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        .logo-symbol {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #2563EB 0%, #3B82F6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            font-size: 1.15rem;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+        }
+        .brand-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.4px;
+        }
+        .brand-name span {
+            color: var(--primary);
+        }
+
+        /* Auth Form Box */
+        .auth-box {
+            max-width: 400px;
+            width: 100%;
+            margin: auto 0;
+            padding: 20px 0;
+        }
+
+        .auth-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .auth-subtitle {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        /* Google Sign-in Button */
+        .btn-google {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 12px 20px;
+            background: #FFFFFF;
+            border: 1px solid var(--border-strong);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+        .btn-google:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.12);
+            color: var(--primary);
+        }
+
+        /* Divider */
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 24px 0;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .auth-divider span {
+            padding: 0 12px;
+        }
+
+        /* Dev Fast-Login Card */
+        .dev-card {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: border-color 0.2s;
+        }
+        .dev-card:hover {
+            border-color: var(--primary-border);
+        }
+        .dev-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .dev-badge {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--primary);
+            background: var(--primary-light);
+            border: 1px solid var(--primary-border);
+            padding: 2px 8px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .dev-user {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .dev-sub {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+        }
+        .btn-primary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 11px 18px;
+            background: var(--primary);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 1px 2px rgba(37, 99, 235, 0.25);
+            transition: all 0.2s;
+        }
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Auth Footer */
+        .auth-footer {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* ------------------------------------------------------------- */
+        /* Right Side: Creative Visual Showcase                          */
+        /* ------------------------------------------------------------- */
+        .showcase-side {
+            flex: 1.25;
+            background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 50%, #F1F5F9 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Ambient glowing sphere */
+        .glow-sphere {
+            position: absolute;
+            width: 520px;
+            height: 520px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.16) 0%, rgba(147, 197, 253, 0.1) 40%, transparent 70%);
+            filter: blur(40px);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .showcase-content {
+            position: relative;
+            z-index: 5;
+            max-width: 620px;
+            width: 100%;
+        }
+
+        .showcase-heading {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            line-height: 1.25;
+            color: var(--text-primary);
+            margin-bottom: 32px;
+            letter-spacing: -0.6px;
+        }
+        .showcase-heading .gradient-text {
+            background: linear-gradient(135deg, #2563EB 0%, #4F46E5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Mockup Container */
+        .mockup-scene {
+            position: relative;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* Main Search Bar Mockup */
+        .search-mockup {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
+            margin-bottom: 18px;
+        }
+        .search-mockup i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        .search-query {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            flex: 1;
+        }
+        .search-chip {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--primary);
+            background: var(--primary-light);
+            border: 1px solid var(--primary-border);
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Core Showcase Card (Job Match) */
+        .core-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            position: relative;
+            transition: transform 0.3s var(--ease);
+        }
+
+        .core-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .job-type-pill {
+            font-size: 0.74rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 1px solid var(--primary-border);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .match-score-pill {
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: var(--ok-light);
+            color: var(--ok);
+            border: 1px solid var(--ok-border);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .job-card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+        .job-card-company {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .match-explanation {
+            background: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .match-explanation i {
+            color: var(--primary);
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .card-actions-preview {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .action-chip {
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .action-chip.draft {
+            background: #EFF6FF;
+            color: #2563EB;
+            border: 1px solid #BFDBFE;
+        }
+        .action-chip.send {
+            background: #16A34A;
+            color: #FFFFFF;
+        }
+
+        /* Floating Satellite Cards */
+        .floating-card {
+            position: absolute;
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 16px;
+            box-shadow: 0 10px 20px -3px rgba(15, 23, 42, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 10;
+            animation: float 4s ease-in-out infinite alternate;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-6px); }
+        }
+
+        .floating-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .floating-title {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .floating-desc {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        /* Position satellite cards */
+        .card-float-top {
+            top: -24px;
+            right: -20px;
+            animation-delay: 0.5s;
+        }
+        .card-float-bottom {
+            bottom: -22px;
+            left: -16px;
+            animation-delay: 1.2s;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 980px) {
+            .split-container {
+                flex-direction: column;
+            }
+            .auth-side {
+                max-width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding: 40px 24px;
+            }
+            .auth-box {
+                margin: 30px auto;
+            }
+            .showcase-side {
+                padding: 48px 24px;
+            }
+            .card-float-top, .card-float-bottom {
+                position: static;
+                margin-top: 12px;
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="split-container">
+
+        <!-- Left: Workspace Authentication Panel -->
+        <section class="auth-side">
+            <header>
+                <a href="/" class="brand-logo">
+                    <div class="logo-symbol">
+                        <i class="ph ph-briefcase"></i>
+                    </div>
+                    <span class="brand-name">Job<span>Hunter</span></span>
+                </a>
+            </header>
+
+            <div class="auth-box">
+                <h1 class="auth-title">Sign in to your workspace</h1>
+                <p class="auth-subtitle">
+                    Access your private job engine with automated search, CV match scoring, and email dispatch.
+                </p>
+
+                <!-- Google OAuth Login -->
+                <a href="/auth/login" class="btn-google">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20" height="20">
+                        <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/>
+                        <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/>
+                        <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/>
+                        <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/>
+                    </svg>
+                    Sign in with Google
+                </a>
+
+                <div class="auth-divider">
+                    <span>or local test</span>
+                </div>
+
+                <!-- Instant Dev Workspace Launcher -->
+                <div class="dev-card">
+                    <div class="dev-card-header">
+                        <span class="dev-badge"><i class="ph ph-terminal"></i> Local Dev Access</span>
+                        <span class="dev-sub">No Google credentials required</span>
+                    </div>
+                    <div class="dev-info">
+                        <div class="dev-user">Instant Test Account</div>
+                        <div class="dev-sub">Auto-configures isolated workspace &amp; Gemini engine</div>
+                    </div>
+                    <a href="/auth/dev-login" class="btn-primary">
+                        <span>Launch Workspace Demo</span>
+                        <i class="ph ph-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <footer class="auth-footer">
+                <i class="ph ph-lock-key"></i> Strictly multi-tenant. Your CV, applications, and presets are private to your session.
+            </footer>
+        </section>
+
+        <!-- Right: Creative Visual Mockup & Value Proposition -->
+        <section class="showcase-side">
+            <div class="glow-sphere"></div>
+
+            <div class="showcase-content">
+                <h2 class="showcase-heading">
+                    An autonomous AI agent that <span class="gradient-text">searches, scores &amp; applies</span> to jobs for you
+                </h2>
+
+                <div class="mockup-scene">
+
+                    <!-- Search Filter Mockup -->
+                    <div class="search-mockup">
+                        <i class="ph ph-magnifying-glass"></i>
+                        <span class="search-query">Senior Python Backend Developer · Remote / Hybrid</span>
+                        <span class="search-chip"><i class="ph ph-sparkle"></i> Gemini 3.1</span>
+                    </div>
+
+                    <!-- Core Active Card: Live Scored Job -->
+                    <div class="core-card">
+                        <div class="core-card-top">
+                            <span class="job-type-pill"><i class="ph ph-check"></i> Direct Employer</span>
+                            <span class="match-score-pill"><i class="ph ph-sparkle"></i> 94% Match</span>
+                        </div>
+
+                        <div class="job-card-title">Senior Python &amp; Backend Engineer</div>
+                        <div class="job-card-company">
+                            <i class="ph ph-buildings"></i> Valura AI · <i class="ph ph-map-pin"></i> Remote
+                        </div>
+
+                        <div class="match-explanation">
+                            <i class="ph ph-brain"></i>
+                            <span><strong>Gemini Match:</strong> Strong alignment in FastAPI, database architecture, and asynchronous APIs matching your uploaded resume.</span>
+                        </div>
+
+                        <div class="card-actions-preview">
+                            <span class="action-chip draft"><i class="ph ph-envelope-simple"></i> Cover Email Ready</span>
+                            <span class="action-chip send"><i class="ph ph-paper-plane-tilt"></i> Ready to Send</span>
+                        </div>
+                    </div>
+
+                    <!-- Floating Pill 1: Cover Email Generation -->
+                    <div class="floating-card card-float-top">
+                        <div class="floating-icon" style="background: #EFF6FF; color: #2563EB;">
+                            <i class="ph ph-envelope-open"></i>
+                        </div>
+                        <div>
+                            <div class="floating-title">Clean Cover Email Generated</div>
+                            <div class="floating-desc">Tailored 4-sentence pitch with zero fluff</div>
+                        </div>
+                    </div>
+
+                    <!-- Floating Pill 2: Daily Runner Automation -->
+                    <div class="floating-card card-float-bottom">
+                        <div class="floating-icon" style="background: #DCFCE7; color: #16A34A;">
+                            <i class="ph ph-robot"></i>
+                        </div>
+                        <div>
+                            <div class="floating-title">Daily Runner Active</div>
+                            <div class="floating-desc">Scans presets &amp; emails summaries automatically</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+# User data
+data/users/
+data/gemini_api_key.txt
+
+# OAuth secrets
+oauth_tokens.json
+client_secret*.json
+credentials.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Env
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
