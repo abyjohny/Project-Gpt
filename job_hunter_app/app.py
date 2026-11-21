@@ -250,6 +250,23 @@ async def serve_frontend(request: Request):
     return "<h1>Job Hunter</h1><p><a href='/auth/login'>Sign in with Google</a></p>"
 
 
+@app.get("/privacy", response_class=HTMLResponse)
+async def serve_privacy():
+    privacy_path = STATIC_DIR / "privacy.html"
+    if privacy_path.exists():
+        return privacy_path.read_text(encoding="utf-8")
+    return "<h1>Privacy Policy</h1><p>Contact: abycursor1@gmail.com</p>"
+
+
+@app.get("/terms", response_class=HTMLResponse)
+async def serve_terms():
+    terms_path = STATIC_DIR / "terms.html"
+    if terms_path.exists():
+        return terms_path.read_text(encoding="utf-8")
+    return "<h1>Terms of Service</h1><p>Contact: abycursor1@gmail.com</p>"
+
+
+
 # ------------------------------------------------------------------
 # Auth endpoints
 # ------------------------------------------------------------------
