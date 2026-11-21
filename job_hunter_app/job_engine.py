@@ -52,8 +52,56 @@ AGGREGATOR_DOMAINS = {
     "careerbuilder.com", "jooble.org", "jobrapido.com", "adzuna.com",
     "reed.co.uk", "totaljobs.com", "cwjobs.co.uk", "seek.com.au",
     "shine.com", "foundit.in", "instahyre.com", "hirist.com",
-    "timesjobs.com", "apna.co", "cutshort.io",
+    "timesjobs.com", "apna.co", "cutshort.io", "wellfound.com",
+    "workatastartup.com", "builtin.com",
 }
+
+BLOCKED_DOMAINS = {
+    "wikipedia.org", "w3schools.com", "geeksforgeeks.org", "tutorialspoint.com",
+    "python.org", "github.com", "gitlab.com", "youtube.com", "reddit.com",
+    "quora.com", "medium.com", "stackoverflow.com", "stackexchange.com",
+    "coursera.org", "udemy.com", "edx.org", "freecodecamp.org", "javatpoint.com",
+    "docs.python.org", "pypi.org", "a-z-animals.com", "iere.org", "britannica.com",
+    "investopedia.com", "khanacademy.org", "codecademy.com", "datacamp.com",
+    "simplilearn.com", "programiz.com", "baeldung.com", "dev.to", "hashnode.com",
+}
+
+BLOCKED_TITLE_PATTERNS = {
+    "(programming language)", "tutorial", "tutorials", "documentation",
+    "download python", "what is", "cheat sheet", "cheatsheet", "roadmap",
+    "interview questions", "learn python", "guide for beginners", "syntax",
+    "compiler", "interpreter", "ide online", "ide, editor", "introduction to",
+}
+
+JOB_INTENT_KEYWORDS = {
+    "job", "jobs", "hiring", "vacancy", "vacancies", "career", "careers",
+    "opening", "openings", "role", "roles", "position", "positions",
+    "recruitment", "apply", "developer", "engineer", "salary", "full-time",
+    "part-time", "contract", "remote", "fresher", "intern", "experienced",
+    "walkin", "walk-in", "work from home", "wfh", "talent", "opportunity",
+}
+
+
+def is_valid_job_listing(title: str, url: str, snippet: str) -> bool:
+    """Filter out non-job content like documentation, tutorials, and encyclopedias."""
+    url_l = url.lower()
+    title_l = title.lower()
+    combined = f"{title_l} {snippet.lower()}"
+
+    # Discard non-job domains
+    if any(d in url_l for d in BLOCKED_DOMAINS):
+        return False
+
+    # Discard educational/informational title patterns
+    if any(p in title_l for p in BLOCKED_TITLE_PATTERNS):
+        return False
+
+    # Known aggregator job boards are already job portals
+    if any(d in url_l for d in AGGREGATOR_DOMAINS):
+        return True
+
+    # For general web results, require at least one job keyword
+    return any(kw in combined for kw in JOB_INTENT_KEYWORDS)
 
 
 # ------------------------------------------------------------------
@@ -97,11 +145,28 @@ def search_jobs(
     location = f"{state} {country}".strip() if state else country
     exp_tag = f" {experience}" if experience else ""
 
+    # Normalize role: if user entered only a technology/skill (e.g. 'python', 'react'), ensure job intent
+    role_clean = role.strip()
+    role_lower = role_clean.lower()
+    role_nouns = (
+        "developer", "engineer", "programmer", "architect", "lead", "specialist",
+        "analyst", "manager", "designer", "consultant", "scientist", "tester", "intern",
+    )
+    if not any(noun in role_lower for noun in role_nouns) and "job" not in role_lower:
+        search_role = f"{role_clean} Developer"
+    else:
+        search_role = role_clean
+
     queries = [
-        f"{role}{exp_tag} jobs {location} site:linkedin.com OR site:indeed.com",
-        f"{role}{exp_tag} hiring {location} site:linkedin.com OR site:glassdoor.com",
-        f"{role}{exp_tag} careers {location}",
+        f"{search_role}{exp_tag} jobs {location}",
+        f"{search_role}{exp_tag} hiring {location}",
+        f"{search_role}{exp_tag} careers {location}",
+        f"{search_role}{exp_tag} jobs in {location} site:linkedin.com",
+        f"{search_role}{exp_tag} jobs in {location} site:indeed.com",
     ]
+    if "india" in location.lower():
+        queries.append(f"{search_role}{exp_tag} jobs in {location} site:naukri.com")
+
     if date_from:
         queries = [f"{q} after:{date_from}" for q in queries]
     if date_to:
@@ -126,8 +191,12 @@ def search_jobs(
             title = r.get("title", "").strip()
             snippet = r.get("body", "").strip()
 
+            # Filter out non-job content (encyclopedias, tutorials, documentation, etc.)
+            if not is_valid_job_listing(title, url, snippet):
+                continue
+
             source = "web"
-            for site in ("linkedin.com", "indeed.com", "glassdoor.com", "monster.com"):
+            for site in ("linkedin.com", "indeed.com", "glassdoor.com", "monster.com", "naukri.com"):
                 if site in url:
                     source = site.split(".")[0]
                     break
