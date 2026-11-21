@@ -44,7 +44,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("app")
 
 STATIC_DIR = Path(__file__).parent / "static"
-HOST = os.environ.get("HOST", "127.0.0.1")
+HOST = os.environ.get("HOST", "0.0.0.0" if os.environ.get("RENDER") else "127.0.0.1")
 PORT = int(os.environ.get("PORT", "8080"))
 
 SESSION_COOKIE = "jh_session"
